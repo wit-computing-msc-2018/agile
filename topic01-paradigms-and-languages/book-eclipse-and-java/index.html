@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-light.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <style>
+      
+
+body
+{
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+}
+
+figcaption
+{
+  margin-bottom: 20px;
+}
+
+.vertical-align
+{
+  display: flex;
+  align-items: center;
+}
+
+.ui.segment.pushable
+{
+  margin: 0;
+  padding: 1rem 0;
+  overflow: visible;
+}
+
+code
+{
+  font-family: "Monaco";
+  font-size: 110%;
+}
+
+img
+{
+  padding:1px;
+  border:1px solid black;
+}
+
+h1
+{
+  font-style:italic;
+  font-size:130%;
+  border-bottom:thin solid black;
+}
+
+h2
+{
+  font-size:110%;
+  border-bottom: thin solid black;
+}
+
+h3
+{
+  font-size:100%;
+  border-bottom: thin solid black;
+}
+
+body
+{
+  overflow-y: scroll;
+}
+
+.pushable > .pusher
+{
+  padding-bottom: 1.5rem;
+}
+
+.ui.segment.pushable
+{
+  margin: 0;
+  padding: 1rem 0;
+  overflow: visible;
+}
+
+
+
+    </style>
+  </head>
+
+  <body>
+    
+    
+
+    <div class="ui fixed top pointing inverted stackable menu labmenu">
+      <header class="header item">
+        <i id="toc" class="sitemap icon"></i>
+        <a href="../index.html">
+          1: Paradigms & Languages 
+        </a>
+      </header>
+      <div class="right tab-menu menu">
+        
+          <a class="item" data-tab="Lab-01 Eclipse & Java">
+            Lab-01 Eclipse & Java
+          </a>
+        
+          <a class="item" data-tab="01">
+            01
+          </a>
+        
+          <a class="item" data-tab="02">
+            02
+          </a>
+        
+          <a class="item" data-tab="03">
+            03
+          </a>
+        
+          <a class="item" data-tab="04">
+            04
+          </a>
+        
+          <a class="item" data-tab="05">
+            05
+          </a>
+        
+          <a class="item" data-tab="06">
+            06
+          </a>
+        
+          <a class="item" data-tab="07">
+            07
+          </a>
+        
+          <a class="item" data-tab="08">
+            08
+          </a>
+        
+          <a class="item" data-tab="Exercises">
+            Exercises
+          </a>
+        
+        <div class="item">
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="ui segment pushable">
+      <div class="ui inverted labeled icon left inline vertical sidebar menu">
+        <br><br>
+        
+          
+            <a class="active item" href="../../topic01-paradigms-and-languages/book-eclipse-and-java/index.html">
+              Lab-01 Eclipse & Java
+            </a>
+          
+        
+      </div>
+      <div class="pusher" tabindex="-1">
+        <div class="ui basic segment" id="labchat">
+          <br>
+          
+            <div  class="ui tab segment lab" data-tab="Lab-01 Eclipse & Java">
+              <h1>Objectives</h1>
+<p>The objective of this lab is to install and configure your development workstation and to bring into focus some of the terms and concepts covered in the opening lecture.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="01">
+              <h1>Install JDK</h1>
+<p>The first step is to locate the Java Software Development Kit in this Oracle web site:</p>
+<ul>
+<li><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></li>
+</ul>
+<p>On this page, download the latest release of <strong>JDK, version 10</strong> and save to your local disk.</p>
+<p>Make sure to select the correct one for your operating system.</p>
+<p>Once it is downloaded, locate the file on your hard disk (it may be on your desktop) and run it.</p>
+<p>During the installation process it will install two subsystems</p>
+<ul>
+<li>JRE</li>
+<li>JDK</li>
+</ul>
+<p>Keep an eye on where these are installed, as both are important. </p>
+<h1>Verify JDK</h1>
+<p>Open a Command Prompt in Window - or a terminal - on your workstation.</p>
+<p>Enter the following command:</p>
+<pre><code>  java -version</code></pre>
+<p>this will verify that java is installed correctly, and will display the version number:</p>
+<pre><code>C:\Users\Siobhan&gt;java -version
+java version &quot;10.0.2&quot; 2018-07-17
+Java(TM) SE Runtime Environment 18.3 (build 10.0.2+13)
+Java HotSpot(TM) 64-Bit Server VM 18.3 (build 10.0.2+13, mixed mode)
+
+C:\Users\Siobhan&gt;</code></pre>
+<p>It might look slightly difference depending on your system. However, we are looking for 10.x.x version.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="02">
+              <h1>Install Eclipse</h1>
+<p>Eclipse is a free, open source, Integrated Development Environment for Java. We will use it during the labs as the main environment for writing, testing and exploring Java programs.</p>
+<p>Visit the Eclipse web site:</p>
+<ul>
+<li><a href="http://www.eclipse.org/downloads/eclipse-packages/">http://www.eclipse.org/downloads/eclipse-packages/</a></li>
+</ul>
+<p>Select the &#39;Eclipse IDE for Java EE Developers&#39; version.</p>
+<p>On Windows, the install is merely a matter of extracting the arhive somethere, locating the Eclipse application binary, and launching it. On a Mac/Linux the installation may vary slightly.</p>
+<p>Once installed and launched, it should look like this:</p>
+<p><img src="img/01.png" alt=""></p>
+<h1>Verify Eclipse</h1>
+<p>We will create a very simple &quot;Hello World&quot; application to test the installation. Eclipse is currently displaying what is called the &quot;Welcome&quot; screen. We can remove this and reveal the standard workbench by pressing the &quot;close&quot; button on the welcome screen:</p>
+<p><img src="img/02.png" alt=""></p>
+<p>Note: it is advisable to switch to the &quot;Java Perspective&quot;, if it is not displayed automatically for you.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="03">
+              <h1>HelloWorld</h1>
+<p>We will now create our first Java Application. We do this by first creating a Java project, selecting File-&gt;New-&gt;Java Project.</p>
+<p>Call the project HelloJava:</p>
+<p><img src="img/04.png" alt=""></p>
+<p>... and press Finish:</p>
+<p>When this dialog box appears, click on the <strong>Don&#39;t Create</strong> button (more on this later in the course):</p>
+<p><img src="img/03.png" alt=""></p>
+<p>This has created a project called HelloJava:</p>
+<p><img src="img/05.png" alt=""></p>
+<p>We can explore this project in the &quot;Package Explorer&quot; window:</p>
+<p><img src="img/06.png" alt=""></p>
+<p>Currently the project is empty. We can add a new class to the project as follows:
+Select the src node in the HelloJava project and right click (to bring up the context menu):</p>
+<p><img src="img/07.png" alt=""></p>
+<p>Select Class, which will bring up the New Java Class dialog::</p>
+<p><img src="img/33.png" alt=""></p>
+<p>Call the class Hello as shown above. Also, make sure to select the public static void main check box is checked:</p>
+<p><img src="img/34.png" alt=""></p>
+<p>Press finish - and the class hello.java will be generated:</p>
+<p><img src="img/35.png" alt=""></p>
+<p>Inside the opening and closing braces of the main() method, enter the following:</p>
+<pre><code class="lang-java">      System.out.println(&quot;Hello Everyone!&quot;);</code></pre>
+<p>So that the full class looks like this:</p>
+<p><img src="img/36.png" alt=""></p>
+<p>We can now proceed to execute the program. We should expect it to print the message indicated on the console.</p>
+<p>To execute, right click on Hello.java in the Package Explorer:</p>
+<p><img src="img/37.png" alt=""></p>
+<p>Select Run As-&gt;Java Application as shown above. The application will execute. The output is visible in the Console view along the end of the perspective:</p>
+<p><img src="img/39.png" alt=""></p>
+<p>Finally, note that eclipse is a folding editor. This means we can remove from view selected elements if we wish to have an uncluttered high level view of the source. Hover the cursor over the main method:</p>
+<p><img src="img/48.png" alt=""></p>
+<p>... the press the mouse once, and the method will fold:</p>
+<p><img src="img/49.png" alt=""></p>
+<p>Pressing it again will expand ....</p>
+<p><img src="img/50.png" alt=""></p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="04">
+              <h1>Data Structure</h1>
+<p>Create a new project called <strong>pacemaker-console</strong>. Do this by selecting &#39;File-&gt;New-&gt;Java Project&#39;. Fill out the <strong>New Java Project</strong> wizard as shown:</p>
+<p><img src="img/51.png" alt=""></p>
+<p>Press &quot;Finish&quot;.  When the <strong>Create Module</strong> wizard window appears, click the <strong>Don&#39;t Create</strong> button.</p>
+<p>In the new project, select &#39;src&#39;, right click and select &#39;New-&gt;Package&#39;. Call the package &#39;models&#39; and press finish:</p>
+<p><img src="img/52.png" alt=""></p>
+<p>Selecting &quot;models&quot;, select &quot;File-&gt;New&quot; and select &quot;Class&quot;. Name the class &quot;User&quot;:</p>
+<p><img src="img/53.png" alt=""></p>
+<p>Edit the User.java source - and replace the current contents with the following:</p>
+<pre><code class="lang-java">package models;
+
+public class User 
+{
+  public String firstName;
+  public String lastName;
+  public String email;
+  public String password;
+
+  public User()
+  {
+  }
+
+  public User(String firstName, String lastName, String email, String password)
+  {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.password = password;
+  }
+}</code></pre>
+<p>In a new package called &#39;controllers&#39;, create a class called &quot;Main&quot; (follow same steps used to create User class above). Replace the contents of Main.java with the following</p>
+<pre><code class="lang-java">package controllers;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import models.User;
+
+public class Main
+{
+  public static void main(String[] args)
+  {
+    List&lt;User&gt; users = new ArrayList&lt;User&gt;();
+    users.add(new User(&quot;Bart&quot;, &quot;Simpson&quot;, &quot;bart@simpson.com&quot;, &quot;secret&quot;));
+    users.add(new User(&quot;Homer&quot;, &quot;Simpson&quot;, &quot;bart@simpson.com&quot;, &quot;secret&quot;));
+    users.add(new User(&quot;Lisa&quot;, &quot;Simpson&quot;, &quot;bart@simpson.com&quot;, &quot;secret&quot;));
+    System.out.println(users);
+  }
+}</code></pre>
+<p>The workbench should now look as follows:</p>
+<p><img src="img/56.png" alt=""></p>
+<p>Launch the application as follows. Do this by selecting &quot;Main.java&quot; in the Package Explorer and select &quot;Run-&gt;Run As-&gt;Java Application&quot;. This executes the application (running the <em>main</em> method) which in turn prints output to the console.</p>
+<p><img src="img/57.png" alt=""></p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="05">
+              <h1>Debug</h1>
+<p>Now explore the &quot;users&quot; data structure in the debugger: Editing the Main.java source file, double click inside the scroll bar on first line of the main method:</p>
+<p><img src="img/58.png" alt=""></p>
+<p>This creates a breakpoint (visually a small blue bubble). Run the program again: - this time under the debugger. With the &#39;pacemaker-console&#39; project open, select these options from the toolbar...Run-&gt; Debug.</p>
+<p>You may see the permissions dialog (allow access):</p>
+<p><img src="img/58a.png" alt=""></p>
+<p>and also a switch perspective dialog (allow the switch):</p>
+<p><img src="img/58b.png" alt=""></p>
+<p>Finally, the workspace will be reconfigured as follows:</p>
+<p><img src="img/59.png" alt=""></p>
+<p>Selecting &#39;Run-&gt;Step Over&#39; from the eclipse menu several times will execute each line of the main method.</p>
+<p><img src="img/60.png" alt=""></p>
+<p>Note the editor view shows each line under execution. The Variables view shows the contacts data structure being populated.</p>
+<p><img src="img/61.png" alt=""></p>
+<p>Exploring the variable window should enable you to inspect each contact object as it is inserted. This variable window can also show a &quot;Logical View&quot; of the data structure (toggle the second button in the toolbar)</p>
+<p><img src="img/62.png" alt=""></p>
+<p>To terminate the application, press the button in the Console view and restore the &quot;Java Perspective&quot; (using buttons in top right hand corner):</p>
+<p><img src="img/63.png" alt=""></p>
+<p>... you should now be back in the familiar &quot;Java Perspective&quot;:</p>
+<p><img src="img/56.png" alt=""></p>
+<p>If you are not familiar with debugging in eclipse, spend some time repeating the above steps. In particular, hover over the various tool bar buttons visible in the debug perspective to get an general understanding of how to control and explore a running application.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="06">
+              <h1>Git Version Control</h1>
+<p>Before moving on to the next step - we will commit this project to &#39;git&#39; version control.</p>
+<p>First, right click on the project and select &#39;Team-&gt;Share Project&#39;</p>
+<p><img src="img/x01.png" alt=""></p>
+<p>and then you will see this:</p>
+<p><img src="img/x03.png" alt=""></p>
+<p>Tick the &#39;Use or create repository&#39;, and then press the &#39;Create Repository&#39; button.  Then press the &#39;Finish&#39; button.</p>
+<p>You may notice that your eclipse project icons look a little different.</p>
+<p><img src="img/x06.png" alt=""></p>
+<p>Now, select the project again in Package Explorer, select &#39;Team&#39; - and this time the menu will be different:</p>
+<p><img src="img/x08.png" alt=""></p>
+<p>Select &#39;Commit&#39; - and enter details as shown here:</p>
+<p><img src="img/x07.png" alt=""></p>
+<p>Select all the &#39;unstaged&#39; files </p>
+<p><img src="img/x40.png" alt=""></p>
+<p>... and select &#39;add to index&#39; from the context menu:</p>
+<p><img src="img/x51.png" alt=""></p>
+<p>Press &quot;Commit&quot; - which will clear the staging panel:</p>
+<p><img src="img/53x.png" alt=""></p>
+<p>Note how the icons above changed again in the package explorer.</p>
+<p>Although we haven&#39;t saved this to any external server, we have preserved the applications current structure.</p>
+<p>You may be more familiar with the git command line or another git visual client.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="07">
+              <h1>Pattern</h1>
+<p>Create a new package in the eclipse project, called &#39;utils&#39; and introduce the following class into that package:</p>
+<pre><code class="lang-java">package utils;
+
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+public class FileLogger
+{
+  private static FileLogger logger;
+
+  private FileLogger()
+  {
+  }
+
+  public static FileLogger getLogger()
+  {
+    if (logger == null)
+    {
+      logger = new FileLogger();
+    }
+    return logger;
+  }
+
+  public boolean log(String msg)
+  {
+    try
+    {
+      PrintWriter writer = new PrintWriter(new FileWriter(&quot;log.txt&quot;, true));
+      writer.println(msg);
+      writer.close();
+    }
+    catch (FileNotFoundException ex)
+    {
+      return (false);
+    }
+    catch (IOException ex)
+    {
+      return (false);
+    }
+    return (true);
+  }
+}</code></pre>
+<p>Project workspace should be structured as follows:</p>
+<p><img src="img/x11.png" alt=""></p>
+<p>Edit the Main.java, replacing the main method with the following:</p>
+<pre><code class="lang-java">  public static void main(String[] args)
+  {
+    FileLogger logger = FileLogger.getLogger();
+    logger.log(&quot;Creating user list&quot;);
+
+    List&lt;User&gt; users = new ArrayList&lt;User&gt;();
+    users.add(new User(&quot;Bart&quot;, &quot;Simpson&quot;, &quot;bart@simpson.com&quot;, &quot;secret&quot;));
+    users.add(new User(&quot;Homer&quot;, &quot;Simpson&quot;, &quot;bart@simpson.com&quot;, &quot;secret&quot;));
+    users.add(new User(&quot;Lisa&quot;, &quot;Simpson&quot;, &quot;bart@simpson.com&quot;, &quot;secret&quot;));
+    System.out.println(users);
+
+    logger.log(&quot;Finished - shutting down&quot;);
+  }</code></pre>
+<p>Note that there will be one error - the FileLogger class is being used in the Main method without being imported. Hovering over the error in the editor will pop-up some autocorrect suggestions:</p>
+<p><img src="img/x12.png" alt=""></p>
+<p>If you select the first one shown (Import FileLogger) then the appropriate import will be inserted into the class and the error will disappear:</p>
+<pre><code class="lang-java">import utils.FileLogger;</code></pre>
+<p>Execute the program. Do this be selecting main.java in the package explorer, and selecting menu &quot;Run-&gt;Run As-&gt;Java Application&quot; as before.</p>
+<p>The console should list data structure as before, and a log file &quot;log.txt&quot; should be generated. As the file is just generated, it will not be visible in the workspace. To view it, select the &#39;pacemaker-console&#39; project in the package explorer, and select &quot;File-&gt;Refresh&quot;. Package explorer will be updated to reflect the new file generated in the workspace:</p>
+<p><img src="img/x13.png" alt=""></p>
+<p>Double click log.txt to view the log:</p>
+<p><img src="img/x14.png" alt=""></p>
+<p>Before we finish this step, we can &#39;commit&#39; changes we have just made. In Package Explorer, select the project, right click and select &#39;Team-&gt;Commit&#39;:</p>
+<p><img src="img/x15.png" alt=""></p>
+<p>Fill out as shown below i.e. add the new source files to the index, provide a relevant message and commit.</p>
+<p><img src="img/x15b.png" alt=""></p>
+<p>Notice the changes in the package explorer icons:</p>
+<p><img src="img/x16.png" alt=""></p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="08">
+              <h1>Component</h1>
+<p>Download the following XStream jar file:</p>
+<ul>
+<li><a href="../book-eclipse-and-java/archives/xstream-1.4.10.jar">xstream-1.4.10.jar</a></li>
+</ul>
+<p>In Eclipse Package Explorer, create a new folder &quot;lib&quot;. Do this be selecting the project, select &quot;File-&gt;New-&gt;Folder&quot;. In the offered dialog, enter &quot;lib&quot; as the file name. Drag the xstream.jar file already downloaded into the lib folder.  Your eclipse workspace should now look like this:</p>
+<p><img src="img/x17.png" alt=""></p>
+<p>Right click on the &#39;xstream&#39; component and select &quot;Build Path-&gt;Add to Build Path&quot;. 
+Your workspace should now look like this:</p>
+<p><img src="img/x17a.png" alt=""></p>
+<p>Replace the main method (not the entire class Main) with this version here:</p>
+<pre><code class="lang-java">  public static void main(String[] args) throws IOException
+  {
+    FileLogger logger = FileLogger.getLogger();
+    logger.log(&quot;Creating user list&quot;);
+
+    List&lt;User&gt; users = new ArrayList&lt;User&gt;();
+    users.add(new User(&quot;Bart&quot;, &quot;Simpson&quot;, &quot;bart@simpson.com&quot;, &quot;secret&quot;));
+    users.add(new User(&quot;Homer&quot;, &quot;Simpson&quot;, &quot;bart@simpson.com&quot;, &quot;secret&quot;));
+    users.add(new User(&quot;Lisa&quot;, &quot;Simpson&quot;, &quot;bart@simpson.com&quot;, &quot;secret&quot;));
+    System.out.println(users);
+
+    logger.log(&quot;Serializing contacts to XML&quot;);
+    XStream xstream = new XStream(new DomDriver());
+    ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter(&quot;users.xml&quot;));
+    out.writeObject(users);
+    out.close();    
+
+    logger.log(&quot;Finished - shutting down&quot;);
+  }</code></pre>
+<p>Use the autocorrect feature to correct the package import errors. If used appropriately, the following import statements should be added to the class (note: existing imports are listed below too):</p>
+<pre><code class="lang-java">import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
+import models.User;
+import utils.FileLogger;</code></pre>
+<p>Run the program (use steps as before). You may be asked to choose the Java application.  Choose Main - Controllers and click the OK button:</p>
+<p><img src="img/x17b.png" alt=""></p>
+<h2>Eliminating a warning message</h2>
+<p>As we are using Java10, you should get the following warning message: </p>
+<p><img src="img/x17c.png" alt=""></p>
+<p>Note that the component works as it is supposed to; the warning message is due to the differing reflective approaches adopted between Java8 and Java10.  The component hasn&#39;t been updated for Java10 yet.</p>
+<p>We can get rid of the warning by passing suppression messages to the VM when we run our application. To do this, right click on the project. From the context menu, select &#39;Run As&#39; followed by &#39;Run Configurations&#39;. The following window should appear:</p>
+<p><img src="img/x17d.png" alt=""></p>
+<p>Click on the &#39;Arguments&#39; tab and enter the following VM arguments:</p>
+<pre><code>--add-opens java.base/java.util=ALL-UNNAMED 
+--add-opens java.base/java.lang.reflect=ALL-UNNAMED 
+--add-opens java.base/java.text=ALL-UNNAMED 
+--add-opens java.desktop/java.awt.font=ALL-UNNAMED</code></pre>
+<p><img src="img/x17e.png" alt=""></p>
+<p>Close the dialog window by pressing the Run button.  Note how the warning message is now suppressed. </p>
+<h2>Interrogating the new file</h2>
+<p>A file called &quot;users.xml&quot; will have been generated. Using the refresh step from before (or just press the F5 key when the focus is in the package explorer) to make this file visible in package explorer.  Then open the file.</p>
+<p>Two views should be visible. A &quot;Design&quot; view:</p>
+<p><img src="img/x18.png" alt=""></p>
+<p>and a &quot;Source&quot; view</p>
+<p><img src="img/x19.png" alt=""></p>
+<p>We have used a component (xstream) to convert an internal data structure into an XML stream, which we have written to a file on our harddisk.</p>
+<p>See if you can commit the changes we have just made to git.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="Exercises">
+              <h1>Exercises</h1>
+<h2>Lab Archive</h2>
+<p>You can find the solution to the previous steps on this github repo (along with a separate solution to these exercises):</p>
+<ul>
+<li><a href="https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V1.0">https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V1.0</a></li>
+</ul>
+<h3>Data Structures</h3>
+<p>The Data Structure example - step 4 - used the ArrayList data structure. For an elegant introduction to this, and the collections framework as a whole, take a look at this trial here:</p>
+<ul>
+<li><a href="http://docs.oracle.com/javase/tutorial/collections/index.html">http://docs.oracle.com/javase/tutorial/collections/index.html</a></li>
+</ul>
+<p>In particular, the ArrayList is discussed here:</p>
+<ul>
+<li><a href="http://docs.oracle.com/javase/tutorial/collections/implementations/list.html">http://docs.oracle.com/javase/tutorial/collections/implementations/list.html</a></li>
+</ul>
+<p>See if you can modify the code to use LinkedList instead of ArrayList. What would be the benefits?</p>
+<h3>Components</h3>
+<p>For many uses, XML has largely been replaced with JSON:</p>
+<ul>
+<li><a href="http://www.json.org/">http://www.json.org/</a></li>
+</ul>
+<p>Which offers some considerable benefits as a simple representation of data structures. The XML library you used in Step 8 also supports JSON.</p>
+<ul>
+<li><a href="http://x-stream.github.io/json-tutorial.html">http://x-stream.github.io/json-tutorial.html</a></li>
+</ul>
+<p>There are only two small changes required to output JSON - which are contained in the first code fragment. The existing xtream jar file will not be sufficient for it to run (although it will compile successfully). Following the instructions for incorporating a jar file in step 8, see if you can import these two libraries here:</p>
+<ul>
+<li><a href="../book-eclipse-and-java/archives/jettison-1.3.8.jar">jettison</a></li>
+<li><a href="../book-eclipse-and-java/archives/stax-1.2.0.jar">stax</a></li>
+</ul>
+<p>If these are part of the build path, then the xstream component should be able to generate json versions of the data structure.</p>
+<h3>Frameworks</h3>
+<p>Rich Client applications are somewhat out of fashion these days, however there is a substantial collection of open source Eclipse RCP applications here:</p>
+<ul>
+<li><a href="http://www.eclipse.org/community/rcpos.php">http://www.eclipse.org/community/rcpos.php</a></li>
+</ul>
+<p>This one here is worth a look:</p>
+<ul>
+<li><a href="http://mytourbook.sourceforge.net/mytourbook/">http://mytourbook.sourceforge.net/mytourbook/</a></li>
+</ul>
+
+            </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(document).on('keydown', function(e) {
+  e = e || window.event;
+  var nextTab;
+  switch (e.which || e.keyCode) {
+    case 37: // left
+      nextTab = $('.tab-menu a[data-tab].active').prev('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').last();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+
+    case 39: // right
+      nextTab = $('.tab-menu a[data-tab].active').next('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').first();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+  }
+});
+
+      $(document).ready(function() {
+  $('img').addClass('ui image');
+
+  $('.ui.embed').embed();
+
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass(
+        'ui basic segment',
+      );
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass(
+        'ui blue ribbon label',
+      );
+      divLabel.append($images[i].alt);
+      $(divLabel).insertBefore($images[i]);
+    }
+  });
+
+  $('.ui.menu .item').tab({
+    history: true,
+    historyType: 'hash',
+  });
+
+  $('.popup').popup();
+
+  $('.ui.sidebar')
+    .sidebar({ context: $('.pushable') })
+    .sidebar('setting', 'transition', 'slide out')
+    .sidebar('attach events', '#toc');
+});
+
+    </script>
+  </body>
+</html>
