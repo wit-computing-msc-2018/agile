@@ -1,0 +1,640 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/css/uikit.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit-icons.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css"/>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+  <style>
+    
+
+body {
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+  font-size:90%;
+  color: black;
+}
+
+p {
+  margin: 0.5em;
+}
+
+pre code {
+  font-family: "Monaco";
+  font-size: 100%;
+}
+
+img {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin:10px;
+}
+
+h1, h2, h3 {
+  border-bottom:thin solid black;
+  margin-bottom: 0.5em;
+  margin-top: 1em;
+}
+
+h1 {
+  font-style:italic;
+  font-size:130%;
+}
+
+h2 {
+  font-size:110%;
+}
+
+h3 {
+  font-size:100%;
+}
+
+
+
+  </style>
+
+  <body class="lab">
+
+    
+  <div class="uk-offcanvas-content">
+    <div id="offcanvas-usage" uk-offcanvas>
+      <div class="uk-offcanvas-bar">
+        <button class="uk-offcanvas-close" type="button" uk-close></button>
+        <ul class="uk-nav">
+          
+            
+              <li>
+                <a class="item" href="https://wit-computing-msc-2018.github.io/agile//topic01-paradigms-and-languages/book-eclipse-and-java/index.html">
+  <i class="fas fa-flask " style="color:#00BCD4"> </i>
+Lab-01 Eclipse & Java
+                </a>
+              </li>
+            
+          
+            
+              <li>
+                <a class="item" href="https://wit-computing-msc-2018.github.io/agile//topic02-java-language/book-cli-and-classes/index.html">
+  <i class="fas fa-flask " style="color:#00BCD4"> </i>
+Lab-02 CLI & Classes
+                </a>
+              </li>
+            
+          
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+    <div uk-sticky>
+      <nav class="uk-navbar">
+        <div class="uk-navbar-left">
+          <ul class="uk-subnav uk-background-secondary uk-subnav-pill">
+            <li><a href="#offcanvas-usage" uk-icon="icon: menu" , uk-toggle title="Switch Lab" pos="bottom"
+                   uk-tooltip></a></li>
+            
+              <li class="uk-active"><a href="../index.html" uk-icon="icon: chevron-up" uk-toggle title="Parent Topic"
+                                     pos="bottom" uk-tooltip>2: The Java Programming Language </a></li>
+            
+          </ul>
+        </div>
+        <div class="uk-navbar-right">
+          <ul class="uk-subnav uk-background-secondary uk-subnav-pill"
+              uk-switcher="connect: .switcher-container">
+            
+              <li><a href="#">Lab-02 CLI & Classes</a></li>
+            
+              <li><a href="#">01</a></li>
+            
+              <li><a href="#">02</a></li>
+            
+              <li><a href="#">03</a></li>
+            
+              <li><a href="#">04</a></li>
+            
+              <li><a href="#">05</a></li>
+            
+              <li><a href="#">06</a></li>
+            
+              <li><a href="#">Exercises</a></li>
+            
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="uk-container uk-container-expand">
+      <ul class="uk-switcher switcher-container">
+        
+          <li> <h1>Objectives</h1>
+<p>Evolve the application developed in lab01 into a simple command line app. Incorporate commands for creating, deleting and listing users. Explore List, ArrayList, Map, HashMap in this context and introduce the guava and cliche libraries.</p>
+</li>
+        
+          <li> <h1>Setup</h1>
+<p>You should have a project from lab01 looking something like this:</p>
+<p><img src="./img/00.png" alt=""></p>
+<p>This is an archive of the project, should you need it:</p>
+<ul>
+<li><a href="https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V1.0">https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V1.0</a></li>
+</ul>
+<p>Just import the application into eclipse (and run it to ensure all is ok on your build).</p>
+</li>
+        
+          <li> <h1>Command Line Skeleton</h1>
+<p>We would like to create a small application to experiment with our User class.</p>
+<p>Firsy, we need two components/libraries which will expidite some of the more mundane tasks. These are:</p>
+<ul>
+<li><a href="https://code.google.com/p/cliche/">https://code.google.com/p/cliche/</a></li>
+<li><a href="https://code.google.com/p/guava-libraries/">https://code.google.com/p/guava-libraries/</a></li>
+</ul>
+<p>Locate the jar file from each of these projects, download and incorporate into your eclipse project. The jars can be located here:</p>
+<ul>
+<li><a href="https://code.google.com/archive/p/cliche/downloads">https://code.google.com/archive/p/cliche/downloads</a></li>
+<li><a href="https://github.com/google/guava/wiki/Release23">https://github.com/google/guava/wiki/Release23</a></li>
+</ul>
+<p>Use the guide on importing the xstream component in last week to help in the steps needed in Eclipse.</p>
+<p>Your project should look something like this if the import has gone successfully.</p>
+<p><img src="./img/01.png" alt=""></p>
+<p>Open Main.java, and replace its contents with the following:</p>
+<pre><code class="lang-java">package controllers;
+
+import java.io.IOException;
+import asg.cliche.Command;
+import asg.cliche.Shell;
+import asg.cliche.ShellFactory;
+
+public class Main
+{
+  @Command(description=&quot;Create a new User&quot;)
+  public void createUser (String firstName,  String lastName, 
+                          String email,      String password)
+  {
+  }
+
+  @Command(description=&quot;Get a Users details&quot;)
+  public void getUser (String email)
+  {
+
+  }
+
+  @Command(description=&quot;Get all users details&quot;)
+  public void getUsers ()
+  {
+
+  }
+
+  @Command(description=&quot;Delete a User&quot;)
+  public void deleteUser (String email)
+  {
+  }
+
+  public static void main(String[] args) throws IOException
+  {
+    Shell shell = ShellFactory.createConsoleShell(&quot;pc&quot;, &quot;Welcome to pacemaker-console - ?help for instructions&quot;, new Main());
+    shell.commandLoop(); 
+  }
+}</code></pre>
+<p>Run this application now, and explore the various commands (start with ?help, then ?la).</p>
+<p>We can annotate the parameters, to provide more information for the user:</p>
+<pre><code class="lang-java">  @Command(description=&quot;Create a new User&quot;)
+  public void createUser (@Param(name=&quot;first name&quot;) String firstName, @Param(name=&quot;last name&quot;) String lastName, 
+                          @Param(name=&quot;email&quot;)      String email,     @Param(name=&quot;password&quot;)  String password)
+  {
+  }
+
+  @Command(description=&quot;Get a Users details&quot;)
+  public void getUser (@Param(name=&quot;email&quot;) String email)
+  {
+
+  }
+
+  @Command(description=&quot;Get all users details&quot;)
+  public void getUsers ()
+  {
+
+  }
+
+  @Command(description=&quot;Delete a User&quot;)
+  public void deleteUser (@Param(name=&quot;email&quot;) String email)
+  {
+  }</code></pre>
+<p>The following import will need to be included, for it to compile.  See if you can generate the import using the auto-correct feature of eclipse:</p>
+<pre><code class="lang-java">import asg.cliche.Param;</code></pre>
+<p>Run this application again and verify that the additional information is displayed.</p>
+</li>
+        
+          <li> <h1>Users Feature</h1>
+<p>In the controllers package, create new class called &quot;PacemakerAPI&quot;, containing the following:</p>
+<pre><code class="lang-java">package controllers;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import models.User;
+
+public class PacemakerAPI
+{
+  private List &lt;User&gt; users = new ArrayList&lt;User&gt;();
+
+  public List&lt;User&gt; getUsers ()
+  {
+    return users;
+  }
+
+  public  void deleteUsers() 
+  {
+    users.clear();
+  }
+
+  public User createUser(String firstName, String lastName, String email, String password) 
+  {
+    User user = new User (firstName, lastName, email, password);
+    users.add(user);
+    return user;
+  }
+
+  public User getUser(String email) 
+  {
+    for (User user : users)
+    {
+      if (email.equals(user.email))
+        return user;
+    }
+    return null;
+  }
+
+  public void deleteUser(String email) 
+  {
+    User foundUser = null;
+    for (User user : users)
+    {
+      if (email.equals(user.email))
+        foundUser = user;
+    }
+    if (foundUser != null)
+    {
+      users.remove(foundUser);
+    }
+  }
+}</code></pre>
+<p>Read this class carefully - making sure you understand each method.</p>
+<p>We will now rework Main to use this class to allow us to interact with the Users list:</p>
+<pre><code class="lang-java">package controllers;
+
+public class Main
+{
+  PacemakerAPI paceApi = new PacemakerAPI();
+
+  @Command(description=&quot;Create a new User&quot;)
+  public void createUser (@Param(name=&quot;first name&quot;) String firstName, @Param(name=&quot;last name&quot;) String lastName, 
+                          @Param(name=&quot;email&quot;)      String email,     @Param(name=&quot;password&quot;)  String password)
+  {
+    paceApi.createUser(firstName, lastName, email, password);
+  }
+
+  @Command(description=&quot;Get a Users details&quot;)
+  public void getUser (@Param(name=&quot;email&quot;) String email)
+  {
+    User user = paceApi.getUser(email);
+    System.out.println(user);
+  }
+
+  @Command(description=&quot;Get all users details&quot;)
+  public void getUsers ()
+  {
+    List&lt;User&gt; users = paceApi.getUsers();
+    System.out.println(users);
+  }
+
+  @Command(description=&quot;Delete a User&quot;)
+  public void deleteUser (@Param(name=&quot;email&quot;) String email)
+  {
+    paceApi.deleteUser(email);
+  }
+
+  public static void main(String[] args) throws IOException
+  {
+    Shell shell = ShellFactory.createConsoleShell(&quot;pc&quot;, &quot;Welcome to pcemaker-console - ?help for instructions&quot;, new Main());
+    shell.commandLoop(); 
+  }
+}</code></pre>
+<p>Again, this code will show numerous errors - all a result of accessing classes not imported. See if you can use autocorrect to import all the necessary references.  Note that &#39;List&#39; comes from the java.util library. </p>
+<p>Run the program - and verify that each of the commands behave as expected. </p>
+</li>
+        
+          <li> <h1>toString</h1>
+<p>The command line app is a little underwhelming - particular the display of the User objects, which appear as some sort of memory address.</p>
+<p>We can fix this my introducing a &#39;toString&#39; method into the User class:</p>
+<pre><code class="lang-java">  public String toString()
+  {
+    return firstName + &#39; &#39; + lastName +&#39; &#39; +  email +&#39; &#39; +  password; 
+  }</code></pre>
+<p>Run the app again, and verify that you can see the actual user details.</p>
+<h2>Guava Component</h2>
+<p>One of the libraries we imported:</p>
+<ul>
+<li><a href="https://code.google.com/p/guava-libraries/">https://code.google.com/p/guava-libraries/</a></li>
+</ul>
+<p>contains some useful utilities for building toString. Introduce the following import into the top of the User class:</p>
+<pre><code>import static com.google.common.base.MoreObjects.toStringHelper;</code></pre>
+<p>and rewrite toString as follows:</p>
+<pre><code class="lang-java">  public String toString()
+  {
+    return toStringHelper(this).addValue(firstName)
+                               .addValue(lastName)
+                               .addValue(email)   
+                               .addValue(password)                            
+                               .toString();
+  }</code></pre>
+<p>Run the app again, and note the change in how the Users are printed to the command line.</p>
+<p>We should commit this version now before making any more changes. Right click on the project in Package Explore, select Team-&gt;Commit - and fill out the form something like this:</p>
+<p><img src="./img/02.png" alt=""></p>
+<p>The project might look something like this now:</p>
+<p><img src="./img/03.png" alt=""></p>
+<p>See if you can figure out the meaning of the different decorations on the files.</p>
+</li>
+        
+          <li> <h1>Upgrade PacemakerAPI</h1>
+<p>PacemakerAPI currently uses a List data structure. It might make sense to rework this to use a Map - keyed on the email address.</p>
+<p>First, redefine the users collection in PacemakerAPI to be a map (import the libraries in the usual way):</p>
+<pre><code class="lang-java">  private Map&lt;String, User&gt; users = new HashMap&lt;String, User&gt;();</code></pre>
+<p>This will require some changes to the api itself:</p>
+<ul>
+<li>getUsers will now return a collection, not a list, of the user in the map:</li>
+</ul>
+<pre><code class="lang-java">  public Collection&lt;User&gt; getUsers ()
+  {
+    return users.values();
+  }</code></pre>
+<ul>
+<li>putting a user into the collection will be different:</li>
+</ul>
+<pre><code class="lang-java">  public User createUser(String firstName, String lastName, String email, String password) 
+  {
+    User user = new User (firstName, lastName, email, password);
+    users.put(email, user);
+    return user;
+  }</code></pre>
+<ul>
+<li>searching for a user, though, becomes simpler:</li>
+</ul>
+<pre><code class="lang-java">  public User getUser(String email) 
+  {
+    return users.get(email);
+  }</code></pre>
+<ul>
+<li>as does deleteUser:</li>
+</ul>
+<pre><code class="lang-java">  public void deleteUser(String email) 
+  {
+    users.remove(email);
+  }</code></pre>
+<p>There will be an error in Main when these changes are introduced (see if you can fix it).</p>
+<p>Run the app to verify that each of the above commands works as expected.</p>
+<p>Commit these changes with a suitable commit message.</p>
+<p>The creation of the Map is a little verbose:</p>
+<pre><code class="lang-java">  private Map&lt;String, User&gt; users = new HashMap&lt;String, User&gt;();</code></pre>
+<p>Java 7 simplifies this with a new syntax (type inference):</p>
+<pre><code class="lang-java">  private Map&lt;String, User&gt; users = new HashMap&lt;&gt;();</code></pre>
+<p>This eliminates the repetition of the type parameters.</p>
+<p>If we are using maps - it is recommended that the hash functions used be associated with the actual (preferably unique) values in the object to be inserted into the container.</p>
+<p>We should also strengthen the hash associated with the User class, as we are now storing it in a Map. The Guava libraries we have imported provide some guidance and support:</p>
+<ul>
+<li><a href="https://google.github.io/guava/releases/23.0/api/docs/com/google/common/base/Objects.html">https://google.github.io/guava/releases/23.0/api/docs/com/google/common/base/Objects.html</a></li>
+</ul>
+<p>and we can refactor the User to use its hash functions. First, import the requisite class:</p>
+<pre><code class="lang-java">import com.google.common.base.Objects;</code></pre>
+<p>...and then implement the hash function to use our objects attributes:</p>
+<pre><code class="lang-java">  @Override  
+  public int hashCode()  
+  {  
+     return Objects.hashCode(this.lastName, this.firstName, this.email, this.password);  
+  }</code></pre>
+<p>Note the user of the &#39;Override&#39; attribute - discussed here:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/94361/when-do-you-use-javas-override-annotation-and-why">Override</a></li>
+</ul>
+<p>We should also add override to toString:</p>
+<pre><code class="lang-java">  @Override
+  public String toString()
+  {
+    return toStringHelper(this).addValue(firstName)
+                               .addValue(lastName)
+                               .addValue(email)                               
+                               .addValue(password)
+                               .toString();
+  }</code></pre>
+</li>
+        
+          <li> <h1>IDs</h1>
+<p>We might wish to use IDs in addition to emails when referencing our users. The User class can be extended to include these attributes:</p>
+<pre><code class="lang-java">public class User 
+{
+  public static Long   counter = 0l;
+  public Long   id;
+  //...  
+
+  public User(String firstName, String lastName, String email, String password)
+  {
+    this.id        = counter++;
+    //...
+  }</code></pre>
+<p>We can think of the principal users collection as the userIndex, and introduce a separate collection call emailIndex - which stores the same object against a different key for rapid access:</p>
+<pre><code class="lang-java">public class PacemakerAPI
+{
+  private Map&lt;Long, User&gt;     userIndex       = new HashMap&lt;&gt;();
+  private Map&lt;String, User&gt;   emailIndex      = new HashMap&lt;&gt;();
+
+  public Collection&lt;User&gt; getUsers ()
+  {
+    return userIndex.values();
+  }
+
+  public  void deleteUsers() 
+  {
+    userIndex.clear();
+    emailIndex.clear();
+  }
+
+  public User createUser(String firstName, String lastName, String email, String password) 
+  {
+    User user = new User (firstName, lastName, email, password);
+    userIndex.put(user.id, user);
+    emailIndex.put(email, user);
+    return user;
+  }
+
+  public User getUserByEmail(String email) 
+  {
+    return emailIndex.get(email);
+  }
+
+  public User getUser(Long id) 
+  {
+    return userIndex.get(id);
+  }
+
+  public void deleteUser(Long id) 
+  {
+    User user = userIndex.remove(id);
+    emailIndex.remove(user.email);
+  }
+}</code></pre>
+<p>Review the above code - note getUser and deleteUser have been adjusted to use IDs.</p>
+<p>In the Main class, the following two methods will need to be changed to use IDs instead:</p>
+<pre><code class="lang-java">public class Main
+{
+  PacemakerAPI paceApi = new PacemakerAPI();
+
+  @Command(description=&quot;Delete a User&quot;)
+  public void deleteUser (@Param(name=&quot;email&quot;) String email)
+  {
+    User user = paceApi.getUserByEmail(email);
+    paceApi.deleteUser(user.id);
+  }
+
+  @Command(description=&quot;Get a Users details&quot;)
+  public void getUser (@Param(name=&quot;email&quot;) String email)
+  {
+    User user = paceApi.getUserByEmail(email);
+    System.out.println(user);
+  }</code></pre>
+<p>Test this now - and verify that you can create and delete a user. </p>
+<p>Now try to delete a user that does not exist - what happens? This is a classic null pointer exception ...occurring in the delete method above. A well known problem, discussed here:</p>
+<ul>
+<li><a href="http://lambda-the-ultimate.org/node/3186">Billion Dollar Mistake</a></li>
+</ul>
+<p>We could, of course, just checked for it:</p>
+<pre><code class="lang-java">    User user = paceApi.getUserByEmail(email);
+    if (null != user)
+      paceApi.deleteUser(user.id);</code></pre>
+<p>Try this now and verify the absence of the exception.</p>
+<p>The guava library has an interesting take on how to avoid the error:</p>
+<ul>
+<li><a href="https://google.github.io/guava/releases/23.0/api/docs/com/google/common/base/Optional.html">Guava Options</a></li>
+</ul>
+<p>.. and specifically recommends against the above coding style we just adopted. They would propose the following version:</p>
+<pre><code class="lang-java">  @Command(description=&quot;Delete a User&quot;)
+  public void deleteUser (@Param(name=&quot;email&quot;) String email)
+  {
+    Optional&lt;User&gt; user = Optional.fromNullable(paceApi.getUserByEmail(email));
+    if (user.isPresent())
+    {
+      paceApi.deleteUser(user.get().id);
+    }
+  }</code></pre>
+<p>Commit these changes with a suitable message.</p>
+</li>
+        
+          <li> <h1>Exercises</h1>
+<h2>Lab Archive</h2>
+<p>You can find the solution to the previous steps on this github repo (along with a separate solution to these exercises):</p>
+<ul>
+<li><a href="https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V2.0">https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V2.0</a></li>
+</ul>
+<h2>1: New Commands</h2>
+<p>Expand the Main class to include two new commands:</p>
+<ul>
+<li>add-activity: this will add an activity to a specific user.</li>
+<li>add-location: this will add a location (latitude,longitude) to a specific activity.</li>
+</ul>
+<p>If the user enters ?listall in the command prompt, then the should see this:</p>
+<pre><code>cu    create-user    (first name, last name, email, password)
+gu    get-user    (email)
+gu    get-users    ()
+du    delete-user    (email)
+aa    add-activity    (user-id, type, location, distance)
+al    add-location    (activity-id, latitude, longitude)</code></pre>
+<h2>2: New Classes</h2>
+<p>Implementing this will require two new classes:</p>
+<p>Activity consisting of:</p>
+<ul>
+<li>id</li>
+<li>type (string)</li>
+<li>location (string)</li>
+<li>distance (double)</li>
+</ul>
+<p>Location:</p>
+<ul>
+<li>id</li>
+<li>latitude (float)</li>
+<li>longitude (float)</li>
+</ul>
+<p>Model these classes on the structure of the User class - including toString and hash methods.</p>
+<h2>3: Relationships</h2>
+<p>The User class is to have a map of Activities something like this:</p>
+<pre><code class="lang-java">  private Map&lt;Long, Activity&gt; activities = new HashMap&lt;&gt;();</code></pre>
+<p>... and the Activiy class is to have a list of Locations:</p>
+<pre><code class="lang-java">  private List&lt;Location&gt; route = new ArrayList&lt;&gt;();</code></pre>
+<p>... and the PacemakerAPI class should have an map of activities by id:</p>
+<pre><code class="lang-java">  private Map&lt;Long, Activity&gt; activitiesIndex = new HashMap&lt;&gt;();</code></pre>
+<h2>4: Running the App</h2>
+<p>If all goes to plan, a transcript of a session at the command line might look like this:</p>
+<pre><code>Welcome to pcemaker-console - ?help for instructions
+pc&gt; cu homer simpsom homer@simpson.com secret
+pc&gt; gu
+[User{0, homer, simpsom, secret, homer@simpson.com, {}}]
+pc&gt; cu marge simpson marge@simpson.com secret
+pc&gt; gu
+[User{0, homer, simpsom, secret, homer@simpson.com, {}}, User{1, marge, simpson, secret, marge@simpson.com, {}}]
+pc&gt; aa 0 walk fridge .001
+pc&gt; aa 0 walk bar 1.0
+pc&gt; aa 0 run work 2.2
+pc&gt; gu
+[User{0, homer, simpsom, secret, homer@simpson.com, {0=Activity{0, walk, fridge, 0.001, []}, 1=Activity{1, walk, bar, 1.0, []}, 2=Activity{2, run, work, 2.2, []}}}, User{1, marge, simpson, secret, marge@simpson.com, {}}]
+pc&gt; aa 1 walk shop 2.5
+pc&gt; aa 1 cycle shop 4.5
+pc&gt; al 3 23.3 32.3
+pc&gt; al 3 23.3 32.5
+pc&gt; al 3 23.3 32.6
+pc&gt; gu
+[User{0, homer, simpsom, secret, homer@simpson.com, {0=Activity{0, walk, fridge, 0.001, []}, 1=Activity{1, walk, bar, 1.0, []}, 2=Activity{2, run, work, 2.2, []}}}, User{1, marge, simpson, secret, marge@simpson.com, {3=Activity{3, walk, shop, 2.5, [Location{0, 23.3, 32.3}, Location{1, 23.3, 32.5}, Location{2, 23.3, 32.6}]}, 4=Activity{4, cycle, shop, 4.5, []}}}]
+pc&gt;</code></pre>
+<p>just to make it clear, this is a pretty printed version of the final command (you don&#39;t need to progam this):</p>
+<pre><code>pc&gt; gu
+[
+  User{0, homer, simpsom, secret, homer@simpson.com, 
+       { 0=Activity {0, walk, fridge, 0.001, []}, 
+         1=Activity {1, walk, bar, 1.0, []}, 
+         2=Activity {2, run, work, 2.2, []} } }, 
+  User{1, marge, simpson, secret, marge@simpson.com, 
+       { 3=Activity{3, walk, shop, 2.5, 
+               [ Location{0, 23.3, 32.3}, 
+                 Location{1, 23.3, 32.5}, 
+                 Location{2, 23.3, 32.6}]}, 
+         4=Activity{4, cycle, shop, 4.5, []} } } 
+]</code></pre>
+</li>
+        
+      </ul>
+    </div>
+
+    <script>
+      $(document).ready(function() {
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass('');
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass('uk-label uk-text-lowercase');
+      divLabel.append($images[i].alt);
+      $(divLabel).insertAfter($images[i]);
+      $('<br>').insertAfter($images[i]);
+    }
+  });
+});
+
+    </script>
+  </body>
+</html>
