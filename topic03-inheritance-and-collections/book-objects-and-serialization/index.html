@@ -68,7 +68,7 @@ h3 {
       <header class="header item">
         <i id="toc" class="sitemap icon"></i>
         
-          <a href="../index.html"> 3: Inheritance & Collections  </a>
+          <a href="../index.html"> 3: Inheritance & Collections  </a>
         
       </header>
       <div class="right tab-menu menu">
@@ -343,7 +343,15 @@ pc&gt;</code></pre>
     ObjectInputStream is = null;
     try
     {
+      //set up an array of classes that can be loaded.
+      Class&lt;?&gt;[] classes = new Class[] { User.class, Activity.class, Location.class };
+
       XStream xstream = new XStream(new DomDriver());
+
+      //set up permissions for loading via xstream
+      XStream.setupDefaultSecurity(xstream);
+      xstream.allowTypes(classes);
+
       is = xstream.createObjectInputStream(new FileReader(file));
       userIndex       = (Map&lt;Long, User&gt;)     is.readObject();
       emailIndex      = (Map&lt;String, User&gt;)   is.readObject();
@@ -826,6 +834,40 @@ pm&gt;</code></pre>
 <pre><code class="lang-java">      stack = (Stack) is.readObject();</code></pre>
 <p>This produces a different serialization - with objects shared via references. You can see this more easily from the structural view:</p>
 <p><img src="img/02.png" alt=""></p>
+<h2>XStream security warning</h2>
+<p>You may be getting the following warning  when you start the console...</p>
+<pre><code>Security framework of XStream not initialized, XStream is probably vulnerable.
+
+Welcome to pacemaker-console - ?help for instructions
+pm&gt;</code></pre>
+<p>You can suppress the warning by retrofitting the read method in the XMLSerializer class with the following code:</p>
+<pre><code class="lang-java">  @SuppressWarnings(&quot;unchecked&quot;)
+  public void read() throws Exception
+  {
+    ObjectInputStream is = null;
+
+    try
+    {
+      //set up an array of classes that can be loaded.
+      Class&lt;?&gt;[] classes = new Class[] { models.User.class, models.Activity.class, models.Location.class };
+
+      XStream xstream = new XStream(new DomDriver());
+
+      //set up permissions for loading via xstream
+      XStream.setupDefaultSecurity(xstream);
+      xstream.allowTypes(classes);    
+
+      is = xstream.createObjectInputStream(new FileReader(file));
+      stack = (Stack) is.readObject();
+    }
+    finally
+    {
+      if (is != null)
+      {
+        is.close();
+      }
+    }
+  }</code></pre>
 
             </div>
           
@@ -833,7 +875,7 @@ pm&gt;</code></pre>
               <h1>Exercises</h1>
 <h2>Archive of project so far...</h2>
 <ul>
-<li><a href="https://github.com/wit-computing-msc-2017/pacemaker-console/releases/tag/lab03">https://github.com/wit-computing-msc-2017/pacemaker-console/releases/tag/lab03</a></li>
+<li><a href="https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V3.0">https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V3.0</a></li>
 </ul>
 <h2>Alternative Serializers</h2>
 <p>We have taken some time to abstract the serialization mechanism. This should enable us to introduce new serializers to adhere to alternative formats. Write two new serializers which support the following formats:</p>
@@ -846,6 +888,10 @@ pm&gt;</code></pre>
 <li><a href="http://x-stream.github.io/json-tutorial.html">http://x-stream.github.io/json-tutorial.html</a></li>
 </ul>
 <p>A Binary serializer can be written just using the native streams in the JDK. </p>
+<p>The solution to the alternative serializers can be found here:</p>
+<ul>
+<li><a href="https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V3.0">https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V3.0</a></li>
+</ul>
 <h2>Features</h2>
 <p>Run your app, or the solution made available above and list all commands:</p>
 <pre><code>!la</code></pre>
