@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <style>
+      
+
+body {
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+  font-size:90%;
+  color: black;
+}
+
+p {
+  margin: 0.5em;
+}
+
+pre code {
+  font-family: "Monaco";
+  font-size: 100%;
+}
+
+img {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin:10px;
+}
+
+h1, h2, h3 {
+  border-bottom:thin solid black;
+  margin-bottom: 0.5em;
+  margin-top: 1em;
+}
+
+h1 {
+  font-style:italic;
+  font-size:130%;
+}
+
+h2 {
+  font-size:110%;
+}
+
+h3 {
+  font-size:100%;
+}
+
+
+
+    </style>
+  </head>
+
+  <body>
+    
+    
+
+    <div class="ui fixed top pointing inverted stackable menu labmenu">
+      <header class="header item">
+        <i id="toc" class="sitemap icon"></i>
+        
+          <a href="../index.html"> 3: Inheritance & Collections  </a>
+        
+      </header>
+      <div class="right tab-menu menu">
+        
+          <a class="item" data-tab="Lab-03 Objects & Serialization">
+            Lab-03 Objects & Serialization
+          </a>
+        
+          <a class="item" data-tab="01">
+            01
+          </a>
+        
+          <a class="item" data-tab="02">
+            02
+          </a>
+        
+          <a class="item" data-tab="03">
+            03
+          </a>
+        
+          <a class="item" data-tab="04">
+            04
+          </a>
+        
+          <a class="item" data-tab="05">
+            05
+          </a>
+        
+          <a class="item" data-tab="Exercises">
+            Exercises
+          </a>
+        
+      </div>
+    </div>
+
+    <div class="ui segment pushable">
+      <div class="ui inverted labeled icon left inline vertical sidebar menu">
+        <br><br>
+        
+          
+            <a class="item" href="../../topic01-paradigms-and-languages/book-eclipse-and-java/index.html">
+              Lab-01 Eclipse & Java
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic02-java-language/book-cli-and-classes/index.html">
+              Lab-02 CLI & Classes
+            </a>
+          
+        
+          
+            <a class="active item" href="../../topic03-inheritance-and-collections/book-objects-and-serialization/index.html">
+              Lab-03 Objects & Serialization
+            </a>
+          
+        
+      </div>
+      <div class="pusher" tabindex="-1">
+        <div class="ui basic segment" id="labchat">
+          <br>
+          
+            <div  class="ui tab segment lab" data-tab="Lab-03 Objects & Serialization">
+              <h1>Objectives</h1>
+<p>Extend the pacemaker application to include Activity and Location classes + associated commands. Once these are in place, incorporate a serialization mechanism to enable users &amp; activities to be persisted to a file. We will then try to generalize this mechanism, which will enable us to experiment with alternative serialization formats.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="01">
+              <h1>Activity &amp; Location classes</h1>
+<p>These are solution classes to last weeks exercises:</p>
+<h3>Activity</h3>
+<pre><code class="lang-java">package models;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.common.base.Objects;
+
+public class Activity 
+{ 
+  static Long   counter = 0l;
+
+  public Long   id;
+
+  public String type;
+  public String location;
+  public double distance;
+
+  public List&lt;Location&gt; route = new ArrayList&lt;&gt;();
+
+  public Activity()
+  {
+  }
+
+  public Activity(String type, String location, double distance)
+  {
+    this.id        = counter++;
+    this.type      = type;
+    this.location  = location;
+    this.distance  = distance;
+  }
+
+  @Override
+  public String toString()
+  {
+    return toStringHelper(this).addValue(id)
+                               .addValue(type)
+                               .addValue(location)
+                               .addValue(distance)
+                               .addValue(route)
+                               .toString();
+  }
+
+  @Override  
+  public int hashCode()  
+  {  
+     return Objects.hashCode(this.id, this.type, this.location, this.distance);  
+  } 
+}</code></pre>
+<h3>Location</h3>
+<pre><code class="lang-java">package models;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
+
+import com.google.common.base.Objects;
+
+public class Location
+{
+  static Long   counter = 0l;
+
+  public Long  id;
+  public float latitude;
+  public float longitude;
+
+  public Location()
+  {
+  }
+
+  public Location (float latitude, float longitude)
+  {
+    this.id        = counter++;
+    this.latitude  = latitude;
+    this.longitude = longitude;
+  }
+
+  @Override
+  public String toString()
+  {
+    return toStringHelper(this).addValue(id)
+                               .addValue(latitude)
+                               .addValue(longitude)                              
+                               .toString();
+  }
+
+  @Override  
+  public int hashCode()  
+  {  
+     return Objects.hashCode(this.id, this.latitude, this.longitude);  
+  } 
+}</code></pre>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="02">
+              <h2>API + Commands</h2>
+<p>These are the new features for PacemakerAPI</p>
+<pre><code class="lang-java">  public void createActivity(Long id, String type, String location, double distance)
+  {
+    Activity activity = new Activity (type, location, distance);
+    Optional&lt;User&gt; user = Optional.fromNullable(userIndex.get(id));
+    if (user.isPresent())
+    {
+      user.get().activities.put(activity.id, activity);
+      activitiesIndex.put(activity.id, activity);
+    }
+  }
+
+  public Activity getActivity (Long id)
+  {
+    return activitiesIndex.get(id);
+  }
+
+  public void addLocation (Long id, float latitude, float longitude)
+  {
+    Optional&lt;Activity&gt; activity = Optional.fromNullable(activitiesIndex.get(id));
+    if (activity.isPresent())
+    {
+      activity.get().route.add(new Location(latitude, longitude));
+    }
+  }</code></pre>
+<p>...and these are the new command implementations:</p>
+<pre><code class="lang-java">  @Command(description=&quot;Add an activity&quot;)
+  public void addActivity (@Param(name=&quot;user-id&quot;)  Long   id,       @Param(name=&quot;type&quot;) String type, 
+                           @Param(name=&quot;location&quot;) String location, @Param(name=&quot;distance&quot;) double distance)
+  {
+    Optional&lt;User&gt; user = Optional.fromNullable(paceApi.getUser(id));
+    if (user.isPresent())
+    {
+      paceApi.createActivity(id, type, location, distance);
+    }
+  }
+
+  @Command(description=&quot;Add Location to an activity&quot;)
+  public void addLocation (@Param(name=&quot;activity-id&quot;)  Long  id,   
+                           @Param(name=&quot;latitude&quot;)     float latitude, @Param(name=&quot;longitude&quot;) float longitude)
+  {
+    Optional&lt;Activity&gt; activity = Optional.fromNullable(paceApi.getActivity(id));
+    if (activity.isPresent())
+    {
+      paceApi.addLocation(activity.get().id, latitude, longitude);
+    }
+  }</code></pre>
+<p>The above code uses a feature of the Guava library that we have not explained yet in class. This is the `Optional&#39; class:</p>
+<ul>
+<li><a href="https://github.com/google/guava/wiki/UsingAndAvoidingNullExplained">https://github.com/google/guava/wiki/UsingAndAvoidingNullExplained</a></li>
+</ul>
+<p>This is a utility that helps our code avoid the possibility of Null Pointer Violations. We will discuss this in detail is a future class.</p>
+<p>Try these out now. The command shell we are using has a facility for running a script - the `!rs&#39; command. So, if you save this file somewhere as &#39;test.script&#39;:</p>
+<pre><code>cu homer simpsom homer@simpson.com secret
+cu marge simpson marge@simpson.com secret
+aa 0 walk fridge .001
+aa 0 walk bar 1.0
+aa 0 run work 2.2
+aa 1 walk shop 2.5
+aa 1 cycle shop 4.5
+al 3 23.3 32.3
+al 3 23.3 32.5
+al 3 23.3 32.6</code></pre>
+<p>and then run it:</p>
+<pre><code>Welcome to pcemaker-console - ?help for instructions
+pc&gt; !rs test.script
+pc$ pc$ pc$ pc$ pc$ pc$ pc$ pc$ pc$ pc$ pc&gt; gu
+[User{0, homer, simpsom, secret, homer@simpson.com, {0=Activity{0, walk, fridge, 0.001, []}, 1=Activity{1, walk, bar, 1.0, []}, 2=Activity{2, run, work, 2.2, []}}}, User{1, marge, simpson, secret, marge@simpson.com, {3=Activity{3, walk, shop, 2.5, [Location{0, 23.3, 32.3}, Location{1, 23.3, 32.5}, Location{2, 23.3, 32.6}]}, 4=Activity{4, cycle, shop, 4.5, []}}}]
+pc&gt;</code></pre>
+<p>Commit these changes with a suitable message</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="03">
+              <h2>Serialization</h2>
+<p>We would like our system to remember our user and activity data between sessions. In lab 1 we explored the xstream component briefly. We will reuse it here to save the entire model on exit from the application, and reload on startup.</p>
+<p>Here is a refactoring of the main method to bring in load/store to the application life cycle:</p>
+<pre><code class="lang-java">  public static void main(String[] args) throws Exception
+  {
+    Main main = new Main();
+
+    File  datastore = new File(&quot;datastore.xml&quot;);
+    if (datastore.isFile())
+    {
+      main.paceApi.load(datastore);
+    }
+
+    Shell shell = ShellFactory.createConsoleShell(&quot;pm&quot;, &quot;Welcome to pacemaker-console - ?help for instructions&quot;, main);
+    shell.commandLoop();
+
+    main.paceApi.store(datastore);
+  }</code></pre>
+<p>In the above main method, we check to see if the file &#39;datastore.xml&#39; exists. If so, we attempt to load a model from it. If not, we proceed with a blank model.</p>
+<p>On exit (i.e. when &#39;exit&#39; is typed from the console) we ask the model to store itself. </p>
+<p>Thus we need two new methods in PacemakerApi:</p>
+<ul>
+<li>load</li>
+<li>store</li>
+</ul>
+<p>Here they are:</p>
+<pre><code class="lang-java">  @SuppressWarnings(&quot;unchecked&quot;)
+  public void load(File file) throws Exception
+  {
+    ObjectInputStream is = null;
+    try
+    {
+      XStream xstream = new XStream(new DomDriver());
+      is = xstream.createObjectInputStream(new FileReader(file));
+      userIndex       = (Map&lt;Long, User&gt;)     is.readObject();
+      emailIndex      = (Map&lt;String, User&gt;)   is.readObject();
+      activitiesIndex = (Map&lt;Long, Activity&gt;) is.readObject();
+    }
+    catch(EOFException e) 
+    {
+    }
+    finally
+    {
+      if (is != null)
+      {
+        is.close();
+      }
+    }
+  }
+
+  public void store(File file) throws Exception
+  {
+    XStream xstream = new XStream(new DomDriver());
+    ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter(file));
+    out.writeObject(userIndex);
+    out.writeObject(emailIndex);
+    out.writeObject(activitiesIndex);
+    out.close(); 
+  }</code></pre>
+<p>Take some time to read these now - and try them out.</p>
+<p>In particular, see if you can locate the &#39;datastore.xml&#39; file after the app has exited. You will need to &#39;refresh&#39; your workspace for it to appear in eclipse project explorer.</p>
+<p>If all goes to plan, and say you run the script we explored earlier, then in eclipse you should be able to examine the datastore file in an xml editor. It could look like this:</p>
+<p><img src="img/00.png" alt=""></p>
+<p>Commit these changes with a suitable message</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="04">
+              <h2>Generalizing the Serializer</h2>
+<p>We have implemnted an xstream based serialization of our model. However, we may be interested in revising this later, selecting a different format or even a different serialisation component. Lets try to abstract the serializer feature a little so we can prepare for such a switch.</p>
+<p>First, introduce into the utils package a new interface:</p>
+<pre><code class="lang-java">package utils;
+
+public interface Serializer
+{
+  void push(Object o);
+  Object pop();
+  void write() throws Exception;
+  void read() throws Exception;
+}</code></pre>
+<p>... and then an implementation of this interface, using the xtream library we have been using:</p>
+<pre><code class="lang-java">package utils;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Stack;
+
+public class XMLSerializer implements Serializer
+{
+
+  private Stack stack = new Stack();
+  private File file;
+
+  public XMLSerializer(File file)
+  {
+    this.file = file;
+  }
+
+  public void push(Object o)
+  {
+    stack.push(o);
+  }
+
+  public Object pop()
+  {
+    return stack.pop(); 
+  }
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  public void read() throws Exception
+  {
+    ObjectInputStream is = null;
+
+    try
+    {
+      XStream xstream = new XStream(new DomDriver());
+      is = xstream.createObjectInputStream(new FileReader(file));
+      Object obj = is.readObject();
+      while (obj != null)
+      {
+        stack.push(obj);
+        obj = is.readObject();
+      }
+    }
+    finally
+    {
+      if (is != null)
+      {
+        is.close();
+      }
+    }
+  }
+
+  public void write() throws Exception
+  {
+    ObjectOutputStream os = null;
+
+    try
+    {
+      XStream xstream = new XStream(new DomDriver());
+      os = xstream.createObjectOutputStream(new FileWriter(file));
+      while (!stack.empty())
+      {
+        os.writeObject(stack.pop());  
+      }
+    }
+    finally
+    {
+      if (os != null)
+      {
+        os.close();
+      }
+    }
+  }
+}</code></pre>
+<p>Now rework the Main class to attempt to load from the datastore in a constructor for Main:</p>
+<pre><code class="lang-java">  public Main() throws Exception
+  {
+    File  datastore = new File(&quot;datastore.xml&quot;);
+    Serializer serializer = new XMLSerializer(datastore);
+
+    paceApi = new PacemakerAPI(serializer);
+    if (datastore.isFile())
+    {
+      paceApi.load();
+    }
+  }</code></pre>
+<p>Note that we only load if there is a file is available. The main method can then be simplified:</p>
+<pre><code class="lang-java">  public static void main(String[] args) throws Exception
+  {
+    Main main = new Main();
+
+    Shell shell = ShellFactory.createConsoleShell(&quot;pm&quot;, &quot;Welcome to pacemaker-console - ?help for instructions&quot;, main);
+    shell.commandLoop();
+
+    main.paceApi.store();
+  }</code></pre>
+<p>Finally, our PacemakerAPI class can now make use of the serializer instead of getting involved in the work of serialization itself:</p>
+<pre><code class="lang-java">public class PacemakerAPI
+{
+  //...
+
+  private Serializer serializer;
+
+  public PacemakerAPI(Serializer serializer)
+  {
+    this.serializer = serializer;
+  }
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  public void load() throws Exception
+  {
+    serializer.read();
+    activitiesIndex = (Map&lt;Long, Activity&gt;) serializer.pop();
+    emailIndex      = (Map&lt;String, User&gt;)   serializer.pop();
+    userIndex       = (Map&lt;Long, User&gt;)     serializer.pop();
+  }
+
+  public void store() throws Exception
+  {
+    serializer.push(userIndex);
+    serializer.push(emailIndex);
+    serializer.push(activitiesIndex);
+    serializer.write(); 
+  }
+  //...
+}</code></pre>
+<p>You will notice that you have a lot of import warnings; remove any unused imports.</p>
+<p>If you have an existing datastore.xml file in your project, delete this.  </p>
+<p>You should be in a position now to test. Remember, if you have a script file like this:</p>
+<pre><code>cu homer simpsom homer@simpson.com secret
+cu marge simpson marge@simpson.com secret
+aa 0 walk fridge .001
+aa 0 walk bar 1.0
+aa 0 run work 2.2
+aa 1 walk shop 2.5
+aa 1 cycle shop 4.5
+al 3 23.3 32.3
+al 3 23.3 32.5
+al 3 23.3 32.6</code></pre>
+<p>Then you can just run this script using the !rs command, and the &#39;gu&#39; command should print the model:</p>
+<pre><code>Welcome to pacemaker-console - ?help for instructions
+pm&gt; !rs test.script
+pm$ pm$ pm$ pm$ pm$ pm$ pm$ pm$ pm$ pm$ pm&gt; gu
+[User{0, homer, simpsom, secret, homer@simpson.com, {0=Activity{0, walk, fridge, 0.001, []}, 1=Activity{1, walk, bar, 1.0, []}, 2=Activity{2, run, work, 2.2, []}}}, User{1, marge, simpson, secret, marge@simpson.com, {3=Activity{3, walk, shop, 2.5, [Location{0, 23.3, 32.3}, Location{1, 23.3, 32.5}, Location{2, 23.3, 32.6}]}, 4=Activity{4, cycle, shop, 4.5, []}}}]
+pm&gt;</code></pre>
+<p>The above session will generate the following xml file:</p>
+<pre><code class="lang-xml">&lt;object-stream&gt;
+  &lt;map&gt;
+    &lt;entry&gt;
+      &lt;long&gt;0&lt;/long&gt;
+      &lt;models.Activity&gt;
+        &lt;id&gt;0&lt;/id&gt;
+        &lt;type&gt;walk&lt;/type&gt;
+        &lt;location&gt;fridge&lt;/location&gt;
+        &lt;distance&gt;0.001&lt;/distance&gt;
+        &lt;route/&gt;
+      &lt;/models.Activity&gt;
+    &lt;/entry&gt;
+    &lt;entry&gt;
+      &lt;long&gt;1&lt;/long&gt;
+      &lt;models.Activity&gt;
+        &lt;id&gt;1&lt;/id&gt;
+        &lt;type&gt;walk&lt;/type&gt;
+        &lt;location&gt;bar&lt;/location&gt;
+        &lt;distance&gt;1.0&lt;/distance&gt;
+        &lt;route/&gt;
+      &lt;/models.Activity&gt;
+    &lt;/entry&gt;
+    &lt;entry&gt;
+      &lt;long&gt;2&lt;/long&gt;
+      &lt;models.Activity&gt;
+        &lt;id&gt;2&lt;/id&gt;
+        &lt;type&gt;run&lt;/type&gt;
+        &lt;location&gt;work&lt;/location&gt;
+        &lt;distance&gt;2.2&lt;/distance&gt;
+        &lt;route/&gt;
+      &lt;/models.Activity&gt;
+    &lt;/entry&gt;
+    &lt;entry&gt;
+      &lt;long&gt;3&lt;/long&gt;
+      &lt;models.Activity&gt;
+        &lt;id&gt;3&lt;/id&gt;
+        &lt;type&gt;walk&lt;/type&gt;
+        &lt;location&gt;shop&lt;/location&gt;
+        &lt;distance&gt;2.5&lt;/distance&gt;
+        &lt;route&gt;
+          &lt;models.Location&gt;
+            &lt;id&gt;0&lt;/id&gt;
+            &lt;latitude&gt;23.3&lt;/latitude&gt;
+            &lt;longitude&gt;32.3&lt;/longitude&gt;
+          &lt;/models.Location&gt;
+          &lt;models.Location&gt;
+            &lt;id&gt;1&lt;/id&gt;
+            &lt;latitude&gt;23.3&lt;/latitude&gt;
+            &lt;longitude&gt;32.5&lt;/longitude&gt;
+          &lt;/models.Location&gt;
+          &lt;models.Location&gt;
+            &lt;id&gt;2&lt;/id&gt;
+            &lt;latitude&gt;23.3&lt;/latitude&gt;
+            &lt;longitude&gt;32.6&lt;/longitude&gt;
+          &lt;/models.Location&gt;
+        &lt;/route&gt;
+      &lt;/models.Activity&gt;
+    &lt;/entry&gt;
+    &lt;entry&gt;
+      &lt;long&gt;4&lt;/long&gt;
+      &lt;models.Activity&gt;
+        &lt;id&gt;4&lt;/id&gt;
+        &lt;type&gt;cycle&lt;/type&gt;
+        &lt;location&gt;shop&lt;/location&gt;
+        &lt;distance&gt;4.5&lt;/distance&gt;
+        &lt;route/&gt;
+      &lt;/models.Activity&gt;
+    &lt;/entry&gt;
+  &lt;/map&gt;
+  &lt;map&gt;
+    &lt;entry&gt;
+      &lt;string&gt;homer@simpson.com&lt;/string&gt;
+      &lt;models.User&gt;
+        &lt;id&gt;0&lt;/id&gt;
+        &lt;firstName&gt;homer&lt;/firstName&gt;
+        &lt;lastName&gt;simpsom&lt;/lastName&gt;
+        &lt;email&gt;homer@simpson.com&lt;/email&gt;
+        &lt;password&gt;secret&lt;/password&gt;
+        &lt;activities&gt;
+          &lt;entry&gt;
+            &lt;long&gt;0&lt;/long&gt;
+            &lt;models.Activity&gt;
+              &lt;id&gt;0&lt;/id&gt;
+              &lt;type&gt;walk&lt;/type&gt;
+              &lt;location&gt;fridge&lt;/location&gt;
+              &lt;distance&gt;0.001&lt;/distance&gt;
+              &lt;route/&gt;
+            &lt;/models.Activity&gt;
+          &lt;/entry&gt;
+          &lt;entry&gt;
+            &lt;long&gt;1&lt;/long&gt;
+            &lt;models.Activity&gt;
+              &lt;id&gt;1&lt;/id&gt;
+              &lt;type&gt;walk&lt;/type&gt;
+              &lt;location&gt;bar&lt;/location&gt;
+              &lt;distance&gt;1.0&lt;/distance&gt;
+              &lt;route/&gt;
+            &lt;/models.Activity&gt;
+          &lt;/entry&gt;
+          &lt;entry&gt;
+            &lt;long&gt;2&lt;/long&gt;
+            &lt;models.Activity&gt;
+              &lt;id&gt;2&lt;/id&gt;
+              &lt;type&gt;run&lt;/type&gt;
+              &lt;location&gt;work&lt;/location&gt;
+              &lt;distance&gt;2.2&lt;/distance&gt;
+              &lt;route/&gt;
+            &lt;/models.Activity&gt;
+          &lt;/entry&gt;
+        &lt;/activities&gt;
+      &lt;/models.User&gt;
+    &lt;/entry&gt;
+    &lt;entry&gt;
+      &lt;string&gt;marge@simpson.com&lt;/string&gt;
+      &lt;models.User&gt;
+        &lt;id&gt;1&lt;/id&gt;
+        &lt;firstName&gt;marge&lt;/firstName&gt;
+        &lt;lastName&gt;simpson&lt;/lastName&gt;
+        &lt;email&gt;marge@simpson.com&lt;/email&gt;
+        &lt;password&gt;secret&lt;/password&gt;
+        &lt;activities&gt;
+          &lt;entry&gt;
+            &lt;long&gt;3&lt;/long&gt;
+            &lt;models.Activity&gt;
+              &lt;id&gt;3&lt;/id&gt;
+              &lt;type&gt;walk&lt;/type&gt;
+              &lt;location&gt;shop&lt;/location&gt;
+              &lt;distance&gt;2.5&lt;/distance&gt;
+              &lt;route&gt;
+                &lt;models.Location&gt;
+                  &lt;id&gt;0&lt;/id&gt;
+                  &lt;latitude&gt;23.3&lt;/latitude&gt;
+                  &lt;longitude&gt;32.3&lt;/longitude&gt;
+                &lt;/models.Location&gt;
+                &lt;models.Location&gt;
+                  &lt;id&gt;1&lt;/id&gt;
+                  &lt;latitude&gt;23.3&lt;/latitude&gt;
+                  &lt;longitude&gt;32.5&lt;/longitude&gt;
+                &lt;/models.Location&gt;
+                &lt;models.Location&gt;
+                  &lt;id&gt;2&lt;/id&gt;
+                  &lt;latitude&gt;23.3&lt;/latitude&gt;
+                  &lt;longitude&gt;32.6&lt;/longitude&gt;
+                &lt;/models.Location&gt;
+              &lt;/route&gt;
+            &lt;/models.Activity&gt;
+          &lt;/entry&gt;
+          &lt;entry&gt;
+            &lt;long&gt;4&lt;/long&gt;
+            &lt;models.Activity&gt;
+              &lt;id&gt;4&lt;/id&gt;
+              &lt;type&gt;cycle&lt;/type&gt;
+              &lt;location&gt;shop&lt;/location&gt;
+              &lt;distance&gt;4.5&lt;/distance&gt;
+              &lt;route/&gt;
+            &lt;/models.Activity&gt;
+          &lt;/entry&gt;
+        &lt;/activities&gt;
+      &lt;/models.User&gt;
+    &lt;/entry&gt;
+  &lt;/map&gt;
+  &lt;map&gt;
+    &lt;entry&gt;
+      &lt;long&gt;0&lt;/long&gt;
+      &lt;models.User&gt;
+        &lt;id&gt;0&lt;/id&gt;
+        &lt;firstName&gt;homer&lt;/firstName&gt;
+        &lt;lastName&gt;simpsom&lt;/lastName&gt;
+        &lt;email&gt;homer@simpson.com&lt;/email&gt;
+        &lt;password&gt;secret&lt;/password&gt;
+        &lt;activities&gt;
+          &lt;entry&gt;
+            &lt;long&gt;0&lt;/long&gt;
+            &lt;models.Activity&gt;
+              &lt;id&gt;0&lt;/id&gt;
+              &lt;type&gt;walk&lt;/type&gt;
+              &lt;location&gt;fridge&lt;/location&gt;
+              &lt;distance&gt;0.001&lt;/distance&gt;
+              &lt;route/&gt;
+            &lt;/models.Activity&gt;
+          &lt;/entry&gt;
+          &lt;entry&gt;
+            &lt;long&gt;1&lt;/long&gt;
+            &lt;models.Activity&gt;
+              &lt;id&gt;1&lt;/id&gt;
+              &lt;type&gt;walk&lt;/type&gt;
+              &lt;location&gt;bar&lt;/location&gt;
+              &lt;distance&gt;1.0&lt;/distance&gt;
+              &lt;route/&gt;
+            &lt;/models.Activity&gt;
+          &lt;/entry&gt;
+          &lt;entry&gt;
+            &lt;long&gt;2&lt;/long&gt;
+            &lt;models.Activity&gt;
+              &lt;id&gt;2&lt;/id&gt;
+              &lt;type&gt;run&lt;/type&gt;
+              &lt;location&gt;work&lt;/location&gt;
+              &lt;distance&gt;2.2&lt;/distance&gt;
+              &lt;route/&gt;
+            &lt;/models.Activity&gt;
+          &lt;/entry&gt;
+        &lt;/activities&gt;
+      &lt;/models.User&gt;
+    &lt;/entry&gt;
+    &lt;entry&gt;
+      &lt;long&gt;1&lt;/long&gt;
+      &lt;models.User&gt;
+        &lt;id&gt;1&lt;/id&gt;
+        &lt;firstName&gt;marge&lt;/firstName&gt;
+        &lt;lastName&gt;simpson&lt;/lastName&gt;
+        &lt;email&gt;marge@simpson.com&lt;/email&gt;
+        &lt;password&gt;secret&lt;/password&gt;
+        &lt;activities&gt;
+          &lt;entry&gt;
+            &lt;long&gt;3&lt;/long&gt;
+            &lt;models.Activity&gt;
+              &lt;id&gt;3&lt;/id&gt;
+              &lt;type&gt;walk&lt;/type&gt;
+              &lt;location&gt;shop&lt;/location&gt;
+              &lt;distance&gt;2.5&lt;/distance&gt;
+              &lt;route&gt;
+                &lt;models.Location&gt;
+                  &lt;id&gt;0&lt;/id&gt;
+                  &lt;latitude&gt;23.3&lt;/latitude&gt;
+                  &lt;longitude&gt;32.3&lt;/longitude&gt;
+                &lt;/models.Location&gt;
+                &lt;models.Location&gt;
+                  &lt;id&gt;1&lt;/id&gt;
+                  &lt;latitude&gt;23.3&lt;/latitude&gt;
+                  &lt;longitude&gt;32.5&lt;/longitude&gt;
+                &lt;/models.Location&gt;
+                &lt;models.Location&gt;
+                  &lt;id&gt;2&lt;/id&gt;
+                  &lt;latitude&gt;23.3&lt;/latitude&gt;
+                  &lt;longitude&gt;32.6&lt;/longitude&gt;
+                &lt;/models.Location&gt;
+              &lt;/route&gt;
+            &lt;/models.Activity&gt;
+          &lt;/entry&gt;
+          &lt;entry&gt;
+            &lt;long&gt;4&lt;/long&gt;
+            &lt;models.Activity&gt;
+              &lt;id&gt;4&lt;/id&gt;
+              &lt;type&gt;cycle&lt;/type&gt;
+              &lt;location&gt;shop&lt;/location&gt;
+              &lt;distance&gt;4.5&lt;/distance&gt;
+              &lt;route/&gt;
+            &lt;/models.Activity&gt;
+          &lt;/entry&gt;
+        &lt;/activities&gt;
+      &lt;/models.User&gt;
+    &lt;/entry&gt;
+  &lt;/map&gt;
+&lt;/object-stream&gt;</code></pre>
+<p>However - there is something profoundly problematic with the above. What is it that is wrong (it is difficult to spot)?</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="05">
+              <h2>Object References and Serialization</h2>
+<p>The problem with our current serializer is that the three Maps serialized are completely independent - even though the maps in memory prior to serialization contain shared objects. This is apparent from this structural view here:</p>
+<p><img src="img/01.png" alt=""></p>
+<p>Correcting this is relatively straightforward. Object referential context is only preserved over a single writeObject operation - we have been doing several on our serializer - see the relevant fragments of the read and write methods:</p>
+<h3>write</h3>
+<pre><code class="lang-java">      while (!stack.empty())
+      {
+        os.writeObject(stack.pop());  
+      }</code></pre>
+<h3>read</h3>
+<pre><code class="lang-java">      Object obj = is.readObject();
+      while (obj != null)
+      {
+        stack.push(obj);
+        obj = is.readObject();
+      }</code></pre>
+<p>Replace the above fragments with single read/write operation:</p>
+<h3>write</h3>
+<pre><code class="lang-java">      os.writeObject(stack);</code></pre>
+<h3>read</h3>
+<pre><code class="lang-java">      stack = (Stack) is.readObject();</code></pre>
+<p>This produces a different serialization - with objects shared via references. You can see this more easily from the structural view:</p>
+<p><img src="img/02.png" alt=""></p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="Exercises">
+              <h1>Exercises</h1>
+<h2>Archive of project so far...</h2>
+<ul>
+<li><a href="https://github.com/wit-computing-msc-2017/pacemaker-console/releases/tag/lab03">https://github.com/wit-computing-msc-2017/pacemaker-console/releases/tag/lab03</a></li>
+</ul>
+<h2>Alternative Serializers</h2>
+<p>We have taken some time to abstract the serialization mechanism. This should enable us to introduce new serializers to adhere to alternative formats. Write two new serializers which support the following formats:</p>
+<ul>
+<li>Json</li>
+<li>Binary</li>
+</ul>
+<p>Json is supported via xstream and the jettison library.  A tutorial is available on the xstream site:</p>
+<ul>
+<li><a href="http://x-stream.github.io/json-tutorial.html">http://x-stream.github.io/json-tutorial.html</a></li>
+</ul>
+<p>A Binary serializer can be written just using the native streams in the JDK. </p>
+<h2>Features</h2>
+<p>Run your app, or the solution made available above and list all commands:</p>
+<pre><code>!la</code></pre>
+<p>This will list a range of &#39;built-in&#39; commands + the commands we have implemented so far:</p>
+<pre><code>abbrev  name              params
+---------------------------------------------------
+cu      create-user      (first name, last name, email, password)
+gu      get-user         (email)
+gu      get-users        ()
+du      delete-user      (email)
+aa      add-activity     (user-id, type, location, distance)
+al      add-location     (activity-id, latitude, longitude)</code></pre>
+<p>Review the command set as specified in the assignment:</p>
+<pre><code>abbrev    name                    params
+---------------------------------------------------
+lu    list-users          ()
+cu    create-user         (first name, last name, email, password)
+lu    list-user           (email)
+lius  list-user           (id)
+la    list-activities     (userid, sortBy: type, location, distance, date, duration)
+la    list-activities     (user id)
+du    delete-user         (id)
+aa    add-activity        (user-id, type, location, distance, datetime, duration)
+al    add-location        (activity-id, latitude, longitude)
+cff   change-file-format  (file format: xml, json)
+l     load                ()
+s     store               ()</code></pre>
+<p>Some commands are more or less complete:</p>
+<pre><code>abbrev  name              params
+---------------------------------------------------
+cu      reate-user       (first name, last name, email, password)
+gu      get-user         (email)
+gu      get-users        ()
+du      delete-user      (email)</code></pre>
+<p>Some are partially complete - the activities are in place, but do not include start time or duration:</p>
+<pre><code>abbrev  name              params
+---------------------------------------------------
+aa      add-activity      (user-id, type, location, distance)
+al      add-location      (activity-id, latitude, longitude)</code></pre>
+<p>and these commands are yet to be tackled:</p>
+<pre><code>abbrev  name               params
+---------------------------------------------------
+lius    list-user          (id)
+la      list-activities    (userid, sortBy: type, location, distance, date, duration)
+la      list-activities    (user id)
+du      delete-user        (id)
+cff     change-file-format (file format: xml, json)
+l       load               ()
+s       store              ()</code></pre>
+<p>Prioritize these commands from simplest to most complex, and consider tackling the simpler commands first.</p>
+
+            </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function() {
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass('');
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass('uk-label uk-text-lowercase');
+      divLabel.append($images[i].alt);
+      $(divLabel).insertAfter($images[i]);
+      $('<br>').insertAfter($images[i]);
+    }
+  });
+});
+
+      $(document).ready(function() {
+  $('img').addClass('ui image');
+
+  $('.ui.embed').embed();
+
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass(
+        'ui basic segment',
+      );
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass(
+        'ui blue ribbon label',
+      );
+      divLabel.append($images[i].alt);
+      $(divLabel).insertBefore($images[i]);
+    }
+  });
+
+  $('.ui.menu .item').tab({
+    history: true,
+    historyType: 'hash',
+  });
+
+  $('.popup').popup();
+
+  $('.ui.sidebar')
+    .sidebar({ context: $('.pushable') })
+    .sidebar('setting', 'transition', 'slide out')
+    .sidebar('attach events', '#toc');
+});
+
+    </script>
+  </body>
+</html>
