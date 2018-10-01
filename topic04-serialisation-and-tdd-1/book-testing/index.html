@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <style>
+      
+
+body {
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+  font-size:90%;
+  color: black;
+}
+
+p {
+  margin: 0.5em;
+}
+
+pre code {
+  font-family: "Monaco";
+  font-size: 100%;
+}
+
+img {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin:10px;
+}
+
+h1, h2, h3 {
+  border-bottom:thin solid black;
+  margin-bottom: 0.5em;
+  margin-top: 1em;
+}
+
+h1 {
+  font-style:italic;
+  font-size:130%;
+}
+
+h2 {
+  font-size:110%;
+}
+
+h3 {
+  font-size:100%;
+}
+
+
+
+    </style>
+  </head>
+
+  <body>
+    
+    
+
+    <div class="ui fixed top pointing inverted stackable menu labmenu">
+      <header class="header item">
+        <i id="toc" class="sitemap icon"></i>
+        
+          <a href="../index.html"> 4: Serialization & Test Driven Development I  </a>
+        
+      </header>
+      <div class="right tab-menu menu">
+        
+          <a class="item" data-tab="Lab-04 Testing">
+            Lab-04 Testing
+          </a>
+        
+          <a class="item" data-tab="01">
+            01
+          </a>
+        
+          <a class="item" data-tab="02">
+            02
+          </a>
+        
+          <a class="item" data-tab="03">
+            03
+          </a>
+        
+          <a class="item" data-tab="04">
+            04
+          </a>
+        
+          <a class="item" data-tab="05">
+            05
+          </a>
+        
+          <a class="item" data-tab="06">
+            06
+          </a>
+        
+          <a class="item" data-tab="07">
+            07
+          </a>
+        
+          <a class="item" data-tab="08">
+            08
+          </a>
+        
+          <a class="item" data-tab="09">
+            09
+          </a>
+        
+          <a class="item" data-tab="10">
+            10
+          </a>
+        
+          <a class="item" data-tab="Exercises">
+            Exercises
+          </a>
+        
+      </div>
+    </div>
+
+    <div class="ui segment pushable">
+      <div class="ui inverted labeled icon left inline vertical sidebar menu">
+        <br><br>
+        
+          
+            <a class="item" href="../../topic01-paradigms-and-languages/book-eclipse-and-java/index.html">
+              Lab-01 Eclipse & Java
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic02-java-language/book-cli-and-classes/index.html">
+              Lab-02 CLI & Classes
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic03-inheritance-and-collections/book-objects-and-serialization/index.html">
+              Lab-03 Objects & Serialization
+            </a>
+          
+        
+          
+            <a class="active item" href="../../topic04-serialisation-and-tdd-1/book-testing/index.html">
+              Lab-04 Testing
+            </a>
+          
+        
+      </div>
+      <div class="pusher" tabindex="-1">
+        <div class="ui basic segment" id="labchat">
+          <br>
+          
+            <div  class="ui tab segment lab" data-tab="Lab-04 Testing">
+              <h1>Objectives</h1>
+<p>Equip Pacemaker with JUnit libraries and then introduce a range of tests to verify essential features. Correct issues that arise as a result of the tests, becoming familiar with the fail/pass/refactor/pass cycle. Review the outstanding command set of the application.  We will use JUnit5 in this lab.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="01">
+              <h1>Junit 5</h1>
+<p>We will introduce unit testing infrastructure + unit tests to exercise the features of the app developed so far.</p>
+<p>First, locate the project properties (context menu-&gt;Build Path-&gt;Configure Build Path):</p>
+<p><img src="img/00.png" alt=""></p>
+<p>Click on <em>Classpath</em>:</p>
+<p><img src="img/00b.png" alt=""></p>
+<p>The <em>Add Library...</em> button should now be active.  Click it: </p>
+<p><img src="img/01.png" alt=""></p>
+<p>And select JUnit - make sure it is JUnit 5. The dependency should be clear from the project workspace:</p>
+<p><img src="img/02.png" alt=""></p>
+<p>Now create a new &#39;source&#39; folder in the project called &#39;test&#39;. Once created, replicate the package structure in this folder. You workspace should look like this:</p>
+<p><img src="img/03.png" alt=""></p>
+<p>The new packages are empty for the moment.</p>
+<h2>A note on Annotations</h2>
+<p>You will notice, during the lab, that we will be using Annotations in our test code (e.g. @Test).  When we discussed JUnit3 in lectures, test methods were recognised by their name i.e. a prefix of <em>test</em> in the method name.  JUnit4 and JUnit5 use Annotations (e.g. @Test, @Before) instead to recogise methods and determine their running order.  If you are not familiar with Annotations, don&#39;t worry...we will give a lecture on this next week.  During labs this week, you will see them in action!</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="02">
+              <h1>LocationTest</h1>
+<p>Create a new unit test in the new models package:</p>
+<p><img src="img/04.png" alt=""></p>
+<p>Call the test &quot;LocationTest&quot;</p>
+<p><img src="img/04b.png" alt=""></p>
+<p>Your folder structure should now look like this:</p>
+<p><img src="img/05.png" alt=""></p>
+<p>And the generated class should look like this:</p>
+<pre><code class="lang-java">package models;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class LocationTest {
+
+  @Test
+  void test() {
+    fail(&quot;Not yet implemented&quot;);
+  }
+
+}</code></pre>
+<p>To run the test, select the &#39;test&#39; folder, right click and select &#39;Run As-&gt;Junit Test&#39;</p>
+<p><img src="img/06.png" alt=""></p>
+<p>This should display the JUnit Test Runner:</p>
+<p><img src="img/07.png" alt=""></p>
+<p>This is our first unit test - deliberately failing for the moment.</p>
+<p>Replace the failing test with the following:</p>
+<pre><code class="lang-java">  @Test
+  public void testCreate()
+  {
+    Location one = new Location(23.3f, 33.3f);
+    assertEquals (0.01, 23.3f, one.latitude);
+    assertEquals (0.01, 33.3f, one.longitude);
+  }</code></pre>
+<p>Which should now pass:</p>
+<p><img src="img/08.png" alt=""></p>
+<p>Add some more tests:</p>
+<pre><code class="lang-java">  @Test
+  public void testIds()
+  {
+    Location one = new Location(23.3f, 33.3f);
+    Location two = new Location(34.4f, 22.2f);
+    assertNotEquals(one.id, two.id);
+
+  }
+
+  @Test
+  public void testToString()
+  {
+    Location one = new Location(23.3f, 33.3f);
+    assertEquals (&quot;Location{2, 23.3, 33.3}&quot;, one.toString());
+  }</code></pre>
+<p>All should now be passing:</p>
+<p><img src="img/09.png" alt=""></p>
+<p>If your tests are failing, revisit your Location.java code and make changes to it so that the tests pass; avoid the temptation to change the tests to suit your code!</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="03">
+              <h1>Fixtures</h1>
+<p>We can simplify the test marginally by sharing the object initializations between tests:</p>
+<pre><code class="lang-java">package models;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+class LocationTest {
+
+    private Location one;
+    private Location two;
+
+    @BeforeEach
+    public void setup()
+    {
+      one = new Location(23.3f, 33.3f);
+      two = new Location(34.4f, 22.2f);
+    }
+
+    @AfterEach
+    public void tearDown()
+    {
+      one = two = null;
+    }
+
+    @Test
+    public void testCreate()
+    {
+      assertEquals (0.01, 23.3, one.latitude);
+      assertEquals (0.01, 33.3, one.longitude);
+    }
+
+    @Test
+    public void testIds()
+    {
+      assertNotEquals(one.id, two.id);
+    }
+
+    @Test
+    public void testToString()
+    {
+      assertEquals (&quot;Location{2, 23.3, 33.3}&quot;, one.toString());
+    }
+
+}</code></pre>
+<p>Read this carefully - the assertions in the tests are the same as before, with the setup/tearDown methods called before/after each individual test.  It is the setup/tearDown that creates and destroys the test data. </p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="04">
+              <h1>UserTest &amp; ActivityTest</h1>
+<p>Include this test in the test/models package:</p>
+<pre><code class="lang-java">package models;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.jupiter.api.Test;
+
+class UserTest {
+
+  private User[] users =
+    {
+        new User (&quot;marge&quot;, &quot;simpson&quot;, &quot;marge@simpson.com&quot;,  &quot;secret&quot;),
+        new User (&quot;lisa&quot;,  &quot;simpson&quot;, &quot;lisa@simpson.com&quot;,   &quot;secret&quot;),
+        new User (&quot;bart&quot;,  &quot;simpson&quot;, &quot;bart@simpson.com&quot;,   &quot;secret&quot;),
+        new User (&quot;maggie&quot;,&quot;simpson&quot;, &quot;maggie@simpson.com&quot;, &quot;secret&quot;)
+    };
+  User homer = new User (&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;,  &quot;secret&quot;);
+
+  @Test
+  public void testCreate()
+  {
+    assertEquals (&quot;homer&quot;,               homer.firstName);
+    assertEquals (&quot;simpson&quot;,             homer.lastName);
+    assertEquals (&quot;homer@simpson.com&quot;,   homer.email);   
+    assertEquals (&quot;secret&quot;,              homer.password);   
+  }
+
+  @Test
+  public void testIds()
+  {
+    Set&lt;Long&gt; ids = new HashSet&lt;&gt;();
+    for (User user : users)
+    {
+      ids.add(user.id);
+    }
+    assertEquals (users.length, ids.size());
+  }
+
+  @Test
+  public void testToString()
+  {
+    assertEquals (&quot;User{homer, simpson, homer@simpson.com, secret, {}}&quot;, homer.toString());
+  }
+
+}</code></pre>
+<p>Make sure all the tests pass.  Once again, if your tests are failing, return to your code instead of changing the tests.</p>
+<p>Note carefully the <code>testIds()</code> test. Can you see its rationale?</p>
+<p>Following the same process, now create an ActivityTest class:</p>
+<pre><code class="lang-java">package models;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.jupiter.api.Test;
+
+class ActivityTest {
+
+  private Activity[] activities =
+    {
+        new Activity (&quot;walk&quot;,  &quot;fridge&quot;, 0.001),
+        new Activity (&quot;walk&quot;,  &quot;bar&quot;,    1.0),
+        new Activity (&quot;run&quot;,   &quot;work&quot;,   2.2),
+        new Activity (&quot;walk&quot;,  &quot;shop&quot;,   2.5),
+        new Activity (&quot;cycle&quot;, &quot;school&quot;, 4.5)
+    };
+
+  Activity test = new Activity (&quot;walk&quot;,  &quot;fridge&quot;, 0.001);
+
+  @Test
+  public void testCreate()
+  {
+    assertEquals (&quot;walk&quot;,          test.type);
+    assertEquals (&quot;fridge&quot;,        test.location);
+    assertEquals (0.0001, 0.001,   test.distance);    
+  }
+
+  @Test
+  public void testIds()
+  {
+    Set&lt;Long&gt; ids = new HashSet&lt;&gt;();
+    for (Activity activity : activities)
+    {
+      ids.add(activity.id);
+    }
+    assertEquals (activities.length, ids.size());
+  }
+
+  @Test
+  public void testToString()
+  {
+    assertEquals (&quot;Activity{&quot; + test.id + &quot;, walk, fridge, 0.001, []}&quot;, test.toString());
+  }
+
+}</code></pre>
+<p>All these tests should pass.  You should be able to run all test in one test runner:</p>
+<p><img src="img/10.png" alt=""></p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="05">
+              <h1>Static Fixtures</h1>
+<p>In preparation for testing the PacemakerAPI class, it may be useful to integrate all the static fixture data into a single <em>fixture</em> class...note this is not a JUnit Test Class; it&#39;s a regular Java class:</p>
+<pre><code class="lang-java">package models;
+
+public class Fixtures
+{
+  public static User[] users =
+  {
+    new User (&quot;marge&quot;, &quot;simpson&quot;, &quot;marge@simpson.com&quot;,  &quot;secret&quot;),
+    new User (&quot;lisa&quot;,  &quot;simpson&quot;, &quot;lisa@simpson.com&quot;,   &quot;secret&quot;),
+    new User (&quot;bart&quot;,  &quot;simpson&quot;, &quot;bart@simpson.com&quot;,   &quot;secret&quot;),
+    new User (&quot;maggie&quot;,&quot;simpson&quot;, &quot;maggie@simpson.com&quot;, &quot;secret&quot;)
+  };
+
+  public static Activity[] activities =
+  {
+    new Activity (&quot;walk&quot;,  &quot;fridge&quot;, 0.001),
+    new Activity (&quot;walk&quot;,  &quot;bar&quot;,    1.0),
+    new Activity (&quot;run&quot;,   &quot;work&quot;,   2.2),
+    new Activity (&quot;walk&quot;,  &quot;shop&quot;,   2.5),
+    new Activity (&quot;cycle&quot;, &quot;school&quot;, 4.5)
+  };
+
+  public static Location[]locations =
+  {
+    new Location(23.3f, 33.3f),
+    new Location(34.4f, 45.2f),  
+    new Location(25.3f, 34.3f),
+    new Location(44.4f, 23.3f)       
+  };
+}</code></pre>
+<p>This will enable us to simplify the three unit test classes somewhat, as follows. </p>
+<h3>LocationTest</h3>
+<pre><code class="lang-java">package models;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static models.Fixtures.locations;
+
+class LocationTest {
+
+  @Test
+  public void testCreate()
+  {
+    assertEquals (0.01, 23.3, locations[0].latitude);
+    assertEquals (0.01, 33.3, locations[0].longitude);
+  }
+
+  @Test
+  public void testIds()
+  {
+    assertNotEquals(locations[0].id, locations[1].id);
+  }
+
+  @Test
+  public void testToString()
+  {
+    assertEquals (&quot;Location{&quot; + locations[0].id + &quot;, 23.3, 33.3}&quot;, locations[0].toString());
+  }
+}</code></pre>
+<h3>ActivityTest</h3>
+<pre><code class="lang-java">package models;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.jupiter.api.Test;
+
+import static models.Fixtures.activities;
+
+class ActivityTest {
+
+  Activity test = new Activity (&quot;walk&quot;,  &quot;fridge&quot;, 0.001);
+
+  @Test
+  public void testCreate()
+  {
+    assertEquals (&quot;walk&quot;,          test.type);
+    assertEquals (&quot;fridge&quot;,        test.location);
+    assertEquals (0.0001, 0.001,   test.distance);    
+  }
+
+  @Test
+  public void testIds()
+  {
+    Set&lt;Long&gt; ids = new HashSet&lt;&gt;();
+    for (Activity activity : activities)
+    {
+      ids.add(activity.id);
+    }
+    assertEquals (activities.length, ids.size());
+  }
+
+  @Test
+  public void testToString()
+  {
+    assertEquals (&quot;Activity{&quot; + test.id + &quot;, walk, fridge, 0.001, []}&quot;, test.toString());
+  }
+
+}</code></pre>
+<h3>UserTest</h3>
+<pre><code class="lang-java">package models;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.jupiter.api.Test;
+import static models.Fixtures.users;
+
+class UserTest {
+
+  User homer = new User (&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;,  &quot;secret&quot;);
+
+  @Test
+  public void testCreate()
+  {
+    assertEquals (&quot;homer&quot;,               homer.firstName);
+    assertEquals (&quot;simpson&quot;,             homer.lastName);
+    assertEquals (&quot;homer@simpson.com&quot;,   homer.email);   
+    assertEquals (&quot;secret&quot;,              homer.password);   
+  }
+
+  @Test
+  public void testIds()
+  {
+    Set&lt;Long&gt; ids = new HashSet&lt;&gt;();
+    for (User user : users)
+    {
+      ids.add(user.id);
+    }
+    assertEquals (users.length, ids.size());
+  }
+
+  @Test
+  public void testToString()
+  {
+    assertEquals (&quot;User{homer, simpson, homer@simpson.com, secret, {}}&quot;, homer.toString());
+  }
+
+}</code></pre>
+<p>Integrate these version and verify that app passes all tests.</p>
+<p>Commit these changes with a suitable message.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="06">
+              <h1>First PacemakerAPI Test</h1>
+<p>PacemakerAPI is a more sophisticated class, whose testing will require a little more discipline and focus. We can start with a skeleton, which will include static imports + a fixture:</p>
+<pre><code class="lang-java">package controllers;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import controllers.PacemakerAPI;
+import static models.Fixtures.users;
+import static models.Fixtures.activities;
+import static models.Fixtures.locations;
+
+public class PacemakerAPITest
+{
+  private PacemakerAPI pacemaker;
+
+  @BeforeEach
+  public void setup()
+  {
+    pacemaker = new PacemakerAPI(null);
+  }
+
+  @AfterEach
+  public void tearDown()
+  {
+    pacemaker = null;
+  }
+
+}</code></pre>
+<p>As there are no @Test methods, there are no test cases to run.  Now introduce the following:</p>
+<pre><code class="lang-java">  @Test
+  public void testUser()
+  {
+    assertEquals (0, pacemaker.getUsers().size());
+  }</code></pre>
+<p>This verifies that we are starting with an empty users datastore. We can augment the test:</p>
+<pre><code class="lang-java">  @Test
+  public void testUser()
+  {
+    User homer = new User (&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;,  &quot;secret&quot;);
+
+    assertEquals (0, pacemaker.getUsers().size());
+    pacemaker.createUser(&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;, &quot;secret&quot;);
+    assertEquals (1, pacemaker.getUsers().size());
+  }</code></pre>
+<p>When we import the User class, this should also pass...</p>
+<p>Our API returns a User object - which we can now verify:</p>
+<pre><code class="lang-java">  @Test
+  public void testUser()
+  {
+    User homer = new User (&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;,  &quot;secret&quot;);
+
+    assertEquals (0, pacemaker.getUsers().size());
+    pacemaker.createUser(&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;, &quot;secret&quot;);
+    assertEquals (1, pacemaker.getUsers().size());
+
+    assertEquals (homer, pacemaker.getUserByEmail(&quot;homer@simpson.com&quot;));
+  }</code></pre>
+<p>This time the test fails. The default behaviour of this test is to trigger a call to &#39;equals()&#39; on the User objects. We haven&#39;t implemented this method, so the default behaviour is to do an identity comparison:</p>
+<ul>
+<li><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html#equals%28java.lang.Object%29">Object.equals</a></li>
+</ul>
+<p>Implementing Equals can be tricky - and there are numerous approaches:</p>
+<ul>
+<li><a href="http://www.javapractices.com/topic/TopicAction.do?Id=17">http://www.javapractices.com/topic/TopicAction.do?Id=17</a></li>
+</ul>
+<p>However, we are already using guava support for toString, so our easiest route is to use the equivalent for equals implementation. This means revisiting the User class, introducing this implementation:</p>
+<pre><code class="lang-java">  @Override
+  public boolean equals(final Object obj)
+  {
+    if (obj instanceof User)
+    {
+      final User other = (User) obj;
+      return Objects.equal(firstName, other.firstName) 
+          &amp;&amp; Objects.equal(lastName,  other.lastName)
+          &amp;&amp; Objects.equal(email,     other.email)
+          &amp;&amp; Objects.equal(password,  other.password);
+    }
+    else
+    {
+      return false;
+    }
+  }</code></pre>
+<p>We should verify our understanding of this method by introducing a new test into UserTest:</p>
+<pre><code class="lang-java">  @Test
+  public void testEquals()
+  {
+    User homer = new User (&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;,  &quot;secret&quot;);
+    User homer2 = new User (&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;,  &quot;secret&quot;); 
+    User bart   = new User (&quot;bart&quot;, &quot;simpson&quot;, &quot;bartr@simpson.com&quot;,  &quot;secret&quot;); 
+
+    assertEquals(homer, homer);
+    assertEquals(homer, homer2);
+    assertNotEquals(homer, bart);
+  }</code></pre>
+<p>This should pass, and out PacemakerAPITest should also now pass.</p>
+<p>Identity and Equality are important concepts to understand - and there are JUnit primitives that can be used to verify two characteristics individually. Extend the testEquals method as follows:</p>
+<pre><code class="lang-java">    assertSame(homer, homer);
+    assertNotSame(homer, homer2);</code></pre>
+<p>This now verifies that homer and homer2 are equal (equality or equivalence test), but not the same (identity test).</p>
+<p>Location and Activity should also have their own equals implementations:</p>
+<pre><code class="lang-java">  @Override
+  public boolean equals(final Object obj)
+  {
+    if (obj instanceof Location)
+    {
+      final Location other = (Location) obj;
+      return Objects.equal(latitude, other.latitude) 
+          &amp;&amp; Objects.equal(longitude, other.longitude);
+    }
+    else
+    {
+      return false;
+    }
+  }</code></pre>
+<pre><code class="lang-java">  @Override
+  public boolean equals(final Object obj)
+  {
+    if (obj instanceof Activity)
+    {
+      final Activity other = (Activity) obj;
+      return Objects.equal(type, other.type) 
+          &amp;&amp; Objects.equal(location,  other.location)
+          &amp;&amp; Objects.equal(distance,  other.distance)
+          &amp;&amp; Objects.equal(route,     other.route);    
+    }
+    else
+    {
+      return false;
+    }
+  }</code></pre>
+<p>What, precisely, will happen when this call is triggered in Activity.equals?</p>
+<pre><code class="lang-java">          &amp;&amp; Objects.equal(route,     other.route);</code></pre>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="07">
+              <h1>More PacemakerAPITests</h1>
+<p>Introduce this unit test</p>
+<pre><code class="lang-java">  @Test
+  public void testUsers()
+  {
+    for (User user : users)
+    {
+      pacemaker.createUser(user.firstName, user.lastName, user.email, user.password);
+    }
+    assertEquals (users.length, pacemaker.getUsers().size());
+  }</code></pre>
+<p>This test should succeed. However, we can strengthen the test now that we have equals methods in place:</p>
+<pre><code class="lang-java">  @Test
+  public void testUsers()
+  {
+    for (User user : users)
+    {
+      pacemaker.createUser(user.firstName, user.lastName, user.email, user.password);
+    }
+    assertEquals (users.length, pacemaker.getUsers().size());
+    for (User user: users)
+    {
+      User eachUser = pacemaker.getUserByEmail(user.email);
+      assertEquals (user, eachUser);
+      assertNotSame(user, eachUser);
+    }
+  }</code></pre>
+<p>Now we can test delete:</p>
+<pre><code class="lang-java">  @Test
+  public void testDeleteUsers()
+  {
+    for (User user : users)
+    {
+      pacemaker.createUser(user.firstName, user.lastName, user.email, user.password);
+    }
+    assertEquals (users.length, pacemaker.getUsers().size());
+    User marge = pacemaker.getUserByEmail(&quot;marge@simpson.com&quot;);
+    pacemaker.deleteUser(marge.id);
+    assertEquals (users.length-1, pacemaker.getUsers().size());    
+  }</code></pre>
+<p>We should continually review our test code in an attempt to keep it as concise as possible. We can consider the test code as important as the main app, with the same care to remove repetition and generally keep in good shape.</p>
+<p>All the tests in PacemakerAPITest can be simplified if we share a fixture:</p>
+<pre><code class="lang-java">public class PacemakerAPITest
+{
+  private PacemakerAPI pacemaker;
+
+  @BeforeEach
+  public void setup()
+  {
+    pacemaker = new PacemakerAPI(null);
+    for (User user : users)
+    {
+      pacemaker.createUser(user.firstName, user.lastName, user.email, user.password);
+    }
+  }
+
+  @AfterEach
+  public void tearDown()
+  {
+    pacemaker = null;
+  }
+
+  @Test
+  public void testUser()
+  {
+    assertEquals (users.length, pacemaker.getUsers().size());
+    pacemaker.createUser(&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;, &quot;secret&quot;);
+    assertEquals (users.length+1, pacemaker.getUsers().size());
+    assertEquals (users[0], pacemaker.getUserByEmail(users[0].email));
+  }  
+
+  @Test
+  public void testUsers()
+  {
+    assertEquals (users.length, pacemaker.getUsers().size());
+    for (User user: users)
+    {
+      User eachUser = pacemaker.getUserByEmail(user.email);
+      assertEquals (user, eachUser);
+      assertNotSame(user, eachUser);
+    }
+  }
+
+  @Test
+  public void testEquals()
+  {
+    User homer = new User (&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;,  &quot;secret&quot;);
+    User homer2 = new User (&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;,  &quot;secret&quot;); 
+    User bart   = new User (&quot;bart&quot;, &quot;simpson&quot;, &quot;bartr@simpson.com&quot;,  &quot;secret&quot;); 
+
+    assertEquals(homer, homer);
+    assertEquals(homer, homer2);
+    assertNotEquals(homer, bart);    
+  }    
+
+  @Test
+  public void testDeleteUsers()
+  {
+    assertEquals (users.length, pacemaker.getUsers().size());
+    User marge = pacemaker.getUserByEmail(&quot;marge@simpson.com&quot;);
+    pacemaker.deleteUser(marge.id);
+    assertEquals (users.length-1, pacemaker.getUsers().size());    
+  }
+
+}</code></pre>
+<p>Note the adjustments made to testUser in this context.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="08">
+              <h1>Activities Tests</h1>
+<p>Right click on the PacemakerAPITest class and select &#39;Coverage As -&gt; JUnit Test&#39;.  </p>
+<p>Unfold the folder structure in the <em>Coverage</em> window until you have the following report displayed:</p>
+<p><img src="img/13.png" alt=""></p>
+<p>This is the code coverage report for the PacemakerAPI class. It shows which methods are 100% tested and which methods require attention.  </p>
+<p>In relation to activities, we can see that three methods are untested i.e. they have 0% beside them and they are coloured red:</p>
+<pre><code class="lang-java">  public void createActivity(Long id, String type, String location, double distance)
+
+  public Activity getActivity (Long id)
+
+  public void addLocation (Long id, float latitude, float longitude)</code></pre>
+<p>The first one, in particular, seems somehow untestable. How can we verify if the activity is created successfully - the return type is void? This is an error in the design - only spotted now when we attempt to write a test. Had we written the tests first then we are unlikely to have written the method in this way.</p>
+<p>First, lets correct the implementation:</p>
+<pre><code class="lang-java">  public Activity createActivity(Long id, String type, String location, double distance)
+  {
+    Activity activity = null;
+    Optional&lt;User&gt; user = Optional.fromNullable(userIndex.get(id));
+    if (user.isPresent())
+    {
+      activity = new Activity (type, location, distance);
+      user.get().activities.put(activity.id, activity);
+      activitiesIndex.put(activity.id, activity);
+    }
+    return activity;
+  }</code></pre>
+<p>Now we can write the test:</p>
+<pre><code class="lang-java">  @Test
+  public void testAddActivity()
+  {
+    User marge = pacemaker.getUserByEmail(&quot;marge@simpson.com&quot;);
+    assertNotNull(marge);
+    Activity activity = pacemaker.createActivity(marge.id, activities[0].type, activities[0].location, activities[0].distance);
+    assertNotNull(activity);
+    Activity returnedActivity = pacemaker.getActivity(activity.id);
+    assertNotNull(returnedActivity);
+    assertEquals(activities[0],  returnedActivity);
+    assertNotSame(activities[0], returnedActivity);
+  }</code></pre>
+<p>This test is probably a little overwrought - and we can reduce the number of asserts to make its operation clearer:</p>
+<pre><code class="lang-java">  @Test
+  public void testAddActivity()
+  {
+    User marge = pacemaker.getUserByEmail(&quot;marge@simpson.com&quot;);
+    Activity activity = pacemaker.createActivity(marge.id, activities[0].type, activities[0].location, activities[0].distance);
+    Activity returnedActivity = pacemaker.getActivity(activity.id);
+    assertEquals(activities[0],  returnedActivity);
+    assertNotSame(activities[0], returnedActivity);
+  }</code></pre>
+<p>If we run a coverage report again, we can see that our % code coverage for the PacemakerAPI class is increasing:</p>
+<p><img src="img/14.png" alt=""></p>
+<p>Now we write a test to add a location to an activity:</p>
+<pre><code class="lang-java">  @Test
+  public void testAddActivityWithSingleLocation()
+  {
+    User marge = pacemaker.getUserByEmail(&quot;marge@simpson.com&quot;);
+    Long activityId = pacemaker.createActivity(marge.id, activities[0].type, activities[0].location, activities[0].distance).id;
+
+    pacemaker.addLocation(activityId, locations[0].latitude, locations[0].longitude);
+
+    Activity activity = pacemaker.getActivity(activityId);
+    assertEquals (1, activity.route.size());
+    assertEquals(0.0001, locations[0].latitude,  activity.route.get(0).latitude);
+    assertEquals(0.0001, locations[0].longitude, activity.route.get(0).longitude);   
+  }</code></pre>
+<p>If this passes (try it) we can be more ambitious and test multiple locations:</p>
+<pre><code class="lang-java">  @Test
+  public void testAddActivityWithMultipleLocation()
+  {
+    User marge = pacemaker.getUserByEmail(&quot;marge@simpson.com&quot;);
+    Long activityId = pacemaker.createActivity(marge.id, activities[0].type, activities[0].location, activities[0].distance).id;
+
+    for (Location location : locations)
+    {
+      pacemaker.addLocation(activityId, location.latitude, location.longitude);      
+    }
+
+    Activity activity = pacemaker.getActivity(activityId);
+    assertEquals (locations.length, activity.route.size());
+    int i = 0;
+    for (Location location : activity.route)
+    {
+      assertEquals(location, locations[i]);
+      i++;
+    }
+  }</code></pre>
+<p>By adding these additional tests, we can see that our code coverage for the PacemakerAPI class has increased from 36.6% to 71.0%.  There are still a few methods that haven&#39;t been tested in the class though.  In the next step, we will look at testing the load and store methods.</p>
+<p><img src="img/15.png" alt=""></p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="09">
+              <h1>Persistence Tests</h1>
+<p>In your test/controllers package, create a new test specifically for persistence:</p>
+<pre><code class="lang-java">package controllers;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class PersistenceTest {
+
+    PacemakerAPI pacemaker;
+
+}</code></pre>
+<p>Before writing a test, we introduce a utility method which we will use to create a dataset in pacemakerAPI. This is not a test, but will be called from a test.</p>
+<pre><code class="lang-java">  void populate (PacemakerAPI pacemaker)
+  {  
+    for (User user : users)
+    {
+      pacemaker.createUser(user.firstName, user.lastName, user.email, user.password);
+    }
+    User user1 = pacemaker.getUserByEmail(users[0].email);
+    Activity activity = pacemaker.createActivity(user1.id, activities[0].type, activities[0].location, activities[0].distance);
+    pacemaker.createActivity(user1.id, activities[1].type, activities[1].location, activities[1].distance);
+    User user2 = pacemaker.getUserByEmail(users[1].email);
+    pacemaker.createActivity(user2.id, activities[2].type, activities[2].location, activities[2].distance);
+    pacemaker.createActivity(user2.id, activities[3].type, activities[3].location, activities[3].distance);
+
+    for (Location location : locations)
+    {
+      pacemaker.addLocation(activity.id, location.latitude, location.longitude);
+    }
+  }</code></pre>
+<p>It creates some users + activities, and then adds a route to one of the activities. We can write a test to see if this is functioning generally as expected:</p>
+<pre><code class="lang-java">  @Test
+  public void testPopulate()
+  { 
+    pacemaker = new PacemakerAPI(null);
+
+    assertEquals(0, pacemaker.getUsers().size());
+    populate (pacemaker);
+
+    assertEquals(users.length, pacemaker.getUsers().size());
+    assertEquals(2, pacemaker.getUserByEmail(users[0].email).activities.size());
+    assertEquals(2, pacemaker.getUserByEmail(users[1].email).activities.size());   
+    Long activityID = pacemaker.getUserByEmail(users[0].email).activities.keySet().iterator().next();
+    assertEquals(locations.length, pacemaker.getActivity(activityID).route.size());   
+  }</code></pre>
+<p>Once you have resolved the import errors, this should pass. </p>
+<p>However, we are not using the serializer yet. Before writing the serializer test, we need a simple file deleting utility:</p>
+<pre><code class="lang-java">  void deleteFile(String fileName)
+  {
+    File datastore = new File (&quot;testdatastore.xml&quot;);
+    if (datastore.exists())
+    {
+      datastore.delete();
+    }
+  }</code></pre>
+<p>Now we can write a new test specifically to see if an object model is serialized - and restored - successfully.</p>
+<pre><code class="lang-java">  @Test
+  public void testXMLSerializer() throws Exception
+  { 
+    String datastoreFile = &quot;testdatastore.xml&quot;;
+    deleteFile (datastoreFile);
+
+    Serializer serializer = new XMLSerializer(new File (datastoreFile));
+
+    pacemaker = new PacemakerAPI(serializer); 
+    populate(pacemaker);
+    pacemaker.store();
+
+    PacemakerAPI pacemaker2 =  new PacemakerAPI(serializer);
+    pacemaker2.load();
+
+    assertEquals (pacemaker.getUsers().size(), pacemaker2.getUsers().size());
+    for (User user : pacemaker.getUsers())
+    {
+      assertTrue (pacemaker2.getUsers().contains(user));
+    }
+    deleteFile (&quot;testdatastore.xml&quot;);
+  }</code></pre>
+<p>This is a complex test, involving the creating of two pacemakerAPI objects. One is populated with complete object graph and serialized. The second loads this graph.</p>
+<p>As both are held in memory, we can run through them in the final loop to test for equivalence.</p>
+<p>If your test fails, first check that the pushing and popping are done in the correct sequence:</p>
+<pre><code class="lang-java">  @SuppressWarnings(&quot;unchecked&quot;)
+  public void load() throws Exception
+  {
+    serializer.read();
+    activitiesIndex = (Map&lt;Long, Activity&gt;) serializer.pop();
+    emailIndex      = (Map&lt;String, User&gt;)   serializer.pop();
+    userIndex       = (Map&lt;Long, User&gt;)     serializer.pop();
+  }
+
+  public void store() throws Exception
+  {
+    serializer.push(userIndex);
+    serializer.push(emailIndex);
+    serializer.push(activitiesIndex);
+    serializer.write(); 
+  }</code></pre>
+<p>If your test still fails (i.e. with an ArrayIndexOutOfBounds error), try downloading the 1.4.8 version of xstream and adding it to your build path:  </p>
+<ul>
+<li><a href="https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream/1.4.8">xstream-1-4-8.jar</a>.</li>
+</ul>
+<h2>Run entire suite</h2>
+<p>Now that the <em>testXMLSerializer</em> test is running successfully and we are happy that the <em>testPopulate</em> method is working, go ahead and disable the <em>testPopulate</em> method:</p>
+<pre><code class="lang-java">  @Disabled
+  public void testPopulate()
+  { 
+       //code omitted  
+  }</code></pre>
+<p> Now run your full test suite.  You can do this by right clicking on the <em>test</em> folder and selecting &#39;Run as -&gt; JUnit&#39;.   All tests that we have written to-date should run successfully.</p>
+<h2>Refactoring the Equals method</h2>
+<p>In order to verify that the full object graph is being compared, place breakpoints in the equals() method in <em>User</em>, <em>Activity</em> and <em>Location</em>, and run the test in the debugger.</p>
+<p>Do you notice anything unusual?</p>
+<p>Only the User.equals() method is being triggered, the activities or locations <em>equals</em> methods are never called. This is because the equals method in User is incomplete. Here is a revision, which includes the extra method call:</p>
+<pre><code class="lang-java">  @Override
+  public boolean equals(final Object obj)
+  {
+    if (obj instanceof User)
+    {
+      final User other = (User) obj;
+      return Objects.equal(firstName,   other.firstName) 
+          &amp;&amp;  Objects.equal(lastName,    other.lastName)
+          &amp;&amp;  Objects.equal(email,       other.email)
+          &amp;&amp;  Objects.equal(password,    other.password)
+          &amp;&amp;  Objects.equal(activities,  other.activities);      
+    }
+    else
+    {
+      return false;
+    }
+  }</code></pre>
+<p>This test should still run successfully, but perform a more effective &#39;deep compare&#39; of the full object graph.</p>
+<p>Finally, reflect again on this &#39;populate&#39; method:</p>
+<pre><code class="lang-java">  void populate (PacemakerAPI pacemaker)
+  {
+    for (User user : users)
+    {
+      pacemaker.createUser(user.firstName, user.lastName, user.email, user.password);
+    }
+    User user1 = pacemaker.getUserByEmail(users[0].email);
+    Activity activity = pacemaker.createActivity(user1.id, activities[0].type, activities[0].location, activities[0].distance);
+    pacemaker.createActivity(user1.id, activities[1].type, activities[1].location, activities[1].distance);
+    User user2 = pacemaker.getUserByEmail(users[1].email);
+    pacemaker.createActivity(user2.id, activities[2].type, activities[2].location, activities[2].distance);
+    pacemaker.createActivity(user2.id, activities[3].type, activities[3].location, activities[3].distance);
+
+    for (Location location : locations)
+    {
+      pacemaker.addLocation(activity.id, location.latitude, location.longitude);
+    }
+  }</code></pre>
+<p>This is very clumsy and poorly abstracted code. Are there alternative approaches?</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="10">
+              <h1>Test Packages</h1>
+<p>The test classes should align with the packages they are testing. If your project does not resemble the layout below, refactor it:</p>
+<p><img src="img/12.png" alt=""></p>
+<p>It should be possible to do this just using drag and drop within the package explorer.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="Exercises">
+              <h1>Exercises</h1>
+<p>Archive of lab so far:</p>
+<ul>
+<li><a href="https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V4.0">https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V4.0</a></li>
+</ul>
+<h2>Remaining Commands</h2>
+<p>From last weeks lab, we still have these commands outstanding - sorted based on estimated potential complexity of the implementation:</p>
+<pre><code>abbrev  name               params
+---------------------------------------------------
+du      delete-user        (user id)
+lius    list-user          (user id)
+la      list-activities    (user id)
+l       load               ()
+s       store              ()
+la      list-activities    (userid, sortBy: type, location, distance, date, duration)
+cff     change-file-format (file format: xml, json)</code></pre>
+<ul>
+<li><p>The first three commands are relatively straightforward. We already have tests that exercise the features these commands rely on, to we can proceed to implement these commands in main.</p>
+</li>
+<li><p>Load and store are also tested reasonably comprehensively via the PacemakerAPITest series, so implementing these commands should be doable with some confidence.</p>
+</li>
+<li><p>The last two commands are more challenging, and ideally should be tackled from a test first perspective. This means formulating a test case that will exercise the feature, writing the test and then implementing, or partially implementing, the feature such that the test passes.</p>
+</li>
+</ul>
+<h2>Time Date Support</h2>
+<p>Still outstanding inn the pacemaker is the support of start date and time. You may choose to postpone this until some of the above commands are tackled, or take it on in advance. Date time handling in Java has had some well recognised challenges:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/1969442/whats-wrong-with-java-date-time-api">http://stackoverflow.com/questions/1969442/whats-wrong-with-java-date-time-api</a></li>
+</ul>
+<p>Historically, the joda time library was used to overcome some of the well documented issues with Java date and time:</p>
+<ul>
+<li><a href="http://www.joda.org/joda-time/">http://www.joda.org/joda-time/</a></li>
+</ul>
+<p>Java 8 brought in a new date and time library:</p>
+<ul>
+<li><a href="http://www.oracle.com/technetwork/articles/java/jf14-date-time-2125367.html">http://www.oracle.com/technetwork/articles/java/jf14-date-time-2125367.html</a> </li>
+</ul>
+<p>This can be seen as a replacement for joda time and this is the package summary documentation:</p>
+<ul>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/java/time/package-summary.html">https://docs.oracle.com/javase/8/docs/api/java/time/package-summary.html</a></li>
+</ul>
+<h2>Formatting</h2>
+<p>The ideal format, as specified in the specification, pretty prints the output like this:</p>
+<pre><code>
++----+-----------+----------+-------------------+----------+
+| ID | FIRSTNAME | LASTNAME |       EMAIL       | PASSWORD |
++----+-----------+----------+-------------------+----------+
+|  1 |     homer |  simpsom | homer@simpson.com |   secret |
+|  2 |     marge |  simpson | marge@simpson.com |   secret |
++----+-----------+----------+-------------------+----------+
+
++----+------+----------+----------+-------------------------------+----------+-----------------------------------+
+| ID | TYPE | LOCATION | DISTANCE |           STARTTIME           | DURATION |               ROUTE               |
++----+------+----------+----------+-------------------------------+----------+-----------------------------------+
+|  1 | walk |   fridge |    0.001 | 2013-10-12T09:00:00.000+01:00 |  PT3600S | [23.3,32.3, 23.3,32.5, 23.3,32.6] |
+|  2 | walk |      bar |        1 | 2013-10-13T09:00:00.000+01:00 |  PT4200S |                                [] |
+|  3 |  run |     work |      2.2 | 2013-10-14T09:00:00.000+01:00 |   PT600S |                                [] |
++----+------+----------+----------+-------------------------------+----------+-----------------------------------+</code></pre>
+<p>Writing code to do this could be very tedious. These components here implement convenient solutions to this problem:</p>
+<h3>Ascii Table</h3>
+<ul>
+<li><a href="https://github.com/robinhowlett/java-ascii-table">https://github.com/robinhowlett/java-ascii-table</a></li>
+</ul>
+<h3>Wagu</h3>
+<ul>
+<li><a href="https://github.com/thedathoudarya/WAGU-data-in-table-view">https://github.com/thedathoudarya/WAGU-data-in-table-view</a></li>
+</ul>
+<p>... and there are others.</p>
+<p>If you are relatively new to Java, incorporating these libraries may be challenging. In next weeks lab we will explore how to introduce one of these libraries into the project.</p>
+
+            </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function() {
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass('');
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass('uk-label uk-text-lowercase');
+      divLabel.append($images[i].alt);
+      $(divLabel).insertAfter($images[i]);
+      $('<br>').insertAfter($images[i]);
+    }
+  });
+});
+
+      $(document).ready(function() {
+  $('img').addClass('ui image');
+
+  $('.ui.embed').embed();
+
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass(
+        'ui basic segment',
+      );
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass(
+        'ui blue ribbon label',
+      );
+      divLabel.append($images[i].alt);
+      $(divLabel).insertBefore($images[i]);
+    }
+  });
+
+  $('.ui.menu .item').tab({
+    history: true,
+    historyType: 'hash',
+  });
+
+  $('.popup').popup();
+
+  $('.ui.sidebar')
+    .sidebar({ context: $('.pushable') })
+    .sidebar('setting', 'transition', 'slide out')
+    .sidebar('attach events', '#toc');
+});
+
+    </script>
+  </body>
+</html>
