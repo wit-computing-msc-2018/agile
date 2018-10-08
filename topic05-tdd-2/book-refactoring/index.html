@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css"
+        type="text/css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css"
+        rel="stylesheet"/>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <style>
+    
+
+body {
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+  font-size:90%;
+  color: black;
+}
+
+p {
+  margin: 0.5em;
+}
+
+pre code {
+  font-family: "Monaco";
+  font-size: 100%;
+}
+
+img {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin:10px;
+}
+
+h1, h2, h3 {
+  border-bottom:thin solid black;
+  margin-bottom: 0.5em;
+  margin-top: 1em;
+}
+
+h1 {
+  font-style:italic;
+  font-size:130%;
+}
+
+h2 {
+  font-size:110%;
+}
+
+h3 {
+  font-size:100%;
+}
+
+
+
+  </style>
+</head>
+
+<body>
+
+
+
+<div class="ui fixed top pointing inverted stackable menu labmenu">
+  <header class="header item">
+    <i id="toc" class="sitemap icon"></i>
+    
+      <a href="../index.html">  5: Test Driven Development II  </a>
+    
+  </header>
+  <div class="right tab-menu menu">
+    
+      <a class="item" data-tab="Lab-05 Refactoring">
+        Lab-05 Refactoring
+      </a>
+    
+      <a class="item" data-tab="01">
+        01
+      </a>
+    
+      <a class="item" data-tab="02">
+        02
+      </a>
+    
+      <a class="item" data-tab="03">
+        03
+      </a>
+    
+      <a class="item" data-tab="04">
+        04
+      </a>
+    
+      <a class="item" data-tab="05">
+        05
+      </a>
+    
+      <a class="item" data-tab="Exercises">
+        Exercises
+      </a>
+    
+  </div>
+</div>
+
+<div class="ui pushable">
+  <div class="ui inverted labeled icon left inline vertical sidebar menu">
+    <br><br>
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic01-paradigms-and-languages/book-eclipse-and-java/index.html">Lab-01 Eclipse & Java </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic02-java-language/book-cli-and-classes/index.html">Lab-02 CLI & Classes </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic03-inheritance-and-collections/book-objects-and-serialization/index.html">Lab-03 Objects & Serialization </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic04-serialisation-and-tdd-1/book-testing/index.html">Lab-04 Testing </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic05-tdd-2/book-refactoring/index.html">Lab-05 Refactoring </a>
+      
+    
+  </div>
+  <div class="pusher" tabindex="-1">
+    <div class="ui basic segment">
+      <br>
+      
+        <div class="ui tab segment lab" data-tab="Lab-05 Refactoring">
+          <h1>Objectives</h1>
+<p>Refactor pacemaker to employ uuid instead of long ids. Unsure the tests as still passing as we make this transition. Make a start command line formatting features.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="01">
+          <h1>ID Management</h1>
+<p>Currently we are using Long id for our users and activitiy objects:</p>
+<pre><code>public class Activity implements Serializable
+{ 
+  static Long   counter = 0l;  
+  public Long   id;</code></pre>
+<pre><code>public class User implements Serializable
+{ 
+  static Long   counter = 0l;
+  public Long   id;</code></pre>
+<p>This defines the structure of the various collections we are using:</p>
+<pre><code>public class PacemakerAPI
+{
+  private Map&lt;String, User&gt;   emailIndex = new HashMap&lt;&gt;();
+  private Map&lt;Long, User&gt;     userIndex  = new HashMap&lt;&gt;();
+  private Map&lt;Long, Activity&gt; activitiesIndex = new HashMap&lt;&gt;();</code></pre>
+<p>While this works (more or less), you may have noticed some flaws. These center around the <code>counter</code>s, stored as static members of the Activity and User classes respectively.</p>
+<p>The role of these counters is to facilitate generation of id&#39;s when we create new objects. For example:</p>
+<pre><code>  public User(String firstName, String lastName, String email, String password)
+  {
+    this.id        = counter++;
+    ...
+  }</code></pre>
+<p>We are simply increasing the counter by one every time a new user is created.</p>
+<p>Can you see any flaw in this approach?</p>
+<p>Specifically, if you restart the app, and load a previously saved model - what will be the value of these counters? What happens when you insert a new User for instance?</p>
+<p>See if you can perform an experiment to exercise the above scenario.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="02">
+          <h1>Refactor User ID</h1>
+<p>You may have seen that the problem with the last step was the ids were reset to 0 when the app was launched. Thus, any new users or activities would overwrite already created users/activities - corrupting the data structure.</p>
+<p>This is clearly a serious bug - one not picked up by our unit tests. In fact it is a difficult bug to pick up in the test infrastructure and you may only be able to reproduce using the command line.</p>
+<p>Out solution will be to abandon this approach completely - and adopt a different strategy for managing ids. We can switch to using Immutable Universally unique Identifiers</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">https://en.wikipedia.org/wiki/Universally_unique_identifier</a></li>
+</ul>
+<p>A generate for these ids is available in the JDK:</p>
+<ul>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/UUID.html">https://docs.oracle.com/javase/8/docs/api/java/util/UUID.html</a></li>
+</ul>
+<p>This seems like a significant change - effecting many aspects of the application. However, because we have a suite of unit tests in place, we can evolve the application in an orderly manner. </p>
+<p>First, change the User class:</p>
+<pre><code>...
+import java.util.UUID;
+...
+
+public class User implements Serializable
+{
+  //static Long   counter = 0l;
+
+  public String   id;
+  ...
+
+ public User(String firstName, String lastName, String email, String password)
+  {
+    //this.id        = counter++;
+    this.id = UUID.randomUUID().toString();
+    ..
+  }
+...</code></pre>
+<p>In the above we have commented out the counter - each new object receive a new unique id.</p>
+<p>There will be errors throughout the application. We can start with the User Test class:</p>
+<pre><code>...
+  @Test
+  public void testIds()
+  {
+    Set&lt;String&gt; ids = new HashSet&lt;&gt;();
+    for (User user : users)
+    {
+      ids.add(user.id);
+    }
+    assertEquals (users.length, ids.size());
+  }
+...</code></pre>
+<p>The above version should now compile successfully. We should also be able to run just this test (even though there are errors elsewhere). It should pass.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="03">
+          <h1>Refactor PacemakerAPI</h1>
+<p>The data structure can now altered to reflect the String id:</p>
+<pre><code>public class PacemakerAPI
+{
+  ...
+  private Map&lt;String, User&gt;     userIndex  = new HashMap&lt;&gt;();
+  ...
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  public void load() throws Exception
+  {
+    serializer.read();
+    activitiesIndex = (Map&lt;Long, Activity&gt;) serializer.pop();
+    emailIndex      = (Map&lt;String, User&gt;)   serializer.pop();
+    userIndex       = (Map&lt;String, User&gt;)   serializer.pop();
+  }
+  ...
+}</code></pre>
+<p>The PacemakerAPI class should now compile successfully.</p>
+<p>We can now turn our attention to the unit tests - which have errors. These errors are as result of the API relying on Long ids. We will fix these in the PacemakerAPI class:</p>
+<pre><code>...
+  public User getUser(String id) 
+  {
+     return userIndex.get(id);
+  }
+...
+  public void deleteUser(String id) 
+  {
+   User user = userIndex.remove(id);
+     emailIndex.remove(user.email);
+  }
+...
+  public Activity createActivity(String id, String type, String location, double distance) 
+  {
+    ...
+  }
+...</code></pre>
+<p>The unit tests should now also compile successfully.</p>
+<p>We should be in a position to run them all now - and they should pass.</p>
+<p>Looking into our <code>testdatstore.xml</code> (if we dont delete it), we can see the new format of the id:</p>
+<pre><code>&lt;object-stream&gt;
+  &lt;java.util.Stack serialization=&quot;custom&quot;&gt;
+    &lt;unserializable-parents/&gt;
+    &lt;vector&gt;
+      &lt;default&gt;
+        &lt;capacityIncrement&gt;0&lt;/capacityIncrement&gt;
+        &lt;elementCount&gt;3&lt;/elementCount&gt;
+        &lt;elementData&gt;
+          &lt;map&gt;
+            &lt;entry&gt;
+              &lt;string&gt;071b8799-56e9-48cf-9d9e-565849c8456b&lt;/string&gt;
+              &lt;models.User&gt;
+                &lt;id&gt;071b8799-56e9-48cf-9d9e-565849c8456b&lt;/id&gt;
+                &lt;firstName&gt;marge&lt;/firstName&gt;
+                &lt;lastName&gt;simpson&lt;/lastName&gt;
+                &lt;email&gt;marge@simpson.com&lt;/email&gt;
+                &lt;password&gt;secret&lt;/password&gt;
+                ...</code></pre>
+<h2>Main</h2>
+<p>Main has a single error - which we can fix now:</p>
+<pre><code> @Command(description=&quot;Add an activity&quot;)
+  public void addActivity (@Param(name=&quot;user-id&quot;)  String id,
+                           @Param(name=&quot;type&quot;)     String type,
+                           @Param(name=&quot;location&quot;) String location,
+                           @Param(name=&quot;distance&quot;) double distance)</code></pre>
+<p>The id parameter above has been changed from Long to String.</p>
+<p>You should be able to run the app successfully now.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="04">
+          <h1>Git &amp; Maven</h1>
+<p>In last weeks lab we referred to some useful utilities libraries for rendering tabular data:</p>
+<ul>
+<li><a href="https://github.com/robinhowlett/java-ascii-table">https://github.com/robinhowlett/java-ascii-table</a></li>
+</ul>
+<p>In order to use this library, you will need to do two things:</p>
+<ol>
+<li>Clone the repository onto your workstation</li>
+<li>Rebuild the project, and include the jar file into your project.</li>
+</ol>
+<p>For 1, you will need to have git installed, and then execute the following command:</p>
+<pre><code>git clone https://github.com/robinhowlett/java-ascii-table.git</code></pre>
+<p>This will replicate the project locally.</p>
+<p>For 2, you must first install maven:</p>
+<ul>
+<li><a href="https://maven.apache.org">https://maven.apache.org</a></li>
+</ul>
+<p>Make sure to follow the installation instructions for your platform (note: download the binary and not the source zip). If installed correctly, the the following command should work correctly;</p>
+<pre><code>$ mvn -version</code></pre>
+<p>This should return something like this:</p>
+<pre><code>Apache Maven 3.5.4 (1edded0938998edf8bf061f1ceb3cfdeccf443fe; 2018-06-17T19:33:14+01:00)
+Maven home: C:\dev\apache-maven-3.5.4\bin\..
+Java version: 10.0.2, vendor: Oracle Corporation, runtime: C:\Program Files\Java\jdk-10.0.2
+Default locale: en_IE, platform encoding: Cp1252
+OS name: &quot;windows 10&quot;, version: &quot;10.0&quot;, arch: &quot;amd64&quot;, family: &quot;windows&quot;</code></pre>
+<p>Next weeks topic includes an in depth review of Maven, so installing the package now is a useful preparation.</p>
+<p>Once installed, we can enter this command from inside the folder containing the project you cloned:</p>
+<pre><code>$ mvn package</code></pre>
+<p>This may take a few minutes to download and build all downstream components. It should finish successfully with something like this:</p>
+<pre><code>[INFO] Scanning for projects...
+[INFO]
+[INFO] ------------------&lt; com.bethecoder:java-ascii-table &gt;-------------------
+[INFO] Building java-ascii-table 1.0
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ java-ascii-table ---
+[INFO] Using &#39;UTF-8&#39; encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\Siobhan\eclipse-workspace\java-ascii-table\src\main\resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.2:compile (default-compile) @ java-ascii-table ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 7 source files to C:\Users\Siobhan\eclipse-workspace\java-ascii-table\target\classes
+[WARNING] bootstrap class path not set in conjunction with -source 7
+[WARNING] /C:/Users/Siobhan/eclipse-workspace/java-ascii-table/src/main/java/com/bethecoder/ascii_table/impl/CollectionASCIITableAware.java:[70,71] found raw type: java.lang.Class
+  missing type arguments for generic class java.lang.Class&lt;T&gt;
+[INFO]
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ java-ascii-table ---
+[INFO] Using &#39;UTF-8&#39; encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\Siobhan\eclipse-workspace\java-ascii-table\src\test\resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.2:testCompile (default-testCompile) @ java-ascii-table ---
+[INFO] No sources to compile
+[INFO]
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ java-ascii-table ---
+[INFO] No tests to run.
+[INFO]
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ java-ascii-table ---
+[INFO] Building jar: C:\Users\Siobhan\eclipse-workspace\java-ascii-table\target\java-ascii-table-1.0.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 9.045 s
+[INFO] Finished at: 2018-10-03T12:15:38+01:00
+[INFO] ------------------------------------------------------------------------</code></pre>
+<p>It will have generated a jar file called <code>java-ascii-table-1.0.jar</code> into the <code>./target</code> subfolder in the project. Copy this file intro your <code>pacemaker/lib</code> folder, and add the jar to your build path.</p>
+<p>The project should look like this in Eclipse:</p>
+<p><img src="img/01.png" alt=""></p>
+<p>If you are having trouble with maven - here is a version of the jar file you can use without completing the above steps:</p>
+<ul>
+<li><a href="archives/java-ascii-table-1.0.jar">java-ascii-table-1.0.jar</a></li>
+</ul>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="05">
+          <h1>ascii-table</h1>
+<p>The readme for the library:</p>
+<ul>
+<li><a href="https://github.com/robinhowlett/java-ascii-table">https://github.com/robinhowlett/java-ascii-table</a></li>
+</ul>
+<p>Contains just about enough guidance for using the library. <code>Example 5</code> is simplest way in:</p>
+<pre><code>  Employee stud = new Employee(&quot;Sriram&quot;, 2, &quot;Chess&quot;, false, 987654321.21d);
+  Employee stud2 = new Employee(&quot;Sudhakar&quot;, 29, &quot;Painting&quot;, true, 123456789.12d);
+  List&lt;Employee&gt; students = Arrays.asList(stud, stud2);
+
+  IASCIITableAware asciiTableAware = new CollectionASCIITableAware&lt;Employee&gt;(students, &quot;name&quot;, &quot;age&quot;, &quot;married&quot;, &quot;hobby&quot;, &quot;salary&quot;); 
+  ASCIITable.getInstance().printTable(asciiTableAware);</code></pre>
+<p>Which will generate this output:</p>
+<pre><code>+----------+-----+---------+----------+----------------+
+|   NAME   | AGE | MARRIED |   HOBBY  |     SALARY     |
++----------+-----+---------+----------+----------------+
+|   Sriram |   2 |   false |    Chess | 987,654,321.21 |
+| Sudhakar |  29 |    true | Painting | 123,456,789.12 |
++----------+-----+---------+----------+----------------+</code></pre>
+<p>This is relatively self explanatory. However, before engaging in our application, we need to introduce the following methods to the User class</p>
+<pre><code>  public String getFirstname() 
+  {
+    return firstName;
+  }
+
+  public String getLastname() 
+  {
+    return lastName;
+  }
+
+  public String getEmail() 
+  {
+    return email;
+  }</code></pre>
+<p>These are accessors, which the library will use in constructing the output table. </p>
+<p>Hers is a revised version of the <code>getusers()</code> method in the <code>Main</code> class:</p>
+<pre><code>  @Command(description=&quot;Get all users details&quot;)
+  public void getUsers ()
+  {
+    List&lt;User&gt; userList = new ArrayList&lt;User&gt; (paceApi.getUsers());
+    IASCIITableAware asciiTableAware = new CollectionASCIITableAware&lt;User&gt;(userList, &quot;firstname&quot;, &quot;lastname&quot;, &quot;email&quot;); 
+    ASCIITable.getInstance().printTable(asciiTableAware);
+  }</code></pre>
+<p>This should now support the following user interaction:</p>
+<pre><code>Welcome to pacemaker-console - ?help for instructions
+pm&gt; cu homer simpson homer@simpson.com secret
+pm&gt; gu
++-----------+----------+-------------------+
+| FIRSTNAME | LASTNAME |       EMAIL       |
++-----------+----------+-------------------+
+|     homer |  simpson | homer@simpson.com |
++-----------+----------+-------------------+
+
+pm&gt;</code></pre>
+<p>Looking at the above code again:</p>
+<pre><code>    // generate a List of Users from the Collection of users returned by our api. ascii-table expects a list
+    List&lt;User&gt; userList = new ArrayList&lt;User&gt; (paceApi.getUsers());
+
+    // Pass the list + the names of the field we wish to display. Note: there must be an accessor method in each 
+    //  User object matching the names precisely
+    IASCIITableAware asciiTableAware = new CollectionASCIITableAware&lt;User&gt;(userList, &quot;firstname&quot;, &quot;lastname&quot;, &quot;email&quot;); 
+
+    // print the table
+    ASCIITable.getInstance().printTable(asciiTableAware);</code></pre>
+<ul>
+<li>The component requires a List, so we create a list from the Collection returned from the getUsers() method.</li>
+<li>We create a <code>TableAware</code> object - which is paramaterised by the type of our collection (<code>User</code>) + the user list itself, the the names of the fields we wish to appear in the table. </li>
+<li>We print the table.</li>
+</ul>
+<p>NB: Where we are using camel-case attributes names (e.g <code>lastName</code>), it is very important to use convert to lower case the second capital letter (the <code>N</code> in <code>lastName</code>) when composing the accessors. This is due to a bug in the library.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="Exercises">
+          <h1>Exercises</h1>
+<p>Archive of the lab so far:</p>
+<ul>
+<li><a href="https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V5.0">https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V5.0</a></li>
+</ul>
+<h2>Exercise 1: UUID Ids for Activity &amp; Location</h2>
+<p>Consider refactoring Activity and Location classes to use an ID based on UUID as we have implemented for the User class. Make sure you also rework the tests and get used to relying on the these tests to ensure the project is evolving in an orderly manner.</p>
+<h2>Exercise 2: ASCII Table</h2>
+<p>Introduce ASCII table into all commands, following the example of step 05</p>
+<h2>Exercise 3: Joda Time</h2>
+<p>Last week we referred you to this library:</p>
+<ul>
+<li><a href="http://www.joda.org/joda-time/">http://www.joda.org/joda-time/</a></li>
+</ul>
+<p>This library arose as a result of inadequacies in date/time handing in the JDK. These have been largely resolved in Java 8, however there are some advantages to using Joda time:</p>
+<ul>
+<li>It support for Duration is simpler and more usable that Java 8</li>
+<li>Earlier JDK &amp; Android support. The Joda Time library is available for a wider range of JDK versions.</li>
+</ul>
+<p>There are, however, counter arguments. A useful discussion here:</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/24631909/differences-between-java-8-date-time-api-java-time-and-joda-time">https://stackoverflow.com/questions/24631909/differences-between-java-8-date-time-api-java-time-and-joda-time</a></li>
+</ul>
+<p>Feel free to use either in your assignment.</p>
+
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).on('keydown', function(e) {
+  e = e || window.event;
+  var nextTab;
+  switch (e.which || e.keyCode) {
+    case 37: // left
+      nextTab = $('.tab-menu a[data-tab].active').prev('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').last();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+
+    case 39: // right
+      nextTab = $('.tab-menu a[data-tab].active').next('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').first();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+  }
+});
+
+  $(document).ready(function() {
+  $('img').addClass('ui image');
+
+  $('.ui.embed').embed();
+
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass(
+        'ui basic segment',
+      );
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass(
+        'ui blue ribbon label',
+      );
+      divLabel.append($images[i].alt);
+      $(divLabel).insertBefore($images[i]);
+    }
+  });
+
+  $('.ui.menu .item').tab({
+    history: true,
+    historyType: 'hash',
+  });
+
+  $('.popup').popup();
+
+  $('.ui.sidebar')
+    .sidebar({ context: $('.pushable') })
+    .sidebar('setting', 'transition', 'slide out')
+    .sidebar('attach events', '#toc');
+});
+
+</script>
+</body>
+</html>

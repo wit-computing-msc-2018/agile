@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css" rel="stylesheet" />
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-    <style>
-      
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css"
+        type="text/css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css"
+        rel="stylesheet"/>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <style>
+    
 
 body {
   font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
@@ -57,94 +66,95 @@ h3 {
 
 
 
-    </style>
-  </head>
+  </style>
+</head>
 
-  <body>
+<body>
+
+
+
+<div class="ui fixed top pointing inverted stackable menu labmenu">
+  <header class="header item">
+    <i id="toc" class="sitemap icon"></i>
     
+      <a href="../index.html"> 3: Inheritance & Collections  </a>
     
+  </header>
+  <div class="right tab-menu menu">
+    
+      <a class="item" data-tab="Lab-03 Objects & Serialization">
+        Lab-03 Objects & Serialization
+      </a>
+    
+      <a class="item" data-tab="01">
+        01
+      </a>
+    
+      <a class="item" data-tab="02">
+        02
+      </a>
+    
+      <a class="item" data-tab="03">
+        03
+      </a>
+    
+      <a class="item" data-tab="04">
+        04
+      </a>
+    
+      <a class="item" data-tab="05">
+        05
+      </a>
+    
+      <a class="item" data-tab="Exercises">
+        Exercises
+      </a>
+    
+  </div>
+</div>
 
-    <div class="ui fixed top pointing inverted stackable menu labmenu">
-      <header class="header item">
-        <i id="toc" class="sitemap icon"></i>
-        
-          <a href="../index.html"> 3: Inheritance & Collections  </a>
-        
-      </header>
-      <div class="right tab-menu menu">
-        
-          <a class="item" data-tab="Lab-03 Objects & Serialization">
-            Lab-03 Objects & Serialization
-          </a>
-        
-          <a class="item" data-tab="01">
-            01
-          </a>
-        
-          <a class="item" data-tab="02">
-            02
-          </a>
-        
-          <a class="item" data-tab="03">
-            03
-          </a>
-        
-          <a class="item" data-tab="04">
-            04
-          </a>
-        
-          <a class="item" data-tab="05">
-            05
-          </a>
-        
-          <a class="item" data-tab="Exercises">
-            Exercises
-          </a>
-        
-      </div>
-    </div>
-
-    <div class="ui segment pushable">
-      <div class="ui inverted labeled icon left inline vertical sidebar menu">
-        <br><br>
-        
-          
-            <a class="item" href="../../topic01-paradigms-and-languages/book-eclipse-and-java/index.html">
-              Lab-01 Eclipse & Java
-            </a>
-          
-        
-          
-            <a class="item" href="../../topic02-java-language/book-cli-and-classes/index.html">
-              Lab-02 CLI & Classes
-            </a>
-          
-        
-          
-            <a class="active item" href="../../topic03-inheritance-and-collections/book-objects-and-serialization/index.html">
-              Lab-03 Objects & Serialization
-            </a>
-          
-        
-          
-            <a class="item" href="../../topic04-serialisation-and-tdd-1/book-testing/index.html">
-              Lab-04 Testing
-            </a>
-          
-        
-      </div>
-      <div class="pusher" tabindex="-1">
-        <div class="ui basic segment" id="labchat">
-          <br>
-          
-            <div  class="ui tab segment lab" data-tab="Lab-03 Objects & Serialization">
-              <h1>Objectives</h1>
+<div class="ui pushable">
+  <div class="ui inverted labeled icon left inline vertical sidebar menu">
+    <br><br>
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic01-paradigms-and-languages/book-eclipse-and-java/index.html">Lab-01 Eclipse & Java </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic02-java-language/book-cli-and-classes/index.html">Lab-02 CLI & Classes </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic03-inheritance-and-collections/book-objects-and-serialization/index.html">Lab-03 Objects & Serialization </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic04-serialisation-and-tdd-1/book-testing/index.html">Lab-04 Testing </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic05-tdd-2/book-refactoring/index.html">Lab-05 Refactoring </a>
+      
+    
+  </div>
+  <div class="pusher" tabindex="-1">
+    <div class="ui basic segment">
+      <br>
+      
+        <div class="ui tab segment lab" data-tab="Lab-03 Objects & Serialization">
+          <h1>Objectives</h1>
 <p>Extend the pacemaker application to include Activity and Location classes + associated commands. Once these are in place, incorporate a serialization mechanism to enable users &amp; activities to be persisted to a file. We will then try to generalize this mechanism, which will enable us to experiment with alternative serialization formats.</p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="01">
-              <h1>Activity &amp; Location classes</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="01">
+          <h1>Activity &amp; Location classes</h1>
 <p>These are solution classes to last weeks exercises:</p>
 <h3>Activity</h3>
 <pre><code class="lang-java">package models;
@@ -239,10 +249,10 @@ public class Location
   } 
 }</code></pre>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="02">
-              <h2>API + Commands</h2>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="02">
+          <h2>API + Commands</h2>
 <p>These are the new features for PacemakerAPI</p>
 <pre><code class="lang-java">  public void createActivity(Long id, String type, String location, double distance)
   {
@@ -314,10 +324,10 @@ pc$ pc$ pc$ pc$ pc$ pc$ pc$ pc$ pc$ pc$ pc&gt; gu
 pc&gt;</code></pre>
 <p>Commit these changes with a suitable message</p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="03">
-              <h2>Serialization</h2>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="03">
+          <h2>Serialization</h2>
 <p>We would like our system to remember our user and activity data between sessions. In lab 1 we explored the xstream component briefly. We will reuse it here to save the entire model on exit from the application, and reload on startup.</p>
 <p>Here is a refactoring of the main method to bring in load/store to the application life cycle:</p>
 <pre><code class="lang-java">  public static void main(String[] args) throws Exception
@@ -390,10 +400,10 @@ pc&gt;</code></pre>
 <p><img src="img/00.png" alt=""></p>
 <p>Commit these changes with a suitable message</p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="04">
-              <h2>Generalizing the Serializer</h2>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="04">
+          <h2>Generalizing the Serializer</h2>
 <p>We have implemnted an xstream based serialization of our model. However, we may be interested in revising this later, selecting a different format or even a different serialisation component. Lets try to abstract the serializer feature a little so we can prepare for such a switch.</p>
 <p>First, introduce into the utils package a new interface:</p>
 <pre><code class="lang-java">package utils;
@@ -814,10 +824,10 @@ pm&gt;</code></pre>
 &lt;/object-stream&gt;</code></pre>
 <p>However - there is something profoundly problematic with the above. What is it that is wrong (it is difficult to spot)?</p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="05">
-              <h2>Object References and Serialization</h2>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="05">
+          <h2>Object References and Serialization</h2>
 <p>The problem with our current serializer is that the three Maps serialized are completely independent - even though the maps in memory prior to serialization contain shared objects. This is apparent from this structural view here:</p>
 <p><img src="img/01.png" alt=""></p>
 <p>Correcting this is relatively straightforward. Object referential context is only preserved over a single writeObject operation - we have been doing several on our serializer - see the relevant fragments of the read and write methods:</p>
@@ -875,10 +885,10 @@ pm&gt;</code></pre>
     }
   }</code></pre>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="Exercises">
-              <h1>Exercises</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="Exercises">
+          <h1>Exercises</h1>
 <h2>Archive of project so far...</h2>
 <ul>
 <li><a href="https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V3.0">https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V3.0</a></li>
@@ -949,28 +959,34 @@ l       load               ()
 s       store              ()</code></pre>
 <p>Prioritize these commands from simplest to most complex, and consider tackling the simpler commands first.</p>
 
-            </div>
-          
         </div>
-      </div>
+      
     </div>
+  </div>
+</div>
 
-    <script>
-      $(document).ready(function() {
-  const $images = $('.lab img');
-  jQuery.each($images, function(i) {
-    if ($images[i].alt.length > 0) {
-      const divImg = $(document.createElement('div')).addClass('');
-      $($images[i]).wrap(divImg);
-      const divLabel = $(document.createElement('div')).addClass('uk-label uk-text-lowercase');
-      divLabel.append($images[i].alt);
-      $(divLabel).insertAfter($images[i]);
-      $('<br>').insertAfter($images[i]);
-    }
-  });
+<script>
+  $(document).on('keydown', function(e) {
+  e = e || window.event;
+  var nextTab;
+  switch (e.which || e.keyCode) {
+    case 37: // left
+      nextTab = $('.tab-menu a[data-tab].active').prev('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').last();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+
+    case 39: // right
+      nextTab = $('.tab-menu a[data-tab].active').next('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').first();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+  }
 });
 
-      $(document).ready(function() {
+  $(document).ready(function() {
   $('img').addClass('ui image');
 
   $('.ui.embed').embed();
@@ -1003,6 +1019,6 @@ s       store              ()</code></pre>
     .sidebar('attach events', '#toc');
 });
 
-    </script>
-  </body>
+</script>
+</body>
 </html>

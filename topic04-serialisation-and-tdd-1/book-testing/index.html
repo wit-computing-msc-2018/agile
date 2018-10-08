@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css" rel="stylesheet" />
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-    <style>
-      
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css"
+        type="text/css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css"
+        rel="stylesheet"/>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <style>
+    
 
 body {
   font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
@@ -57,114 +66,115 @@ h3 {
 
 
 
-    </style>
-  </head>
+  </style>
+</head>
 
-  <body>
+<body>
+
+
+
+<div class="ui fixed top pointing inverted stackable menu labmenu">
+  <header class="header item">
+    <i id="toc" class="sitemap icon"></i>
     
+      <a href="../index.html"> 4: Serialization & Test Driven Development I  </a>
     
+  </header>
+  <div class="right tab-menu menu">
+    
+      <a class="item" data-tab="Lab-04 Testing">
+        Lab-04 Testing
+      </a>
+    
+      <a class="item" data-tab="01">
+        01
+      </a>
+    
+      <a class="item" data-tab="02">
+        02
+      </a>
+    
+      <a class="item" data-tab="03">
+        03
+      </a>
+    
+      <a class="item" data-tab="04">
+        04
+      </a>
+    
+      <a class="item" data-tab="05">
+        05
+      </a>
+    
+      <a class="item" data-tab="06">
+        06
+      </a>
+    
+      <a class="item" data-tab="07">
+        07
+      </a>
+    
+      <a class="item" data-tab="08">
+        08
+      </a>
+    
+      <a class="item" data-tab="09">
+        09
+      </a>
+    
+      <a class="item" data-tab="10">
+        10
+      </a>
+    
+      <a class="item" data-tab="Exercises">
+        Exercises
+      </a>
+    
+  </div>
+</div>
 
-    <div class="ui fixed top pointing inverted stackable menu labmenu">
-      <header class="header item">
-        <i id="toc" class="sitemap icon"></i>
-        
-          <a href="../index.html"> 4: Serialization & Test Driven Development I  </a>
-        
-      </header>
-      <div class="right tab-menu menu">
-        
-          <a class="item" data-tab="Lab-04 Testing">
-            Lab-04 Testing
-          </a>
-        
-          <a class="item" data-tab="01">
-            01
-          </a>
-        
-          <a class="item" data-tab="02">
-            02
-          </a>
-        
-          <a class="item" data-tab="03">
-            03
-          </a>
-        
-          <a class="item" data-tab="04">
-            04
-          </a>
-        
-          <a class="item" data-tab="05">
-            05
-          </a>
-        
-          <a class="item" data-tab="06">
-            06
-          </a>
-        
-          <a class="item" data-tab="07">
-            07
-          </a>
-        
-          <a class="item" data-tab="08">
-            08
-          </a>
-        
-          <a class="item" data-tab="09">
-            09
-          </a>
-        
-          <a class="item" data-tab="10">
-            10
-          </a>
-        
-          <a class="item" data-tab="Exercises">
-            Exercises
-          </a>
-        
-      </div>
-    </div>
-
-    <div class="ui segment pushable">
-      <div class="ui inverted labeled icon left inline vertical sidebar menu">
-        <br><br>
-        
-          
-            <a class="item" href="../../topic01-paradigms-and-languages/book-eclipse-and-java/index.html">
-              Lab-01 Eclipse & Java
-            </a>
-          
-        
-          
-            <a class="item" href="../../topic02-java-language/book-cli-and-classes/index.html">
-              Lab-02 CLI & Classes
-            </a>
-          
-        
-          
-            <a class="item" href="../../topic03-inheritance-and-collections/book-objects-and-serialization/index.html">
-              Lab-03 Objects & Serialization
-            </a>
-          
-        
-          
-            <a class="active item" href="../../topic04-serialisation-and-tdd-1/book-testing/index.html">
-              Lab-04 Testing
-            </a>
-          
-        
-      </div>
-      <div class="pusher" tabindex="-1">
-        <div class="ui basic segment" id="labchat">
-          <br>
-          
-            <div  class="ui tab segment lab" data-tab="Lab-04 Testing">
-              <h1>Objectives</h1>
+<div class="ui pushable">
+  <div class="ui inverted labeled icon left inline vertical sidebar menu">
+    <br><br>
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic01-paradigms-and-languages/book-eclipse-and-java/index.html">Lab-01 Eclipse & Java </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic02-java-language/book-cli-and-classes/index.html">Lab-02 CLI & Classes </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic03-inheritance-and-collections/book-objects-and-serialization/index.html">Lab-03 Objects & Serialization </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic04-serialisation-and-tdd-1/book-testing/index.html">Lab-04 Testing </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic05-tdd-2/book-refactoring/index.html">Lab-05 Refactoring </a>
+      
+    
+  </div>
+  <div class="pusher" tabindex="-1">
+    <div class="ui basic segment">
+      <br>
+      
+        <div class="ui tab segment lab" data-tab="Lab-04 Testing">
+          <h1>Objectives</h1>
 <p>Equip Pacemaker with JUnit libraries and then introduce a range of tests to verify essential features. Correct issues that arise as a result of the tests, becoming familiar with the fail/pass/refactor/pass cycle. Review the outstanding command set of the application.  We will use JUnit5 in this lab.</p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="01">
-              <h1>Junit 5</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="01">
+          <h1>Junit 5</h1>
 <p>We will introduce unit testing infrastructure + unit tests to exercise the features of the app developed so far.</p>
 <p>First, locate the project properties (context menu-&gt;Build Path-&gt;Configure Build Path):</p>
 <p><img src="img/00.png" alt=""></p>
@@ -180,10 +190,10 @@ h3 {
 <h2>A note on Annotations</h2>
 <p>You will notice, during the lab, that we will be using Annotations in our test code (e.g. @Test).  When we discussed JUnit3 in lectures, test methods were recognised by their name i.e. a prefix of <em>test</em> in the method name.  JUnit4 and JUnit5 use Annotations (e.g. @Test, @Before) instead to recogise methods and determine their running order.  If you are not familiar with Annotations, don&#39;t worry...we will give a lecture on this next week.  During labs this week, you will see them in action!</p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="02">
-              <h1>LocationTest</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="02">
+          <h1>LocationTest</h1>
 <p>Create a new unit test in the new models package:</p>
 <p><img src="img/04.png" alt=""></p>
 <p>Call the test &quot;LocationTest&quot;</p>
@@ -240,10 +250,10 @@ class LocationTest {
 <p><img src="img/09.png" alt=""></p>
 <p>If your tests are failing, revisit your Location.java code and make changes to it so that the tests pass; avoid the temptation to change the tests to suit your code!</p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="03">
-              <h1>Fixtures</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="03">
+          <h1>Fixtures</h1>
 <p>We can simplify the test marginally by sharing the object initializations between tests:</p>
 <pre><code class="lang-java">package models;
 
@@ -293,10 +303,10 @@ class LocationTest {
 }</code></pre>
 <p>Read this carefully - the assertions in the tests are the same as before, with the setup/tearDown methods called before/after each individual test.  It is the setup/tearDown that creates and destroys the test data. </p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="04">
-              <h1>UserTest &amp; ActivityTest</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="04">
+          <h1>UserTest &amp; ActivityTest</h1>
 <p>Include this test in the test/models package:</p>
 <pre><code class="lang-java">package models;
 
@@ -399,10 +409,10 @@ class ActivityTest {
 <p>All these tests should pass.  You should be able to run all test in one test runner:</p>
 <p><img src="img/10.png" alt=""></p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="05">
-              <h1>Static Fixtures</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="05">
+          <h1>Static Fixtures</h1>
 <p>In preparation for testing the PacemakerAPI class, it may be useful to integrate all the static fixture data into a single <em>fixture</em> class...note this is not a JUnit Test Class; it&#39;s a regular Java class:</p>
 <pre><code class="lang-java">package models;
 
@@ -552,10 +562,10 @@ class UserTest {
 <p>Integrate these version and verify that app passes all tests.</p>
 <p>Commit these changes with a suitable message.</p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="06">
-              <h1>First PacemakerAPI Test</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="06">
+          <h1>First PacemakerAPI Test</h1>
 <p>PacemakerAPI is a more sophisticated class, whose testing will require a little more discipline and focus. We can start with a skeleton, which will include static imports + a fixture:</p>
 <pre><code class="lang-java">package controllers;
 
@@ -692,10 +702,10 @@ public class PacemakerAPITest
 <p>What, precisely, will happen when this call is triggered in Activity.equals?</p>
 <pre><code class="lang-java">          &amp;&amp; Objects.equal(route,     other.route);</code></pre>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="07">
-              <h1>More PacemakerAPITests</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="07">
+          <h1>More PacemakerAPITests</h1>
 <p>Introduce this unit test</p>
 <pre><code class="lang-java">  @Test
   public void testUsers()
@@ -802,10 +812,10 @@ public class PacemakerAPITest
 }</code></pre>
 <p>Note the adjustments made to testUser in this context.</p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="08">
-              <h1>Activities Tests</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="08">
+          <h1>Activities Tests</h1>
 <p>Right click on the PacemakerAPITest class and select &#39;Coverage As -&gt; JUnit Test&#39;.  </p>
 <p>Unfold the folder structure in the <em>Coverage</em> window until you have the following report displayed:</p>
 <p><img src="img/13.png" alt=""></p>
@@ -893,10 +903,10 @@ public class PacemakerAPITest
 <p>By adding these additional tests, we can see that our code coverage for the PacemakerAPI class has increased from 36.6% to 71.0%.  There are still a few methods that haven&#39;t been tested in the class though.  In the next step, we will look at testing the load and store methods.</p>
 <p><img src="img/15.png" alt=""></p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="09">
-              <h1>Persistence Tests</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="09">
+          <h1>Persistence Tests</h1>
 <p>In your test/controllers package, create a new test specifically for persistence:</p>
 <pre><code class="lang-java">package controllers;
 
@@ -1050,18 +1060,18 @@ class PersistenceTest {
   }</code></pre>
 <p>This is very clumsy and poorly abstracted code. Are there alternative approaches?</p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="10">
-              <h1>Test Packages</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="10">
+          <h1>Test Packages</h1>
 <p>The test classes should align with the packages they are testing. If your project does not resemble the layout below, refactor it:</p>
 <p><img src="img/12.png" alt=""></p>
 <p>It should be possible to do this just using drag and drop within the package explorer.</p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="Exercises">
-              <h1>Exercises</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="Exercises">
+          <h1>Exercises</h1>
 <p>Archive of lab so far:</p>
 <ul>
 <li><a href="https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V4.0">https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V4.0</a></li>
@@ -1131,28 +1141,34 @@ cff     change-file-format (file format: xml, json)</code></pre>
 <p>... and there are others.</p>
 <p>If you are relatively new to Java, incorporating these libraries may be challenging. In next weeks lab we will explore how to introduce one of these libraries into the project.</p>
 
-            </div>
-          
         </div>
-      </div>
+      
     </div>
+  </div>
+</div>
 
-    <script>
-      $(document).ready(function() {
-  const $images = $('.lab img');
-  jQuery.each($images, function(i) {
-    if ($images[i].alt.length > 0) {
-      const divImg = $(document.createElement('div')).addClass('');
-      $($images[i]).wrap(divImg);
-      const divLabel = $(document.createElement('div')).addClass('uk-label uk-text-lowercase');
-      divLabel.append($images[i].alt);
-      $(divLabel).insertAfter($images[i]);
-      $('<br>').insertAfter($images[i]);
-    }
-  });
+<script>
+  $(document).on('keydown', function(e) {
+  e = e || window.event;
+  var nextTab;
+  switch (e.which || e.keyCode) {
+    case 37: // left
+      nextTab = $('.tab-menu a[data-tab].active').prev('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').last();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+
+    case 39: // right
+      nextTab = $('.tab-menu a[data-tab].active').next('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').first();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+  }
 });
 
-      $(document).ready(function() {
+  $(document).ready(function() {
   $('img').addClass('ui image');
 
   $('.ui.embed').embed();
@@ -1185,6 +1201,6 @@ cff     change-file-format (file format: xml, json)</code></pre>
     .sidebar('attach events', '#toc');
 });
 
-    </script>
-  </body>
+</script>
+</body>
 </html>
