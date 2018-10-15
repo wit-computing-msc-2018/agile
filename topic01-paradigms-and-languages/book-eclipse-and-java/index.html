@@ -1,29 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css"
-        type="text/css">
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css"
-        rel="stylesheet"/>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script type="text/javascript"
-          src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
-  <script type="text/javascript"
-          src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
-  <script type="text/javascript"
-          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script type="text/javascript"
-          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
-  <script type="text/javascript"
-          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
-  <style>
-    
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <style>
+      
 
 body {
   font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
@@ -66,107 +57,118 @@ h3 {
 
 
 
-  </style>
-</head>
+    </style>
+  </head>
 
-<body>
+  <body>
+    
+    
 
+    <div class="ui fixed top pointing inverted stackable menu labmenu">
+      <header class="header item">
+        <i id="toc" class="sitemap icon"></i>
+        
+          <a href="../index.html"> 1: Paradigms & Languages  </a>
+        
+      </header>
+      <div class="right tab-menu menu">
+        
+          <a class="item" data-tab="Lab-01 Eclipse & Java">
+            Lab-01 Eclipse & Java
+          </a>
+        
+          <a class="item" data-tab="01">
+            01
+          </a>
+        
+          <a class="item" data-tab="02">
+            02
+          </a>
+        
+          <a class="item" data-tab="03">
+            03
+          </a>
+        
+          <a class="item" data-tab="04">
+            04
+          </a>
+        
+          <a class="item" data-tab="05">
+            05
+          </a>
+        
+          <a class="item" data-tab="06">
+            06
+          </a>
+        
+          <a class="item" data-tab="07">
+            07
+          </a>
+        
+          <a class="item" data-tab="08">
+            08
+          </a>
+        
+          <a class="item" data-tab="Exercises">
+            Exercises
+          </a>
+        
+      </div>
+    </div>
 
-
-<div class="ui fixed top pointing inverted stackable menu labmenu">
-  <header class="header item">
-    <i id="toc" class="sitemap icon"></i>
-    
-      <a href="../index.html"> 1: Paradigms & Languages  </a>
-    
-  </header>
-  <div class="right tab-menu menu">
-    
-      <a class="item" data-tab="Lab-01 Eclipse & Java">
-        Lab-01 Eclipse & Java
-      </a>
-    
-      <a class="item" data-tab="01">
-        01
-      </a>
-    
-      <a class="item" data-tab="02">
-        02
-      </a>
-    
-      <a class="item" data-tab="03">
-        03
-      </a>
-    
-      <a class="item" data-tab="04">
-        04
-      </a>
-    
-      <a class="item" data-tab="05">
-        05
-      </a>
-    
-      <a class="item" data-tab="06">
-        06
-      </a>
-    
-      <a class="item" data-tab="07">
-        07
-      </a>
-    
-      <a class="item" data-tab="08">
-        08
-      </a>
-    
-      <a class="item" data-tab="Exercises">
-        Exercises
-      </a>
-    
-  </div>
-</div>
-
-<div class="ui pushable">
-  <div class="ui inverted labeled icon left inline vertical sidebar menu">
-    <br><br>
-    
-      
-        <a class="item"
-           href="https://wit-computing-msc-2018.github.io/agile//topic01-paradigms-and-languages/book-eclipse-and-java/index.html">Lab-01 Eclipse & Java </a>
-      
-    
-      
-        <a class="item"
-           href="https://wit-computing-msc-2018.github.io/agile//topic02-java-language/book-cli-and-classes/index.html">Lab-02 CLI & Classes </a>
-      
-    
-      
-        <a class="item"
-           href="https://wit-computing-msc-2018.github.io/agile//topic03-inheritance-and-collections/book-objects-and-serialization/index.html">Lab-03 Objects & Serialization </a>
-      
-    
-      
-        <a class="item"
-           href="https://wit-computing-msc-2018.github.io/agile//topic04-serialisation-and-tdd-1/book-testing/index.html">Lab-04 Testing </a>
-      
-    
-      
-        <a class="item"
-           href="https://wit-computing-msc-2018.github.io/agile//topic05-tdd-2/book-refactoring/index.html">Lab-05 Refactoring </a>
-      
-    
-  </div>
-  <div class="pusher" tabindex="-1">
-    <div class="ui basic segment">
-      <br>
-      
-        <div class="ui tab segment lab" data-tab="Lab-01 Eclipse & Java">
-          <h1>Objectives</h1>
+    <div class="ui segment pushable">
+      <div class="ui inverted labeled icon left inline vertical sidebar menu">
+        <br><br>
+        
+          
+            <a class="active item" href="../../topic01-paradigms-and-languages/book-eclipse-and-java/index.html">
+              Lab-01 Eclipse & Java
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic02-java-language/book-cli-and-classes/index.html">
+              Lab-02 CLI & Classes
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic03-inheritance-and-collections/book-objects-and-serialization/index.html">
+              Lab-03 Objects & Serialization
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic04-serialisation-and-tdd-1/book-testing/index.html">
+              Lab-04 Testing
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic05-tdd-2/book-refactoring/index.html">
+              Lab-05 Refactoring
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic06-exceptions-and-maven/book-maven/index.html">
+              Lab-06 Maven
+            </a>
+          
+        
+      </div>
+      <div class="pusher" tabindex="-1">
+        <div class="ui basic segment" id="labchat">
+          <br>
+          
+            <div  class="ui tab segment lab" data-tab="Lab-01 Eclipse & Java">
+              <h1>Objectives</h1>
 <p>The objective of this lab is to install and configure your development workstation and to bring into focus some of the terms and concepts covered in the opening lecture.</p>
 
-        </div>
-      
-        <div class="ui tab segment lab" data-tab="01">
-          <h1>Install JDK</h1>
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="01">
+              <h1>Install JDK</h1>
 <p>The first step is to locate the Java Software Development Kit in this Oracle web site:</p>
 <ul>
 <li><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></li>
@@ -193,10 +195,10 @@ Java HotSpot(TM) 64-Bit Server VM 18.3 (build 10.0.2+13, mixed mode)
 C:\Users\Siobhan&gt;</code></pre>
 <p>It might look slightly difference depending on your system. However, we are looking for 10.x.x version.</p>
 
-        </div>
-      
-        <div class="ui tab segment lab" data-tab="02">
-          <h1>Install Eclipse</h1>
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="02">
+              <h1>Install Eclipse</h1>
 <p>Eclipse is a free, open source, Integrated Development Environment for Java. We will use it during the labs as the main environment for writing, testing and exploring Java programs.</p>
 <p>Visit the Eclipse web site:</p>
 <ul>
@@ -211,10 +213,10 @@ C:\Users\Siobhan&gt;</code></pre>
 <p><img src="img/02.png" alt=""></p>
 <p>Note: it is advisable to switch to the &quot;Java Perspective&quot;, if it is not displayed automatically for you.</p>
 
-        </div>
-      
-        <div class="ui tab segment lab" data-tab="03">
-          <h1>HelloWorld</h1>
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="03">
+              <h1>HelloWorld</h1>
 <p>We will now create our first Java Application. We do this by first creating a Java project, selecting File-&gt;New-&gt;Java Project.</p>
 <p>Call the project HelloJava:</p>
 <p><img src="img/04.png" alt=""></p>
@@ -250,10 +252,10 @@ Select the src node in the HelloJava project and right click (to bring up the co
 <p>Pressing it again will expand ....</p>
 <p><img src="img/50.png" alt=""></p>
 
-        </div>
-      
-        <div class="ui tab segment lab" data-tab="04">
-          <h1>Data Structure</h1>
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="04">
+              <h1>Data Structure</h1>
 <p>Create a new project called <strong>pacemaker-console</strong>. Do this by selecting &#39;File-&gt;New-&gt;Java Project&#39;. Fill out the <strong>New Java Project</strong> wizard as shown:</p>
 <p><img src="img/51.png" alt=""></p>
 <p>Press &quot;Finish&quot;.  When the <strong>Create Module</strong> wizard window appears, click the <strong>Don&#39;t Create</strong> button.</p>
@@ -307,10 +309,10 @@ public class Main
 <p>Launch the application as follows. Do this by selecting &quot;Main.java&quot; in the Package Explorer and select &quot;Run-&gt;Run As-&gt;Java Application&quot;. This executes the application (running the <em>main</em> method) which in turn prints output to the console.</p>
 <p><img src="img/57.png" alt=""></p>
 
-        </div>
-      
-        <div class="ui tab segment lab" data-tab="05">
-          <h1>Debug</h1>
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="05">
+              <h1>Debug</h1>
 <p>Now explore the &quot;users&quot; data structure in the debugger: Editing the Main.java source file, double click inside the scroll bar on first line of the main method:</p>
 <p><img src="img/58.png" alt=""></p>
 <p>This creates a breakpoint (visually a small blue bubble). Run the program again: - this time under the debugger. With the &#39;pacemaker-console&#39; project open, select these options from the toolbar...Run-&gt; Debug.</p>
@@ -332,10 +334,10 @@ public class Main
 <p><img src="img/56.png" alt=""></p>
 <p>If you are not familiar with debugging in eclipse, spend some time repeating the above steps. In particular, hover over the various tool bar buttons visible in the debug perspective to get an general understanding of how to control and explore a running application.</p>
 
-        </div>
-      
-        <div class="ui tab segment lab" data-tab="06">
-          <h1>Git Version Control</h1>
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="06">
+              <h1>Git Version Control</h1>
 <p>Before moving on to the next step - we will commit this project to &#39;git&#39; version control.</p>
 <p>First, right click on the project and select &#39;Team-&gt;Share Project&#39;</p>
 <p><img src="img/x01.png" alt=""></p>
@@ -358,10 +360,10 @@ public class Main
 <p>Although we haven&#39;t saved this to any external server, we have preserved the applications current structure.</p>
 <p>You may be more familiar with the git command line or another git visual client.</p>
 
-        </div>
-      
-        <div class="ui tab segment lab" data-tab="07">
-          <h1>Pattern</h1>
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="07">
+              <h1>Pattern</h1>
 <p>Create a new package in the eclipse project, called &#39;utils&#39; and introduce the following class into that package:</p>
 <pre><code class="lang-java">package utils;
 
@@ -438,10 +440,10 @@ public class FileLogger
 <p>Notice the changes in the package explorer icons:</p>
 <p><img src="img/x16.png" alt=""></p>
 
-        </div>
-      
-        <div class="ui tab segment lab" data-tab="08">
-          <h1>Component</h1>
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="08">
+              <h1>Component</h1>
 <p>Download the following XStream jar file:</p>
 <ul>
 <li><a href="../book-eclipse-and-java/archives/xstream-1.4.10.jar">xstream-1.4.10.jar</a></li>
@@ -507,10 +509,10 @@ import utils.FileLogger;</code></pre>
 <p>We have used a component (xstream) to convert an internal data structure into an XML stream, which we have written to a file on our harddisk.</p>
 <p>See if you can commit the changes we have just made to git.</p>
 
-        </div>
-      
-        <div class="ui tab segment lab" data-tab="Exercises">
-          <h1>Exercises</h1>
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="Exercises">
+              <h1>Exercises</h1>
 <h2>Lab Archive</h2>
 <p>You can find the solution to the previous steps on this github repo (along with a separate solution to these exercises):</p>
 <ul>
@@ -551,34 +553,28 @@ import utils.FileLogger;</code></pre>
 <li><a href="http://mytourbook.sourceforge.net/mytourbook/">http://mytourbook.sourceforge.net/mytourbook/</a></li>
 </ul>
 
+            </div>
+          
         </div>
-      
+      </div>
     </div>
-  </div>
-</div>
 
-<script>
-  $(document).on('keydown', function(e) {
-  e = e || window.event;
-  var nextTab;
-  switch (e.which || e.keyCode) {
-    case 37: // left
-      nextTab = $('.tab-menu a[data-tab].active').prev('a[data-tab]');
-      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').last();
-      nextTab.click();
-      $('.pusher').focus();
-      break;
-
-    case 39: // right
-      nextTab = $('.tab-menu a[data-tab].active').next('a[data-tab]');
-      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').first();
-      nextTab.click();
-      $('.pusher').focus();
-      break;
-  }
+    <script>
+      $(document).ready(function() {
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass('');
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass('uk-label uk-text-lowercase');
+      divLabel.append($images[i].alt);
+      $(divLabel).insertAfter($images[i]);
+      $('<br>').insertAfter($images[i]);
+    }
+  });
 });
 
-  $(document).ready(function() {
+      $(document).ready(function() {
   $('img').addClass('ui image');
 
   $('.ui.embed').embed();
@@ -611,6 +607,6 @@ import utils.FileLogger;</code></pre>
     .sidebar('attach events', '#toc');
 });
 
-</script>
-</body>
+    </script>
+  </body>
 </html>
