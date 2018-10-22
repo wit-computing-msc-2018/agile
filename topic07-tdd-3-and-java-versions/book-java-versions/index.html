@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <style>
+      
+
+body {
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+  font-size:90%;
+  color: black;
+}
+
+p {
+  margin: 0.5em;
+}
+
+pre code {
+  font-family: "Monaco";
+  font-size: 100%;
+}
+
+img {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin:10px;
+}
+
+h1, h2, h3 {
+  border-bottom:thin solid black;
+  margin-bottom: 0.5em;
+  margin-top: 1em;
+}
+
+h1 {
+  font-style:italic;
+  font-size:130%;
+}
+
+h2 {
+  font-size:110%;
+}
+
+h3 {
+  font-size:100%;
+}
+
+
+
+    </style>
+  </head>
+
+  <body>
+    
+    
+
+    <div class="ui fixed top pointing inverted stackable menu labmenu">
+      <header class="header item">
+        <i id="toc" class="sitemap icon"></i>
+        
+          <a href="../index.html"> 7. TDDIII and Java Evolution  </a>
+        
+      </header>
+      <div class="right tab-menu menu">
+        
+          <a class="item" data-tab="Lab-07 Java Versions">
+            Lab-07 Java Versions
+          </a>
+        
+          <a class="item" data-tab="01">
+            01
+          </a>
+        
+          <a class="item" data-tab="02">
+            02
+          </a>
+        
+          <a class="item" data-tab="03">
+            03
+          </a>
+        
+          <a class="item" data-tab="04">
+            04
+          </a>
+        
+          <a class="item" data-tab="05">
+            05
+          </a>
+        
+          <a class="item" data-tab="06">
+            06
+          </a>
+        
+          <a class="item" data-tab="07">
+            07
+          </a>
+        
+          <a class="item" data-tab="Exercises">
+            Exercises
+          </a>
+        
+      </div>
+    </div>
+
+    <div class="ui segment pushable">
+      <div class="ui inverted labeled icon left inline vertical sidebar menu">
+        <br><br>
+        
+          
+            <a class="item" href="../../topic01-paradigms-and-languages/book-eclipse-and-java/index.html">
+              Lab-01 Eclipse & Java
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic02-java-language/book-cli-and-classes/index.html">
+              Lab-02 CLI & Classes
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic03-inheritance-and-collections/book-objects-and-serialization/index.html">
+              Lab-03 Objects & Serialization
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic04-serialisation-and-tdd-1/book-testing/index.html">
+              Lab-04 Testing
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic05-tdd-2/book-refactoring/index.html">
+              Lab-05 Refactoring
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic06-exceptions-and-maven/book-maven/index.html">
+              Lab-06 Maven
+            </a>
+          
+        
+          
+            <a class="active item" href="../../topic07-tdd-3-and-java-versions/book-java-versions/index.html">
+              Lab-07 Java Versions
+            </a>
+          
+        
+      </div>
+      <div class="pusher" tabindex="-1">
+        <div class="ui basic segment" id="labchat">
+          <br>
+          
+            <div  class="ui tab segment lab" data-tab="Lab-07 Java Versions">
+              <h2>Objectives</h2>
+<p>In the previous lab, you incorporated Maven into your pacemaker-console app.  In this lab, we will bring in some of the new features from Java 7 onwards.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="01">
+              <h1>Eclipse - checking settings</h1>
+<p>In this step, we will verify that our Eclipse settings for our latest version of pacemaker-console-maven are ok.</p>
+<h2>JRE10</h2>
+<p>First make sure that your Eclipse project has Java10 on its build path.  You can check it by selecting the following from the tool bar:</p>
+<p><em>Window &gt; Preferences &gt; Java &gt; Installed JREs</em></p>
+<p><img src="img/01.png" alt=""></p>
+<p>If JRE10 is not listed, add it.</p>
+<h2>Compiler Compliance</h2>
+<p>With the <em>Java Preferences</em> open, check the <em>Compiler</em> settings.  If the compiler compliance level is not set to <strong>10</strong>, select this now and apply the settings (you may be asked if you want to do a full rebuild...you do!).  </p>
+<h2>Maven Test</h2>
+<p>Open a new console window, navigate to the workspace folder for this project.  Enter the following command to make sure that your project is building and testing successfully:</p>
+<pre><code>mvn test</code></pre>
+<p>Maven should return with something similar to this, indicating that your project is compiling and also the tests are running:</p>
+<pre><code>[INFO] Results:
+[INFO]
+[INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 6.939 s
+[INFO] Finished at: 2018-10-09T12:15:00+01:00
+[INFO] ------------------------------------------------------------------------</code></pre>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="02">
+              <h1>Java 7</h1>
+<p>We are going to implement try-with-resources and also multiple exceptions handling in this step.</p>
+<h2>try-with-resources</h2>
+<p>In <em>BinarySerializer.java</em>, you will notice that we are using a try-catch block in both the <em>read</em> and <em>write</em> methods:</p>
+<pre><code class="lang-java">  @SuppressWarnings(&quot;unchecked&quot;)
+  public void read() throws Exception
+  {
+    ObjectInputStream is = null;
+
+    try
+    {
+      is = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
+      stack = (Stack) is.readObject();
+    }
+    finally
+    {
+      if (is != null)
+      {
+        is.close();
+      }
+    }
+  }
+
+  public void write() throws Exception
+  {
+    ObjectOutputStream os = null;
+
+    try
+    {
+      os = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+      os.writeObject(stack);
+    }
+    finally
+    {
+      if (os != null)
+      {
+        os.close();
+      }
+    }
+  }
+}</code></pre>
+<p>Re-write this code to use the try-with-resources construct:</p>
+<pre><code class="lang-java">  @SuppressWarnings(&quot;unchecked&quot;)
+  public void read() throws Exception
+  {
+    try (ObjectInputStream is = new ObjectInputStream(
+                                    new BufferedInputStream(
+                                        new FileInputStream(file)))){
+      stack = (Stack) is.readObject();
+    }
+  }
+
+  public void write() throws Exception
+  {
+    try (ObjectOutputStream os = new ObjectOutputStream(
+                                    new BufferedOutputStream(
+                                        new FileOutputStream(file)))) {
+      os.writeObject(stack);
+    }
+  }</code></pre>
+<h2>Testing the change</h2>
+<p>First, run the <em>mvn install</em> command to build, test, package and install your app.</p>
+<p>Once that was successful, run the <strong>launch</strong> script that you wrote in the previous lab and make sure the binary loading and saving is working as expected.</p>
+<h2>What about the XML and JSON serializers?</h2>
+<p>As the XStream component does not implement the AutoClosable interface, we cannot use try-with-resources here.  This is definitely a drawback of the XStream componment; we are really starting to see that component choice and the cadence of componenets can hamper the use of newer language constructs.  If a component does not keep up to date with the new language constructs, it can become obsolete quite quickly.</p>
+<h2>Multiple Exception Handling (FileLogger.java)</h2>
+<p>Currently the <em>log</em> method in FileLogger.java is:</p>
+<pre><code class="lang-java">
+  public boolean log(String msg)
+  {
+    try
+    {
+      PrintWriter writer = new PrintWriter(new FileWriter(&quot;log.txt&quot;, true));
+      writer.println(msg);
+      writer.close();
+    }
+    catch (FileNotFoundException ex)
+    {
+      return (false);
+    }
+    catch (IOException ex)
+    {
+      return (false);
+    }
+    return (true);
+  }</code></pre>
+<p>We can use the try-with-resources approach here and also the <em>multiple exception handling</em> approach here.  Make the following changes to the above method:</p>
+<pre><code class="lang-java">  public boolean log(String msg)
+  {
+    try (PrintWriter writer = new PrintWriter(new FileWriter(&quot;log.txt&quot;, true))) {
+      writer.println(msg);
+      writer.close();
+    }
+    catch (FileNotFoundException|IOException ex)
+    {
+      return (false);
+    }
+    return (true);
+  }</code></pre>
+<p>This will result in a compile error:</p>
+<p><img src="img/02.png" alt=""></p>
+<p>Remove the offending exception.  Your method should now look like this:</p>
+<pre><code class="lang-java">  public boolean log(String msg)
+  {
+    try (PrintWriter writer = new PrintWriter(new FileWriter(&quot;log.txt&quot;, true))) {
+      writer.println(msg);
+      writer.close();
+    }
+    catch (IOException ex)
+    {
+      return (false);
+    }
+    return (true);
+  }</code></pre>
+<p>Already, you can see that the verbosity of your code is starting to reduce. </p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="03">
+              <h1>Java 8 - Interfaces</h1>
+<p>In this step, we will add a default method to our Serializer inferface and override it in our applicable serializer concrete classes.</p>
+<h2>Default methods</h2>
+<p>Add the following default method to your Serializer interface:</p>
+<pre><code class="lang-java">  default String serializerFormat() {
+      return &quot;Serializer Format is...&quot;;
+  }</code></pre>
+<p>Note: you can recompile the app at this stage and the interface update hasn&#39;t broken it. </p>
+<p>Now, in the XMLSerializer.java, add the following method:</p>
+<pre><code class="lang-java">    @Override
+    public String serializerFormat() {
+      return Serializer.super.serializerFormat() + &quot;XML&quot;;
+    }</code></pre>
+<p>Add a similar method in each of the other serializers...just replace <em>XML</em> with the actual serializer type.  </p>
+<p>Note: we can override default interface methods.  Also note that our code will compile even if we don&#39;t provide an overriden implementation in each class that <em>implements Serializer</em>. </p>
+<p>In Main.java, we will now provide an additional command, <em>csf</em> that will check the serializer format and print the current format to the shell.</p>
+<pre><code class="lang-java">    @Command(description = &quot;Current Serialization Format&quot;)
+    public void currentSerialisationFormat() {
+        System.out.println(paceApi.getSerializer().serializerFormat());
+    }</code></pre>
+<p>This code will require the following getter in PacemakerAPI.java:</p>
+<pre><code class="lang-java">    public Serializer getSerializer() {
+        return serializer;
+    }</code></pre>
+<p>Save the changes and run <em>mvn install</em> followed by your launch.bat script.  </p>
+<p>When the shell appears, test the new <em>csf</em> command:</p>
+<pre><code>Welcome to pacemaker-console - ?help for instructions
+pm&gt; csf
+Serializer Format is...Binary
+pm&gt;</code></pre>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="04">
+              <h1>Java 8 - Lambdas and Streams</h1>
+<p>Before we start working on Java 8 Lambdas and Streams, we are first going to generate some test data in the console.</p>
+<h2>Setting up test data scripts</h2>
+<p>Create three new .script files in your route directory called:</p>
+<ul>
+<li>newusers.script</li>
+<li>newactivities.script</li>
+<li>newroutes.script</li>
+</ul>
+<p>In each of them, copy the following commands (please note that we only changed the User class to have UUID; the Activity and Location class still use Long, as this was part of the exercises):</p>
+<p>newusers.script: this script will create 5 new users and assign a UUID</p>
+<pre><code>cu homer simpsom homer@simpson.com secret
+cu marge simpson marge@simpson.com secret
+cu maggie simpson maggie@simpson.com secret
+cu maggie simpson maggie@simpson.com secret
+cu lisa simpson lisa@simpson.com secret</code></pre>
+<p>newactivities.script:  this script will add activities for two users; we will need to change the generated id before running this</p>
+<pre><code>aa 3b01194f-9140-44f0-941a-e1a69ac79315 walk fridge 1.0
+aa 3b01194f-9140-44f0-941a-e1a69ac79315 walk bar 3.0
+aa 3b01194f-9140-44f0-941a-e1a69ac79315 run work 2.2
+aa 2cfc62ad-4ef7-4ca4-b323-90cf2a41b0b7 walk shop 2.5
+aa 2cfc62ad-4ef7-4ca4-b323-90cf2a41b0b7 cycle shop 4.5</code></pre>
+<p>newroutes.script: create a series of locations for two activites</p>
+<pre><code>al 2 23.3 32.3
+al 2 23.3 32.5
+al 2 23.3 32.6
+al 3 11.3 2.3
+al 3 3.3 2.5
+al 3 33.3 13.6
+al 3 13.3 15.3
+al 3 53.3 52.5
+al 3 43.3 44.4</code></pre>
+<h2>Running the test data scripts</h2>
+<p>Delete any XML, JSON, etc datastore files that you have.  </p>
+<p>Change your app to serialise to either XML / JSON (something human readable!).</p>
+<p>From the command line, launch your app.</p>
+<p>Run the newusers.script by using the following command:</p>
+<pre><code>!rs newusers.script</code></pre>
+<p>This should create 5 new users...you can check this using the <em>gu</em> command. </p>
+<p>Exit the app - this should persist your data to a datastore file.</p>
+<p>Open this datastore file and copy the UUID from any two of the users you created.</p>
+<p>Update the newactivities.script file with the two new UUIDs, replacing the existing UUIDs.</p>
+<p>Restart the app and run the newactivities.script by using the following command:</p>
+<pre><code>!rs newactivities.script</code></pre>
+<p>Then run the newroutes.script before exiting the app.</p>
+<p>Re-open your datastore file and you should now have users, activities and locations store in it.  </p>
+<p>We are now ready to add some Java8 features!</p>
+<p>For reference, if you are using XML serialisation, your test data should look something similar to this:</p>
+<pre><code class="lang-xml">&lt;object-stream&gt;
+  &lt;java.util.Stack serialization=&quot;custom&quot;&gt;
+    &lt;unserializable-parents/&gt;
+    &lt;vector&gt;
+      &lt;default&gt;
+        &lt;capacityIncrement&gt;0&lt;/capacityIncrement&gt;
+        &lt;elementCount&gt;3&lt;/elementCount&gt;
+        &lt;elementData&gt;
+          &lt;map&gt;
+            &lt;entry&gt;
+              &lt;string&gt;77659618-256c-49da-a9dd-ec23821653d7&lt;/string&gt;
+              &lt;models.User&gt;
+                &lt;id&gt;77659618-256c-49da-a9dd-ec23821653d7&lt;/id&gt;
+                &lt;firstName&gt;maggie&lt;/firstName&gt;
+                &lt;lastName&gt;simpson&lt;/lastName&gt;
+                &lt;email&gt;maggie@simpson.com&lt;/email&gt;
+                &lt;password&gt;secret&lt;/password&gt;
+                &lt;activities/&gt;
+              &lt;/models.User&gt;
+            &lt;/entry&gt;
+            &lt;entry&gt;
+              &lt;string&gt;b982b4b3-3af7-4fee-b198-e633f8ea06e3&lt;/string&gt;
+              &lt;models.User&gt;
+                &lt;id&gt;b982b4b3-3af7-4fee-b198-e633f8ea06e3&lt;/id&gt;
+                &lt;firstName&gt;lisa&lt;/firstName&gt;
+                &lt;lastName&gt;simpson&lt;/lastName&gt;
+                &lt;email&gt;lisa@simpson.com&lt;/email&gt;
+                &lt;password&gt;secret&lt;/password&gt;
+                &lt;activities&gt;
+                  &lt;entry&gt;
+                    &lt;long&gt;0&lt;/long&gt;
+                    &lt;models.Activity&gt;
+                      &lt;id&gt;0&lt;/id&gt;
+                      &lt;type&gt;walk&lt;/type&gt;
+                      &lt;location&gt;fridge&lt;/location&gt;
+                      &lt;distance&gt;1.0&lt;/distance&gt;
+                      &lt;route/&gt;
+                    &lt;/models.Activity&gt;
+                  &lt;/entry&gt;
+                  &lt;entry&gt;
+                    &lt;long&gt;1&lt;/long&gt;
+                    &lt;models.Activity&gt;
+                      &lt;id&gt;1&lt;/id&gt;
+                      &lt;type&gt;walk&lt;/type&gt;
+                      &lt;location&gt;bar&lt;/location&gt;
+                      &lt;distance&gt;3.0&lt;/distance&gt;
+                      &lt;route/&gt;
+                    &lt;/models.Activity&gt;
+                  &lt;/entry&gt;
+                  &lt;entry&gt;
+                    &lt;long&gt;2&lt;/long&gt;
+                    &lt;models.Activity&gt;
+                      &lt;id&gt;2&lt;/id&gt;
+                      &lt;type&gt;run&lt;/type&gt;
+                      &lt;location&gt;work&lt;/location&gt;
+                      &lt;distance&gt;2.2&lt;/distance&gt;
+                      &lt;route&gt;
+                        &lt;models.Location&gt;
+                          &lt;id&gt;0&lt;/id&gt;
+                          &lt;latitude&gt;23.3&lt;/latitude&gt;
+                          &lt;longitude&gt;32.3&lt;/longitude&gt;
+                        &lt;/models.Location&gt;
+                        &lt;models.Location&gt;
+                          &lt;id&gt;1&lt;/id&gt;
+                          &lt;latitude&gt;23.3&lt;/latitude&gt;
+                          &lt;longitude&gt;32.5&lt;/longitude&gt;
+                        &lt;/models.Location&gt;
+                        &lt;models.Location&gt;
+                          &lt;id&gt;2&lt;/id&gt;
+                          &lt;latitude&gt;23.3&lt;/latitude&gt;
+                          &lt;longitude&gt;32.6&lt;/longitude&gt;
+                        &lt;/models.Location&gt;
+                      &lt;/route&gt;
+                    &lt;/models.Activity&gt;
+                  &lt;/entry&gt;
+                &lt;/activities&gt;
+              &lt;/models.User&gt;
+            &lt;/entry&gt;
+            &lt;entry&gt;
+              &lt;string&gt;27c2cec4-85ed-4894-bfc8-4edbe56147cf&lt;/string&gt;
+              &lt;models.User&gt;
+                &lt;id&gt;27c2cec4-85ed-4894-bfc8-4edbe56147cf&lt;/id&gt;
+                &lt;firstName&gt;maggie&lt;/firstName&gt;
+                &lt;lastName&gt;simpson&lt;/lastName&gt;
+                &lt;email&gt;maggie@simpson.com&lt;/email&gt;
+                &lt;password&gt;secret&lt;/password&gt;
+                &lt;activities/&gt;
+              &lt;/models.User&gt;
+            &lt;/entry&gt;
+            &lt;entry&gt;
+              &lt;string&gt;d3eb5a9e-1f41-4bf2-a1df-e7892d3a7f6f&lt;/string&gt;
+              &lt;models.User&gt;
+                &lt;id&gt;d3eb5a9e-1f41-4bf2-a1df-e7892d3a7f6f&lt;/id&gt;
+                &lt;firstName&gt;homer&lt;/firstName&gt;
+                &lt;lastName&gt;simpsom&lt;/lastName&gt;
+                &lt;email&gt;homer@simpson.com&lt;/email&gt;
+                &lt;password&gt;secret&lt;/password&gt;
+                &lt;activities/&gt;
+              &lt;/models.User&gt;
+            &lt;/entry&gt;
+            &lt;entry&gt;
+              &lt;string&gt;784e4220-6081-4431-8e57-64ad7d92e287&lt;/string&gt;
+              &lt;models.User&gt;
+                &lt;id&gt;784e4220-6081-4431-8e57-64ad7d92e287&lt;/id&gt;
+                &lt;firstName&gt;marge&lt;/firstName&gt;
+                &lt;lastName&gt;simpson&lt;/lastName&gt;
+                &lt;email&gt;marge@simpson.com&lt;/email&gt;
+                &lt;password&gt;secret&lt;/password&gt;
+                &lt;activities&gt;
+                  &lt;entry&gt;
+                    &lt;long&gt;3&lt;/long&gt;
+                    &lt;models.Activity&gt;
+                      &lt;id&gt;3&lt;/id&gt;
+                      &lt;type&gt;walk&lt;/type&gt;
+                      &lt;location&gt;shop&lt;/location&gt;
+                      &lt;distance&gt;2.5&lt;/distance&gt;
+                      &lt;route&gt;
+                        &lt;models.Location&gt;
+                          &lt;id&gt;3&lt;/id&gt;
+                          &lt;latitude&gt;11.3&lt;/latitude&gt;
+                          &lt;longitude&gt;2.3&lt;/longitude&gt;
+                        &lt;/models.Location&gt;
+                        &lt;models.Location&gt;
+                          &lt;id&gt;4&lt;/id&gt;
+                          &lt;latitude&gt;3.3&lt;/latitude&gt;
+                          &lt;longitude&gt;2.5&lt;/longitude&gt;
+                        &lt;/models.Location&gt;
+                        &lt;models.Location&gt;
+                          &lt;id&gt;5&lt;/id&gt;
+                          &lt;latitude&gt;33.3&lt;/latitude&gt;
+                          &lt;longitude&gt;13.6&lt;/longitude&gt;
+                        &lt;/models.Location&gt;
+                        &lt;models.Location&gt;
+                          &lt;id&gt;6&lt;/id&gt;
+                          &lt;latitude&gt;13.3&lt;/latitude&gt;
+                          &lt;longitude&gt;15.3&lt;/longitude&gt;
+                        &lt;/models.Location&gt;
+                        &lt;models.Location&gt;
+                          &lt;id&gt;7&lt;/id&gt;
+                          &lt;latitude&gt;53.3&lt;/latitude&gt;
+                          &lt;longitude&gt;52.5&lt;/longitude&gt;
+                        &lt;/models.Location&gt;
+                        &lt;models.Location&gt;
+                          &lt;id&gt;8&lt;/id&gt;
+                          &lt;latitude&gt;43.3&lt;/latitude&gt;
+                          &lt;longitude&gt;44.4&lt;/longitude&gt;
+                        &lt;/models.Location&gt;
+                      &lt;/route&gt;
+                    &lt;/models.Activity&gt;
+                  &lt;/entry&gt;
+                  &lt;entry&gt;
+                    &lt;long&gt;4&lt;/long&gt;
+                    &lt;models.Activity&gt;
+                      &lt;id&gt;4&lt;/id&gt;
+                      &lt;type&gt;cycle&lt;/type&gt;
+                      &lt;location&gt;shop&lt;/location&gt;
+                      &lt;distance&gt;4.5&lt;/distance&gt;
+                      &lt;route/&gt;
+                    &lt;/models.Activity&gt;
+                  &lt;/entry&gt;
+                &lt;/activities&gt;
+              &lt;/models.User&gt;
+            &lt;/entry&gt;
+          &lt;/map&gt;
+          &lt;map&gt;
+            &lt;entry&gt;
+              &lt;string&gt;homer@simpson.com&lt;/string&gt;
+              &lt;models.User reference=&quot;../../../map/entry[4]/models.User&quot;/&gt;
+            &lt;/entry&gt;
+            &lt;entry&gt;
+              &lt;string&gt;lisa@simpson.com&lt;/string&gt;
+              &lt;models.User reference=&quot;../../../map/entry[2]/models.User&quot;/&gt;
+            &lt;/entry&gt;
+            &lt;entry&gt;
+              &lt;string&gt;marge@simpson.com&lt;/string&gt;
+              &lt;models.User reference=&quot;../../../map/entry[5]/models.User&quot;/&gt;
+            &lt;/entry&gt;
+            &lt;entry&gt;
+              &lt;string&gt;maggie@simpson.com&lt;/string&gt;
+              &lt;models.User reference=&quot;../../../map/entry[3]/models.User&quot;/&gt;
+            &lt;/entry&gt;
+          &lt;/map&gt;
+          &lt;map&gt;
+            &lt;entry&gt;
+              &lt;long&gt;0&lt;/long&gt;
+              &lt;models.Activity reference=&quot;../../../map/entry[2]/models.User/activities/entry/models.Activity&quot;/&gt;
+            &lt;/entry&gt;
+            &lt;entry&gt;
+              &lt;long&gt;1&lt;/long&gt;
+              &lt;models.Activity reference=&quot;../../../map/entry[2]/models.User/activities/entry[2]/models.Activity&quot;/&gt;
+            &lt;/entry&gt;
+            &lt;entry&gt;
+              &lt;long&gt;2&lt;/long&gt;
+              &lt;models.Activity reference=&quot;../../../map/entry[2]/models.User/activities/entry[3]/models.Activity&quot;/&gt;
+            &lt;/entry&gt;
+            &lt;entry&gt;
+              &lt;long&gt;3&lt;/long&gt;
+              &lt;models.Activity reference=&quot;../../../map/entry[5]/models.User/activities/entry/models.Activity&quot;/&gt;
+            &lt;/entry&gt;
+            &lt;entry&gt;
+              &lt;long&gt;4&lt;/long&gt;
+              &lt;models.Activity reference=&quot;../../../map/entry[5]/models.User/activities/entry[2]/models.Activity&quot;/&gt;
+            &lt;/entry&gt;
+          &lt;/map&gt;
+          &lt;null/&gt;
+          &lt;null/&gt;
+          &lt;null/&gt;
+          &lt;null/&gt;
+          &lt;null/&gt;
+          &lt;null/&gt;
+          &lt;null/&gt;
+        &lt;/elementData&gt;
+      &lt;/default&gt;
+    &lt;/vector&gt;
+  &lt;/java.util.Stack&gt;
+&lt;/object-stream&gt;</code></pre>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="05">
+              <h1>Java 8 - Lambdas &amp; Streams</h1>
+<p>We will now add a new feature that will utilise both Lambdas and Streams to perform processing on the User collection.</p>
+<h2>New Report</h2>
+<p>We are going to write a report that will print out the &quot;active&quot; users to the console.  Our code will assume that an active user is one that has activities added.</p>
+<p>Add the following code to Main.java:</p>
+<pre><code class="lang-java">    @Command(description = &quot;Report active users&quot;)
+    public void reportActiveUsers() {
+
+       List&lt;User&gt; userList = new ArrayList&lt;User&gt; (paceApi.getUsers());
+
+       List&lt;User&gt; activeUsers = userList
+                                    .stream()
+                                    .filter(p -&gt; p.activities.isEmpty() == false)
+                                    .collect(Collectors.toList());
+
+        System.out.println(activeUsers);
+    }</code></pre>
+<p>This code will create a new command, rau, that will print our all users whose &#39;activities&#39; collection is not empty.  This code uses a lambda expression with streams.</p>
+<p>When you run this code, you will get the following output:</p>
+<pre><code>pm&gt; rau
+[User{lisa, simpson, lisa@simpson.com, secret, {0=Activity{0, walk, fridge, 1.0, []}, 1=Activity{1, walk, bar, 3.0, []}, 2=Activity{2, run, work, 2.2, [Location{0, 23.3, 32.3}, Location{1, 23.3, 32.5}, Location{2, 23.3, 32.6}]}}}, User{marge, simpson, marge@simpson.com, secret, {3=Activity{3, walk, shop, 2.5, [Location{3, 11.3, 2.3}, Location{4, 3.3, 2.5}, Location{5, 33.3, 13.6}, Location{6, 13.3, 15.3}, Location{7, 53.3, 52.5}, Location{8, 43.3, 44.4}]}, 4=Activity{4, cycle, shop, 4.5, []}}}]</code></pre>
+<p>Let&#39;s refactor the code to reduce the lines of code, then we can work on the console output.</p>
+<p>Change the code to be one statement; note there will be no change in the output format (verify this by running the app):</p>
+<pre><code class="lang-java">    @Command(description = &quot;Report active users&quot;)
+    public void reportActiveUsers() {
+
+       System.out.println(paceApi.getUsers()
+                            .stream()
+                            .filter(p -&gt; p.activities.isEmpty() == false)
+                            .collect(Collectors.toList())
+                          );
+
+    }</code></pre>
+<p>Now lets work on the console output.  Using the ASCII table code from the <em>gu</em> command, refactor the method to be:</p>
+<pre><code class="lang-java">@Command(description = &quot;Report active users&quot;)
+    public void reportActiveUsers() {
+
+          IASCIITableAware asciiTableAware = new CollectionASCIITableAware&lt;User&gt;(
+               paceApi.getUsers()
+                      .stream()
+                   .filter(p -&gt; p.activities.isEmpty() == false)
+                   .collect(Collectors.toList()), 
+            &quot;firstname&quot;, &quot;lastname&quot;, &quot;email&quot;, &quot;activities&quot;); 
+
+          ASCIITable.getInstance().printTable(asciiTableAware);
+    }</code></pre>
+<p>Our output will look like this:</p>
+<pre><code>pm&gt; rau
++-----------+----------+-------------------+----------------+
+| FIRSTNAME | LASTNAME |       EMAIL       |    ACTIVITIES  |
++-----------+----------+-------------------+----------------+
+|      lisa |  simpson |  lisa@simpson.com |    null        |
+|     marge |  simpson | marge@simpson.com |    null        |
++-----------+----------+-------------------+----------------+</code></pre>
+<p>Note that you probably have a <em>null</em> in the activites column.  This is appearing because you don&#39;t have an accessor in the User class for the activities property.  Add this accessor in User:</p>
+<pre><code class="lang-java"> public Map&lt;Long, Activity&gt; getActivities() {
+        return activities;
+  }</code></pre>
+<p>Now rerun the command and your output will look something like this mess:</p>
+<pre><code class="lang-java">+-----------+----------+-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| FIRSTNAME | LASTNAME |       EMAIL       |                                                                                                         ACTIVITIES                                                                                                         |
++-----------+----------+-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|      lisa |  simpson |  lisa@simpson.com |                                      {0=Activity{0, walk, fridge, 1.0, []}, 1=Activity{1, walk, bar, 3.0, []}, 2=Activity{2, run, work, 2.2, [Location{0, 23.3, 32.3}, Location{1, 23.3, 32.5}, Location{2, 23.3, 32.6}]}} |
+|     marge |  simpson | marge@simpson.com | {3=Activity{3, walk, shop, 2.5, [Location{3, 11.3, 2.3}, Location{4, 3.3, 2.5}, Location{5, 33.3, 13.6}, Location{6, 13.3, 15.3}, Location{7, 53.3, 52.5}, Location{8, 43.3, 44.4}]}, 4=Activity{4, cycle, shop, 4.5, []}} |
++-----------+----------+-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</code></pre>
+<p>We definitely need to fix this!!!  Maybe it would be better if we just printed the number of activities instead of the actual activities?  </p>
+<p>To do this, add the following accessor into the User class:</p>
+<pre><code class="lang-java">  public int getActivitiessize() {
+        return activities.size();
+  }</code></pre>
+<p>Now make the following change to the reporting method...just change <em>activities</em> to <em>activitiessize</em>:</p>
+<pre><code class="lang-java">    public void reportActiveUsers() {
+
+              IASCIITableAware asciiTableAware = new CollectionASCIITableAware&lt;User&gt;(
+                   paceApi.getUsers()
+                          .stream()
+                       .filter(p -&gt; p.activities.isEmpty() == false)
+                       .collect(Collectors.toList()), 
+                &quot;firstname&quot;, &quot;lastname&quot;, &quot;email&quot;, &quot;activitiessize&quot;); 
+
+              ASCIITable.getInstance().printTable(asciiTableAware);
+    }</code></pre>
+<p>Rerun and you should have this output:</p>
+<pre><code>+-----------+----------+-------------------+----------------+
+| FIRSTNAME | LASTNAME |       EMAIL       | ACTIVITIESSIZE |
++-----------+----------+-------------------+----------------+
+|      lisa |  simpson |  lisa@simpson.com |              3 |
+|     marge |  simpson | marge@simpson.com |              2 |
++-----------+----------+-------------------+----------------+</code></pre>
+<p>The column heading <em>ACTIVITIESSIZE</em> is not great...it would be better if it said, <em>NUMBER OF ACTIVITIES</em>.  Make the following code changes to the reporting method:</p>
+<pre><code class="lang-java">    @Command(description = &quot;Report active users&quot;)
+    public void reportActiveUsers() {
+
+        IASCIITableAware asciiTableAware = 
+                //data for the table
+                new CollectionASCIITableAware&lt;User&gt;(
+                        paceApi.getUsers()
+                        .stream()
+                        .filter(p -&gt; p.activities.isEmpty() == false)
+                        .collect(Collectors.toList()), 
+                        //properties to read (using getter methods)
+                        Arrays.asList(&quot;firstname&quot;, &quot;lastname&quot;, &quot;email&quot;, &quot;activitiessize&quot;), 
+                        //custom headers for the table
+                        Arrays.asList(&quot;First Name&quot;, &quot;LastName&quot;, &quot;Email&quot;, &quot;Number of Activities&quot;)); 
+
+        ASCIITable.getInstance().printTable(asciiTableAware);
+    }</code></pre>
+<p>Now rerun and you should have the following output:</p>
+<pre><code>+------------+----------+-------------------+----------------------+
+| FIRST NAME | LASTNAME |       EMAIL       | NUMBER OF ACTIVITIES |
++------------+----------+-------------------+----------------------+
+|       lisa |  simpson |  lisa@simpson.com |                    3 |
+|      marge |  simpson | marge@simpson.com |                    2 |
++------------+----------+-------------------+----------------------+</code></pre>
+<p>You have now used Lambdas and Streams in this new command.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="06">
+              <h2>Java 9 updates</h2>
+<p>We will use the new collection factory methods in our new command, Report Active Users.  </p>
+<h2>New Collection Factory Methods</h2>
+<p>Currently the report active users method looks like this:</p>
+<pre><code class="lang-java">    @Command(description = &quot;Report active users&quot;)
+    public void reportActiveUsers() {
+
+        IASCIITableAware asciiTableAware = 
+                //data for the table
+                new CollectionASCIITableAware&lt;User&gt;(
+                        paceApi.getUsers()
+                        .stream()
+                        .filter(p -&gt; p.activities.isEmpty() == false)
+                        .collect(Collectors.toList()), 
+                        //properties to read (using getter methods)
+                        Arrays.asList(&quot;firstname&quot;, &quot;lastname&quot;, &quot;email&quot;, &quot;activitiessize&quot;), 
+                        //custom headers for the table
+                        Arrays.asList(&quot;First Name&quot;, &quot;LastName&quot;, &quot;Email&quot;, &quot;Number of Activities&quot;)); 
+
+        ASCIITable.getInstance().printTable(asciiTableAware);
+    }</code></pre>
+<p>Change the <em>Arrays.asList</em> to the new factory method <em>List.of</em>:</p>
+<pre><code class="lang-java">    @Command(description = &quot;Report active users&quot;)
+    public void reportActiveUsers() {
+
+        IASCIITableAware asciiTableAware = 
+                //data for the table
+                new CollectionASCIITableAware&lt;User&gt;(
+                        paceApi.getUsers()
+                        .stream()
+                        .filter(p -&gt; p.activities.isEmpty() == false)
+                        .collect(Collectors.toList()), 
+                        //properties to read (using getter methods)
+                        List.of(&quot;firstname&quot;, &quot;lastname&quot;, &quot;email&quot;, &quot;activitiessize&quot;), 
+                        //custom headers for the table
+                        List.of(&quot;First Name&quot;, &quot;Last Name&quot;, &quot;Email&quot;, &quot;Number of Activities&quot;)); 
+
+        ASCIITable.getInstance().printTable(asciiTableAware);
+
+    }</code></pre>
+<p>Use maven to install these changes and re-test the app.  There should be no noticable changes to at console level:</p>
+<pre><code>+------------+-----------+-------------------+----------------------+
+| FIRST NAME | LAST NAME |       EMAIL       | NUMBER OF ACTIVITIES |
++------------+-----------+-------------------+----------------------+
+|       lisa |   simpson |  lisa@simpson.com |                    3 |
+|      marge |   simpson | marge@simpson.com |                    2 |
++------------+-----------+-------------------+----------------------+</code></pre>
+<h2>Refactoring the code slightly</h2>
+<p>Now that we have a new getActivities() method in the User class, we can replace this line of code:</p>
+<pre><code class="lang-java">.filter(p -&gt; p.activities.isEmpty() == false)</code></pre>
+<p>with this:</p>
+<pre><code class="lang-java">.filter(p -&gt; !p.getActivities().isEmpty())</code></pre>
+<p>It makes it slightly more readable!</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="07">
+              <h1>Java 10 updates</h1>
+<p>This is the last change that we will make.  We will use the new identifier <em>var</em>.</p>
+<h2>Local variable type inference</h2>
+<p>A new identifier named <em>var</em> is now available for local variables with non-null initializers. Using this identifier, the type of the variable is inferred from the context.</p>
+<h2>Report Active Users method</h2>
+<p>Returning to our new command, report active users, change the declaration of the asciiTableAware variable like this:</p>
+<pre><code class="lang-java">    @Command(description = &quot;Report active users&quot;)
+    public void reportActiveUsers() {
+
+        var asciiTableAware = 
+                //data for the table
+                new CollectionASCIITableAware&lt;User&gt;(
+                        paceApi.getUsers()
+                        .stream()
+                        .filter(p -&gt; !p.getActivities().isEmpty())
+                        .collect(Collectors.toList()), 
+                        //properties to read (using getter methods)
+                        List.of(&quot;firstname&quot;, &quot;lastname&quot;, &quot;email&quot;, &quot;activitiessize&quot;), 
+                        //custom headers for the table
+                        List.of(&quot;First Name&quot;, &quot;Last Name&quot;, &quot;Email&quot;, &quot;Number of Activities&quot;)); 
+
+        ASCIITable.getInstance().printTable(asciiTableAware);    
+    }</code></pre>
+<p>Now refactor all local variables in Main.java to be <em>var</em>.</p>
+<p>As you replace the variable declaration with var, you will notice that your IDE starts highlighting import statements that are <em>no longer required</em>.  Remove these import statements.  Your code should look less verbose now with the use of <em>var</em>.</p>
+<p>Your Main.java will look something like this:</p>
+<pre><code class="lang-java">package controllers;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.bethecoder.ascii_table.ASCIITable;
+import com.bethecoder.ascii_table.impl.CollectionASCIITableAware;
+import com.google.common.base.Optional;
+
+import asg.cliche.Command;
+import asg.cliche.Param;
+import asg.cliche.ShellFactory;
+import models.User;
+import utils.XMLSerializer;
+
+public class Main {
+
+    PacemakerAPI paceApi;
+
+    public Main() throws Exception
+    {
+        //XML Serializer
+        var datastore = new File(&quot;datastore.xml&quot;);
+        var serializer = new XMLSerializer(datastore);
+
+        //JSON Serializer
+        //File  datastore = new File(&quot;datastore.json&quot;);
+        //Serializer serializer = new JSONSerializer(datastore);
+
+        //Binary Serializer
+        //File  datastore = new File(&quot;datastore.txt&quot;);
+        //Serializer serializer = new BinarySerializer(datastore);
+
+        paceApi = new PacemakerAPI(serializer);
+        if (datastore.isFile())
+        {
+            paceApi.load();
+        }
+    }
+
+    @Command(description = &quot;Create a new User&quot;)
+    public void createUser(@Param(name = &quot;first name&quot;) String firstName, @Param(name = &quot;last name&quot;) String lastName,
+            @Param(name = &quot;email&quot;) String email, @Param(name = &quot;password&quot;) String password) {
+        paceApi.createUser(firstName, lastName, email, password);
+    }
+
+    @Command(description = &quot;Get a Users details&quot;)
+    public void getUser(@Param(name = &quot;email&quot;) String email) {
+        var user = paceApi.getUserByEmail(email);
+        System.out.println(user);
+    }
+
+    @Command(description=&quot;Get all users details&quot;)
+    public void getUsers ()
+    {
+        var userList = new ArrayList&lt;User&gt; (paceApi.getUsers());
+        var asciiTableAware = new CollectionASCIITableAware&lt;User&gt;(userList, &quot;firstname&quot;, &quot;lastname&quot;, &quot;email&quot;); 
+        ASCIITable.getInstance().printTable(asciiTableAware);
+    }
+
+    @Command(description = &quot;Delete a User&quot;)
+    public void deleteUser(@Param(name = &quot;email&quot;) String email) {
+        var user = Optional.fromNullable(paceApi.getUserByEmail(email));
+        if (user.isPresent()) {
+            paceApi.deleteUser(user.get().id);
+        }
+    }
+
+    @Command(description = &quot;Add an activity&quot;)
+    public void addActivity(@Param(name = &quot;user-id&quot;) String id, @Param(name = &quot;type&quot;) String type,
+            @Param(name = &quot;location&quot;) String location, @Param(name = &quot;distance&quot;) double distance) {
+        var user = Optional.fromNullable(paceApi.getUser(id));
+        if (user.isPresent()) {
+            paceApi.createActivity(id, type, location, distance);
+        }
+    }
+
+    @Command(description = &quot;Add Location to an activity&quot;)
+    public void addLocation(@Param(name = &quot;activity-id&quot;) Long id, @Param(name = &quot;latitude&quot;) float latitude,
+            @Param(name = &quot;longitude&quot;) float longitude) {
+        var activity = Optional.fromNullable(paceApi.getActivity(id));
+        if (activity.isPresent()) {
+            paceApi.addLocation(activity.get().id, latitude, longitude);
+        }
+    }
+
+    @Command(description = &quot;Current Serialization Format&quot;)
+    public void currentSerialisationFormat() {
+        System.out.println(paceApi.getSerializer().serializerFormat());
+    }
+
+    @Command(description = &quot;Report active users&quot;)
+    public void reportActiveUsers() {
+
+        var asciiTableAware = 
+                //data for the table
+                new CollectionASCIITableAware&lt;User&gt;(
+                        paceApi.getUsers()
+                        .stream()
+                        .filter(p -&gt; !p.getActivities().isEmpty())
+                        .collect(Collectors.toList()), 
+                        //properties to read (using getter methods)
+                        List.of(&quot;firstname&quot;, &quot;lastname&quot;, &quot;email&quot;, &quot;activitiessize&quot;), 
+                        //custom headers for the table
+                        List.of(&quot;First Name&quot;, &quot;Last Name&quot;, &quot;Email&quot;, &quot;Number of Activities&quot;)); 
+
+        ASCIITable.getInstance().printTable(asciiTableAware);
+
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        var main = new Main();
+
+        var shell = ShellFactory.createConsoleShell(&quot;pm&quot;, &quot;Welcome to pacemaker-console - ?help for instructions&quot;, main);
+        shell.commandLoop();
+
+        main.paceApi.store();
+    }
+}</code></pre>
+<p>Now run <em>mvn install</em> and also re-test your app from the console to make sure all is ok.  </p>
+<h2>Refactor your code base to use var</h2>
+<p>Refactor all the local variables in src/main/java to use <em>var</em>.  Notice how handy the JUnit tests are during this refactoring process!</p>
+<p>As an exercise:</p>
+<ul>
+<li><p>try changing one of the attributes in your model classes to <em>var</em> (e.g. userIndex HashMap).  An error message will be generated.  <em>var</em> is only applicable to local variables.</p>
+</li>
+<li><p>try changing a local variable that has been initialised to null.  This will also generate a syntax error.  The type cannot be inferred in this case, so the compiler will not allow it. </p>
+</li>
+</ul>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="Exercises">
+              <h1>Exercises</h1>
+<p>The complete maven project so far:</p>
+<ul>
+<li><a href="https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V7.0">https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V7.0</a></li>
+</ul>
+<h2>Exercise 1</h2>
+<p>The purpose of the previous steps was to incorporate some Java 7-10 capabilities into the source code for the maven build of <strong>pacemaker-console-maven</strong>.  </p>
+<p>You are now in a position to refactor your pacemaker tests to include Java 7-10 capabilities, should you wish to do so.</p>
+<h2>Exercise 2</h2>
+<p>Consider updating your assignment work completed to-date with Java 7-10 capabilities, in particular for the sorting.  Use of Streams and Lambdas in particular would be a nice addition to your assignment. </p>
+
+            </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function() {
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass('');
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass('uk-label uk-text-lowercase');
+      divLabel.append($images[i].alt);
+      $(divLabel).insertAfter($images[i]);
+      $('<br>').insertAfter($images[i]);
+    }
+  });
+});
+
+      $(document).ready(function() {
+  $('img').addClass('ui image');
+
+  $('.ui.embed').embed();
+
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass(
+        'ui basic segment',
+      );
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass(
+        'ui blue ribbon label',
+      );
+      divLabel.append($images[i].alt);
+      $(divLabel).insertBefore($images[i]);
+    }
+  });
+
+  $('.ui.menu .item').tab({
+    history: true,
+    historyType: 'hash',
+  });
+
+  $('.popup').popup();
+
+  $('.ui.sidebar')
+    .sidebar({ context: $('.pushable') })
+    .sidebar('setting', 'transition', 'slide out')
+    .sidebar('attach events', '#toc');
+});
+
+    </script>
+  </body>
+</html>
