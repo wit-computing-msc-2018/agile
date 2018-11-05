@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css"
+        type="text/css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css"
+        rel="stylesheet"/>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <style>
+    
+
+body {
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+  font-size:90%;
+  color: black;
+}
+
+p {
+  margin: 0.5em;
+}
+
+pre code {
+  font-family: "Monaco";
+  font-size: 100%;
+}
+
+img {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin:10px;
+}
+
+h1, h2, h3 {
+  border-bottom:thin solid black;
+  margin-bottom: 0.5em;
+  margin-top: 1em;
+}
+
+h1 {
+  font-style:italic;
+  font-size:130%;
+}
+
+h2 {
+  font-size:110%;
+}
+
+h3 {
+  font-size:100%;
+}
+
+
+
+  </style>
+</head>
+
+<body>
+
+
+
+<div class="ui fixed top pointing inverted stackable menu labmenu">
+  <header class="header item">
+    <i id="toc" class="sitemap icon"></i>
+    
+      <a href="../index.html"> 8: SRP and Assignment 1 Solution  </a>
+    
+  </header>
+  <div class="right tab-menu menu">
+    
+      <a class="item" data-tab="Lab-08 Skeleton">
+        Lab-08 Skeleton
+      </a>
+    
+      <a class="item" data-tab="01">
+        01
+      </a>
+    
+      <a class="item" data-tab="02">
+        02
+      </a>
+    
+      <a class="item" data-tab="03">
+        03
+      </a>
+    
+      <a class="item" data-tab="04">
+        04
+      </a>
+    
+      <a class="item" data-tab="05">
+        05
+      </a>
+    
+      <a class="item" data-tab="06">
+        06
+      </a>
+    
+      <a class="item" data-tab="Exercises">
+        Exercises
+      </a>
+    
+  </div>
+</div>
+
+<div class="ui pushable">
+  <div class="ui inverted labeled icon left inline vertical sidebar menu">
+    <br><br>
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic01-paradigms-and-languages/book-eclipse-and-java/index.html">Lab-01 Eclipse & Java </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic02-java-language/book-cli-and-classes/index.html">Lab-02 CLI & Classes </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic03-inheritance-and-collections/book-objects-and-serialization/index.html">Lab-03 Objects & Serialization </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic04-serialisation-and-tdd-1/book-testing/index.html">Lab-04 Testing </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic05-tdd-2/book-refactoring/index.html">Lab-05 Refactoring </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic06-exceptions-and-maven/book-maven/index.html">Lab-06 Maven </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic07-tdd-3-and-java-versions/book-java-versions/index.html">Lab-07 Java Versions </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-a-pacemaker-soln-models/index.html">Lab-07a Pacemaker Models </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-b-pacemaker-soln-api/index.html">Lab-07b Pacemaker API </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-c-assignmment-2-skeleton/index.html">Lab-08 Skeleton </a>
+      
+    
+  </div>
+  <div class="pusher" tabindex="-1">
+    <div class="ui basic segment">
+      <br>
+      
+        <div class="ui tab segment lab" data-tab="Lab-08 Skeleton">
+          <h1>Objectives</h1>
+<p>Develop a baseline for Assignment 2, to include a simplified version of pacemaker application developed so far</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="01">
+          <h1>Setup</h1>
+<p>Create a new folder to contain the project. To might call it &#39;pacemaker-skeleton&#39;</p>
+<h2>Directory Structure</h2>
+<p>In this folder, create the following directory structure:</p>
+<pre><code>pacemaker-skeleton
+     │
+     └── src
+         │
+         ├── main
+         │   │ 
+         │   └──java
+         │
+         └── test
+             │
+             └──java</code></pre>
+<h2>pom.xml</h2>
+<p>In the root of the folder, create the pom.xml file:</p>
+<pre><code>&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+  &lt;groupId&gt;pacemaker&lt;/groupId&gt;
+  &lt;artifactId&gt;pacemaker-skeleton&lt;/artifactId&gt;
+  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+  &lt;packaging&gt;jar&lt;/packaging&gt;
+
+  &lt;name&gt;pacemaker-skeleton&lt;/name&gt;
+  &lt;url&gt;http://maven.apache.org&lt;/url&gt;
+
+  &lt;properties&gt;
+    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
+    &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
+  &lt;/properties&gt;
+
+  &lt;build&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+        &lt;configuration&gt;
+          &lt;source&gt;1.8&lt;/source&gt;
+          &lt;target&gt;1.8&lt;/target&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;junit&lt;/groupId&gt;
+      &lt;artifactId&gt;junit&lt;/artifactId&gt;
+      &lt;version&gt;4.12&lt;/version&gt;
+      &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.google.guava&lt;/groupId&gt;
+      &lt;artifactId&gt;guava&lt;/artifactId&gt;
+      &lt;version&gt;23.0&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.googlecode.clichemaven&lt;/groupId&gt;
+      &lt;artifactId&gt;cliche&lt;/artifactId&gt;
+      &lt;version&gt;110413&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;java-ascii-table&lt;/groupId&gt;
+      &lt;artifactId&gt;java-ascii-table&lt;/artifactId&gt;
+      &lt;version&gt;1.0&lt;/version&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+&lt;/project&gt;</code></pre>
+<p>if you are using git, you might wish to use this .gitignore:</p>
+<pre><code>.idea
+target
+*.iml
+.settings
+.classpath
+.project</code></pre>
+<p>We can now bring this project into Eclipse. Select File-Import, and locate Maven-&gt;Existing Maven Project:</p>
+<p><img src="img/01.png" alt=""></p>
+<p>The project should look like this:</p>
+<p><img src="img/02.png" alt=""></p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="02">
+          <h1>Models</h1>
+<p>In Eclipse, create following package in the main/java source folder:</p>
+<ul>
+<li>models</li>
+</ul>
+<p>Here are revised and simplified models for this package:</p>
+<h2>Location</h2>
+<pre><code>package models;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
+
+import java.io.Serializable;
+import java.util.UUID;
+
+import com.google.common.base.Objects;
+
+public class Location implements Serializable {
+
+  public String id;
+  public double longitude;
+  public double latitude;
+
+  public Location() {
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public double getLongitude() {
+    return longitude;
+  }
+
+  public double getLatitude() {
+    return latitude;
+  }
+
+  public Location(double latitude, double longitude) {
+    this.id = UUID.randomUUID().toString();
+    this.latitude = latitude;
+    this.longitude = longitude;
+  }
+
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (obj instanceof Location) {
+      final Location other = (Location) obj;
+      return Objects.equal(latitude, other.latitude)
+          &amp;&amp; Objects.equal(longitude, other.longitude);
+    } else {
+      return false;
+    }
+  }
+
+  @Override
+  public String toString() {
+    return toStringHelper(this).addValue(id)
+        .addValue(latitude)
+        .addValue(longitude)
+        .toString();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.id, this.latitude, this.longitude);
+  }
+}</code></pre>
+<h2>Activity</h2>
+<pre><code>package models;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import com.google.common.base.Objects;
+
+public class Activity implements Serializable {
+
+  public String id;
+  public String type;
+  public String location;
+  public double distance;
+
+  public List&lt;Location&gt; route = new ArrayList&lt;&gt;();
+
+  public Activity() {
+  }
+
+  public Activity(String type, String location, double distance) {
+    this.id = UUID.randomUUID().toString();
+    this.type = type;
+    this.location = location;
+    this.distance = distance;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public String getDistance() {
+    return Double.toString(distance);
+  }
+
+  public String getRoute() {
+    return route.toString();
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (obj instanceof Activity) {
+      final Activity other = (Activity) obj;
+      return Objects.equal(type, other.type)
+          &amp;&amp; Objects.equal(location, other.location)
+          &amp;&amp; Objects.equal(distance, other.distance)
+          &amp;&amp; Objects.equal(route, other.route);
+    } else {
+      return false;
+    }
+  }
+
+  @Override
+  public String toString() {
+    return toStringHelper(this).addValue(id)
+        .addValue(type)
+        .addValue(location)
+        .addValue(distance)
+        .addValue(route)
+        .toString();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.id, this.type, this.location, this.distance);
+  }
+}</code></pre>
+<h2>User</h2>
+<pre><code>package models;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import com.google.common.base.Objects;
+
+public class User implements Serializable {
+
+  public String id;
+  public String firstName;
+  public String lastName;
+  public String email;
+  public String password;
+
+  public Map&lt;String, Activity&gt; activities = new HashMap&lt;&gt;();
+
+  public User() {
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public String getFirstname() {
+    return firstName;
+  }
+
+  public String getLastname() {
+    return lastName;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public User(String firstName, String lastName, String email, String password) {
+    this.id = UUID.randomUUID().toString();
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.password = password;
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (obj instanceof User) {
+      final User other = (User) obj;
+      return Objects.equal(firstName, other.firstName)
+          &amp;&amp; Objects.equal(lastName, other.lastName)
+          &amp;&amp; Objects.equal(email, other.email)
+          &amp;&amp; Objects.equal(password, other.password)
+          &amp;&amp; Objects.equal(activities, other.activities);
+    } else {
+      return false;
+    }
+  }
+
+  @Override
+  public String toString() {
+    return toStringHelper(this).addValue(id)
+        .addValue(firstName)
+        .addValue(lastName)
+        .addValue(password)
+        .addValue(email)
+        .addValue(activities)
+        .toString();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.id, this.lastName, this.firstName, this.email, this.password);
+  }
+}</code></pre>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="03">
+          <h1>Parsers</h1>
+<p>In Eclipse, create following package in the main/java source folder:</p>
+<ul>
+<li>parsers</li>
+</ul>
+<p>Here are class for this package:</p>
+<h2>Parser</h2>
+<pre><code>package parsers;
+
+import java.util.Collection;
+import java.util.List;
+import models.Activity;
+import models.Location;
+import models.User;
+
+public class Parser {
+
+  public void println(String s) {
+    System.out.println(s);
+  }
+
+  public void renderUser(User user) {
+    System.out.println(user.toString());
+  }
+
+  public void renderUsers(Collection&lt;User&gt; users) {
+    System.out.println(users.toString());
+  }
+
+  public void renderActivity(Activity activities) {
+    System.out.println(activities.toString());
+  }
+
+  public void renderActivities(Collection&lt;Activity&gt; activities) {
+    System.out.println(activities.toString());
+  }
+
+  public void renderLocations(List&lt;Location&gt; locations) {
+    System.out.println(locations.toString());
+  }
+}</code></pre>
+<h2>ASCIITableParser</h2>
+<pre><code>package parsers;
+
+import com.bethecoder.ascii_table.ASCIITable;
+import com.bethecoder.ascii_table.impl.CollectionASCIITableAware;
+import com.bethecoder.ascii_table.spec.IASCIITableAware;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import models.Activity;
+import models.Location;
+import models.User;
+
+public class AsciiTableParser extends Parser {
+
+  public void renderUser(User user) {
+    if (user != null) {
+      renderUsers(Arrays.asList(user));
+      System.out.println(&quot;ok&quot;);
+    } else {
+      System.out.println(&quot;not found&quot;);
+    }
+  }
+
+  public void renderUsers(Collection&lt;User&gt; users) {
+    if (users != null) {
+      if (!users.isEmpty()) {
+        List&lt;User&gt; userList = new ArrayList&lt;User&gt;(users);
+        IASCIITableAware asciiTableAware = new CollectionASCIITableAware&lt;User&gt;(userList, &quot;id&quot;,
+            &quot;firstname&quot;,
+            &quot;lastname&quot;, &quot;email&quot;);
+        System.out.println(ASCIITable.getInstance().getTable(asciiTableAware));
+      }
+      System.out.println(&quot;ok&quot;);
+    } else {
+      System.out.println(&quot;not found&quot;);
+    }
+  }
+
+  public void renderActivity(Activity activity) {
+    if (activity != null) {
+      renderActivities(Arrays.asList(activity));
+      System.out.println(&quot;ok&quot;);
+    } else {
+      System.out.println(&quot;not found&quot;);
+    }
+  }
+
+  public void renderActivities(Collection&lt;Activity&gt; activities) {
+    if (activities != null) {
+      if (!activities.isEmpty()) {
+        List&lt;Activity&gt; activityList = new ArrayList(activities);
+        IASCIITableAware asciiTableAware = new CollectionASCIITableAware&lt;Activity&gt;(activityList,
+            &quot;id&quot;,
+            &quot;type&quot;, &quot;location&quot;, &quot;distance&quot;, &quot;starttime&quot;, &quot;duration&quot;);
+        System.out.println(ASCIITable.getInstance().getTable(asciiTableAware));
+      }
+      System.out.println(&quot;ok&quot;);
+    } else {
+      System.out.println(&quot;not found&quot;);
+    }
+  }
+
+  public void renderLocations(List&lt;Location&gt; locations) {
+    if (locations != null) {
+      if (!locations.isEmpty()) {
+        IASCIITableAware asciiTableAware = new CollectionASCIITableAware&lt;Location&gt;(locations,
+            &quot;id&quot;,
+            &quot;latitude&quot;, &quot;longitude&quot;);
+        System.out.println(ASCIITable.getInstance().getTable(asciiTableAware));
+      }
+      System.out.println(&quot;ok&quot;);
+    } else {
+      System.out.println(&quot;not found&quot;);
+    }
+  }
+}</code></pre>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="04">
+          <h1>Controllers</h1>
+<p>In Eclipse, create following package in the main/java source folder:</p>
+<ul>
+<li>controllers</li>
+</ul>
+<p>Here are revised and simplified models for this package:</p>
+<h2>PacemakerAPI</h2>
+<pre><code>package controllers;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.google.common.base.Optional;
+
+import models.Activity;
+import models.Location;
+import models.User;
+
+
+public class PacemakerAPI {
+
+  private Map&lt;String, User&gt; emailIndex = new HashMap&lt;&gt;();
+  private Map&lt;String, User&gt; userIndex = new HashMap&lt;&gt;();
+  private Map&lt;String, Activity&gt; activitiesIndex = new HashMap&lt;&gt;();
+
+  public PacemakerAPI() {
+  }
+
+  public Collection&lt;User&gt; getUsers() {
+    return userIndex.values();
+  }
+
+  public void deleteUsers() {
+    userIndex.clear();
+    emailIndex.clear();
+  }
+
+  public User createUser(String firstName, String lastName, String email, String password) {
+    User user = new User(firstName, lastName, email, password);
+    emailIndex.put(email, user);
+    userIndex.put(user.id, user);
+    return user;
+  }
+
+  public Activity createActivity(String id, String type, String location, double distance) {
+    Activity activity = null;
+    Optional&lt;User&gt; user = Optional.fromNullable(userIndex.get(id));
+    if (user.isPresent()) {
+      activity = new Activity(type, location, distance);
+      user.get().activities.put(activity.id, activity);
+      activitiesIndex.put(activity.id, activity);
+    }
+    return activity;
+  }
+
+  public Activity getActivity(String id) {
+    return activitiesIndex.get(id);
+  }
+
+  public Collection&lt;Activity&gt; getActivities(String id) {
+    Collection&lt;Activity&gt; activities = null;
+    Optional&lt;User&gt; user = Optional.fromNullable(userIndex.get(id));
+    if (user.isPresent()) {
+      activities = user.get().activities.values();
+    }
+    return activities;
+  }
+
+  public List&lt;Activity&gt; listActivities(String userId, String sortBy) {
+    List&lt;Activity&gt; activities = new ArrayList&lt;&gt;();
+    activities.addAll(userIndex.get(userId).activities.values());
+    switch (sortBy) {
+      case &quot;type&quot;:
+        activities.sort((a1, a2) -&gt; a1.type.compareTo(a2.type));
+        break;
+      case &quot;location&quot;:
+        activities.sort((a1, a2) -&gt; a1.location.compareTo(a2.location));
+        break;
+      case &quot;distance&quot;:
+        activities.sort((a1, a2) -&gt; Double.compare(a1.distance, a2.distance));
+        break;
+    }
+    return activities;
+  }
+
+  public void addLocation(String id, double latitude, double longitude) {
+    Optional&lt;Activity&gt; activity = Optional.fromNullable(activitiesIndex.get(id));
+    if (activity.isPresent()) {
+      activity.get().route.add(new Location(latitude, longitude));
+    }
+  }
+
+  public User getUserByEmail(String email) {
+    return emailIndex.get(email);
+  }
+
+  public User getUser(String id) {
+    return userIndex.get(id);
+  }
+
+  public User deleteUser(String id) {
+    User user = userIndex.remove(id);
+    return emailIndex.remove(user.email);
+  }
+}</code></pre>
+<h2>PacemakerConsoleService</h2>
+<pre><code>package controllers;
+
+import com.google.common.base.Optional;
+
+import asg.cliche.Command;
+import asg.cliche.Param;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import models.Activity;
+import models.User;
+import parsers.AsciiTableParser;
+import parsers.Parser;
+
+public class PacemakerConsoleService {
+
+  private PacemakerAPI paceApi = new PacemakerAPI();;
+  private Parser console = new AsciiTableParser();
+  private User loggedInUser = null;
+
+  public PacemakerConsoleService() {
+  }
+
+  // Starter Commands
+
+  @Command(description = &quot;Register: Create an account for a new user&quot;)
+  public void register(@Param(name = &quot;first name&quot;) String firstName,
+      @Param(name = &quot;last name&quot;) String lastName,
+      @Param(name = &quot;email&quot;) String email, @Param(name = &quot;password&quot;) String password) {
+  }
+
+  @Command(description = &quot;List Users: List all users emails, first and last names&quot;)
+  public void listUsers() {
+  }
+
+  @Command(description = &quot;Login: Log in a registered user in to pacemaker&quot;)
+  public void login(@Param(name = &quot;email&quot;) String email,
+      @Param(name = &quot;password&quot;) String password) {
+  }
+
+  @Command(description = &quot;Logout: Logout current user&quot;)
+  public void logout() {
+  }
+
+  @Command(description = &quot;Add activity: create and add an activity for the logged in user&quot;)
+  public void addActivity(
+      @Param(name = &quot;type&quot;) String type,
+      @Param(name = &quot;location&quot;) String location,
+      @Param(name = &quot;distance&quot;) double distance) {
+  }
+
+  @Command(description = &quot;List Activities: List all activities for logged in user&quot;)
+  public void listActivities() {
+  }
+
+  // Baseline Commands
+
+  @Command(description = &quot;Add location: Append location to an activity&quot;)
+  public void addLocation(@Param(name = &quot;activity-id&quot;) String id,
+      @Param(name = &quot;longitude&quot;) double longitude,
+      @Param(name = &quot;latitude&quot;) double latitude) {
+  }
+
+  @Command(description = &quot;ActivityReport: List all activities for logged in user, sorted alphabetically by type&quot;)
+  public void activityReport() {
+  }
+
+  @Command(description = &quot;Activity Report: List all activities for logged in user by type. Sorted longest to shortest distance&quot;)
+  public void activityReport(@Param(name = &quot;byType: type&quot;) String sortBy) {
+  }
+
+  @Command(description = &quot;List all locations for a specific activity&quot;)
+  public void listActivityLocations(@Param(name = &quot;activity-id&quot;) String id) {
+  }
+
+  @Command(description = &quot;Follow Friend: Follow a specific friend&quot;)
+  public void follow(@Param(name = &quot;email&quot;) String email) {
+  }
+
+  @Command(description = &quot;List Friends: List all of the friends of the logged in user&quot;)
+  public void listFriends() {
+  }
+
+  @Command(description = &quot;Friend Activity Report: List all activities of specific friend, sorted alphabetically by type)&quot;)
+  public void friendActivityReport(@Param(name = &quot;email&quot;) String email) {
+  }
+
+  // Good Commands
+
+  @Command(description = &quot;Unfollow Friends: Stop following a friend&quot;)
+  public void unfollowFriend() {
+  }
+
+  @Command(description = &quot;Message Friend: send a message to a friend&quot;)
+  public void messageFriend(@Param(name = &quot;email&quot;) String email,
+      @Param(name = &quot;message&quot;) String message) {
+  }
+
+  @Command(description = &quot;List Messages: List all messages for the logged in user&quot;)
+  public void listMessages() {
+  }
+
+  @Command(description = &quot;Distance Leader Board: list summary distances of all friends, sorted longest to shortest&quot;)
+  public void distanceLeaderBoard() {
+  }
+
+  // Excellent Commands
+
+  @Command(description = &quot;Distance Leader Board: distance leader board refined by type&quot;)
+  public void distanceLeaderBoardByType(@Param(name = &quot;byType: type&quot;) String type) {
+  }
+
+  @Command(description = &quot;Message All Friends: send a message to all friends&quot;)
+  public void messageAllFriends(@Param(name = &quot;message&quot;) String message) {
+  }
+
+  @Command(description = &quot;Location Leader Board: list sorted summary distances of all friends in named location&quot;)
+  public void locationLeaderBoard(@Param(name = &quot;location&quot;) String message) {
+  }
+
+  // Outstanding Commands
+
+  // Todo
+}</code></pre>
+<h2>Main</h2>
+<pre><code>package controllers;
+
+import asg.cliche.Shell;
+import asg.cliche.ShellFactory;
+
+public class Main {
+
+  public static void main(String[] args) throws Exception {
+    PacemakerConsoleService main = new PacemakerConsoleService();
+    Shell shell = ShellFactory
+        .createConsoleShell(&quot;pm&quot;, &quot;Welcome to pacemaker-console - ?help for instructions&quot;, main);
+    shell.commandLoop();
+  }
+}</code></pre>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="05">
+          <h1>Run the application</h1>
+<p>If you run Main - and list all commands, you should see this report in the console:</p>
+<pre><code>Welcome to pacemaker-console - ?help for instructions
+pm&gt; ?la
+abbrev  name  params
+...
+... build in commands
+...
+r register  (first name, last name, email, password)
+l login (email, password)
+f follow  (email)
+l logout  ()
+lu  list-users  ()
+aa  add-activity  (type, location, distance)
+la  list-activities ()
+al  add-location  (activity-id, longitude, latitude)
+ar  activity-report ()
+ar  activity-report (byType: type)
+lal list-activity-locations (activity-id)
+lf  list-friends  ()
+far friend-activity-report  (email)
+uf  unfollow-friend ()
+mf  message-friend  (email, message)
+lm  list-messages ()
+dlb distance-leader-board ()
+dlbbt distance-leader-board-by-type (byType: type)
+maf message-all-friends (message)
+llb location-leader-board (location)</code></pre>
+<p>These are the commands for Assignment 2 - and are implemented as stubbs in PacemakerConsoleService class.</p>
+<p>A scaled down implementation of the API is implemented in PacemakerAPI. It includes the primary features of the sample solution, simplified to exclude serialization.</p>
+<p>The models are similar - but starttime and duration have been removed from the Activity class.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="06">
+          <h1>Initial Command Implementations</h1>
+<p>With the API implementation in place, we can make a start on some of the commands:</p>
+<pre><code class="lang-java">  @Command(description = &quot;Register: Create an account for a new user&quot;)
+  public void register(@Param(name = &quot;first name&quot;) String firstName,
+      @Param(name = &quot;last name&quot;) String lastName,
+      @Param(name = &quot;email&quot;) String email, @Param(name = &quot;password&quot;) String password) {
+    console.renderUser(paceApi.createUser(firstName, lastName, email, password));
+  }
+
+  @Command(description = &quot;List Users: List all users emails, first and last names&quot;)
+  public void listUsers() {
+    console.renderUsers(paceApi.getUsers());
+  }
+
+  @Command(description = &quot;Login: Log in a registered user in to pacemaker&quot;)
+  public void login(@Param(name = &quot;email&quot;) String email,
+      @Param(name = &quot;password&quot;) String password) {
+    Optional&lt;User&gt; user = Optional.fromNullable(paceApi.getUserByEmail(email));
+    if (user.isPresent()) {
+      if (user.get().password.equals(password)) {
+        loggedInUser = user.get();
+        console.println(&quot;Logged in &quot; + loggedInUser.email);
+        console.println(&quot;ok&quot;);
+      } else {
+        console.println(&quot;Error on login&quot;);
+      }
+    }
+  }
+
+  @Command(description = &quot;Logout: Logout current user&quot;)
+  public void logout() {
+    console.println(&quot;Logging out &quot; + loggedInUser.email);
+    console.println(&quot;ok&quot;);
+    loggedInUser = null;
+  }</code></pre>
+<p>The above should permit the following interaction:</p>
+<pre><code>Welcome to pacemaker-console - ?help for instructions
+pm&gt; r homer simpson homer@simpson.com secret
++--------------------------------------+-----------+----------+-------------------+
+|                  ID                  | FIRSTNAME | LASTNAME |       EMAIL       |
++--------------------------------------+-----------+----------+-------------------+
+| 73cc563c-40b2-47a3-9acd-5a2471c4d7f9 |     homer |  simpson | homer@simpson.com |
++--------------------------------------+-----------+----------+-------------------+
+
+ok
+ok
+pm&gt; l homer@simpson.com secret
+Logged in homer@simpson.com
+ok
+pm&gt; l
+Logging out homer@simpson.com
+ok
+pm&gt;</code></pre>
+<p>Try it now to see if it works.</p>
+<p>We can implement the add and list activities commands:</p>
+<pre><code>  @Command(description = &quot;Add activity: create and add an activity for the logged in user&quot;)
+  public void addActivity(
+      @Param(name = &quot;type&quot;) String type,
+      @Param(name = &quot;location&quot;) String location,
+      @Param(name = &quot;distance&quot;) double distance) {
+    Optional&lt;User&gt; user = Optional.fromNullable(loggedInUser);
+    if (user.isPresent()) {
+      console
+          .renderActivity(paceApi.createActivity(user.get().id, type, location, distance));
+    }
+  }
+
+  @Command(description = &quot;List Activities: List all activities for logged in user&quot;)
+  public void listActivities() {
+    Optional&lt;User&gt; user = Optional.fromNullable(loggedInUser);
+    if (user.isPresent()) {
+      console
+          .renderActivities(paceApi.getActivities(user.get().id));
+    }
+  }</code></pre>
+<p>These commands should allow us to interact as follows (having logged in successfully):</p>
+<pre><code>pm&gt; aa walk fridge 23
++--------------------------------------+------+----------+----------+-----------+----------+
+|                  ID                  | TYPE | LOCATION | DISTANCE | STARTTIME | DURATION |
++--------------------------------------+------+----------+----------+-----------+----------+
+| 2cc9b97d-346f-4d3f-96a7-ccfcf2351025 | walk |   fridge |       23 |      null |     null |
++--------------------------------------+------+----------+----------+-----------+----------+
+
+ok
+pm&gt;aa walk tv 4
++--------------------------------------+------+----------+----------+-----------+----------+
+|                  ID                  | TYPE | LOCATION | DISTANCE | STARTTIME | DURATION |
++--------------------------------------+------+----------+----------+-----------+----------+
+| bfa408d8-be3e-4c88-99b7-0f50f3aa3408 | walk |       tv |        4 |      null |     null |
++--------------------------------------+------+----------+----------+-----------+----------+
+
+
+ok
+pm&gt; la
++--------------------------------------+------+----------+----------+-----------+----------+
+|                  ID                  | TYPE | LOCATION | DISTANCE | STARTTIME | DURATION |
++--------------------------------------+------+----------+----------+-----------+----------+
+| 2cc9b97d-346f-4d3f-96a7-ccfcf2351025 | walk |   fridge |       23 |      null |     null |
+| bfa408d8-be3e-4c88-99b7-0f50f3aa3408 | walt |       tv |        4 |      null |     null |
++--------------------------------------+------+----------+----------+-----------+----------+
+
+ok
+pm&gt;</code></pre>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="Exercises">
+          <h1>Exercises</h1>
+<p>Archive of the lab so far:</p>
+<ul>
+<li><a href="https://github.com/wit-computing-msc-2018/pacemaker-skeleton/releases/tag/lab.08.end.2018">https://github.com/wit-computing-msc-2018/pacemaker-skeleton/releases/tag/lab.08.end.2018</a></li>
+</ul>
+<h1>Exercise 1:</h1>
+<p>implement the Add Location Command</p>
+<h1>Exercise 2:</h1>
+<p>implement the List Location Command</p>
+<h1>Exercise 3:</h1>
+<p>Implement the Activity Report Command. There are two of these commands:</p>
+<ul>
+<li><p>(a) taking no parameters - which sorts the activities by type</p>
+</li>
+<li><p>(b) talking a single parameter - the activity type. This command only lists activities of the specified type. However, they are to be sorted by distance, longest to shortest.</p>
+</li>
+</ul>
+<h2>Note:</h2>
+<p>These exercises are solved in the next lab. Exercise 1 &amp; 2 are relatively straightforward, and can be solved by looking at the sample solution to the assignment.</p>
+<p>Exercise 3 (a) is also fairly straightforward, but exercise (b) might take a little more consideration.</p>
+
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).on('keydown', function(e) {
+  e = e || window.event;
+  var nextTab;
+  switch (e.which || e.keyCode) {
+    case 37: // left
+      nextTab = $('.tab-menu a[data-tab].active').prev('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').last();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+
+    case 39: // right
+      nextTab = $('.tab-menu a[data-tab].active').next('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').first();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+  }
+});
+
+  $(document).ready(function() {
+  $('img').addClass('ui image');
+
+  $('.ui.embed').embed();
+
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass(
+        'ui basic segment',
+      );
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass(
+        'ui blue ribbon label',
+      );
+      divLabel.append($images[i].alt);
+      $(divLabel).insertBefore($images[i]);
+    }
+  });
+
+  $('.ui.menu .item').tab({
+    history: true,
+    historyType: 'hash',
+  });
+
+  $('.popup').popup();
+
+  $('.ui.sidebar')
+    .sidebar({ context: $('.pushable') })
+    .sidebar('setting', 'transition', 'slide out')
+    .sidebar('attach events', '#toc');
+});
+
+</script>
+</body>
+</html>

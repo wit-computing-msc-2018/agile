@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css"
+        type="text/css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css"
+        rel="stylesheet"/>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <style>
+    
+
+body {
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+  font-size:90%;
+  color: black;
+}
+
+p {
+  margin: 0.5em;
+}
+
+pre code {
+  font-family: "Monaco";
+  font-size: 100%;
+}
+
+img {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin:10px;
+}
+
+h1, h2, h3 {
+  border-bottom:thin solid black;
+  margin-bottom: 0.5em;
+  margin-top: 1em;
+}
+
+h1 {
+  font-style:italic;
+  font-size:130%;
+}
+
+h2 {
+  font-size:110%;
+}
+
+h3 {
+  font-size:100%;
+}
+
+
+
+  </style>
+</head>
+
+<body>
+
+
+
+<div class="ui fixed top pointing inverted stackable menu labmenu">
+  <header class="header item">
+    <i id="toc" class="sitemap icon"></i>
+    
+      <a href="../index.html"> 8: SRP and Assignment 1 Solution  </a>
+    
+  </header>
+  <div class="right tab-menu menu">
+    
+      <a class="item" data-tab="Lab-07a Pacemaker Models">
+        Lab-07a Pacemaker Models
+      </a>
+    
+      <a class="item" data-tab="01">
+        01
+      </a>
+    
+      <a class="item" data-tab="02">
+        02
+      </a>
+    
+      <a class="item" data-tab="03">
+        03
+      </a>
+    
+      <a class="item" data-tab="04">
+        04
+      </a>
+    
+      <a class="item" data-tab="05">
+        05
+      </a>
+    
+      <a class="item" data-tab="06">
+        06
+      </a>
+    
+      <a class="item" data-tab="07">
+        07
+      </a>
+    
+      <a class="item" data-tab="Exercises">
+        Exercises
+      </a>
+    
+  </div>
+</div>
+
+<div class="ui pushable">
+  <div class="ui inverted labeled icon left inline vertical sidebar menu">
+    <br><br>
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic01-paradigms-and-languages/book-eclipse-and-java/index.html">Lab-01 Eclipse & Java </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic02-java-language/book-cli-and-classes/index.html">Lab-02 CLI & Classes </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic03-inheritance-and-collections/book-objects-and-serialization/index.html">Lab-03 Objects & Serialization </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic04-serialisation-and-tdd-1/book-testing/index.html">Lab-04 Testing </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic05-tdd-2/book-refactoring/index.html">Lab-05 Refactoring </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic06-exceptions-and-maven/book-maven/index.html">Lab-06 Maven </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic07-tdd-3-and-java-versions/book-java-versions/index.html">Lab-07 Java Versions </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-a-pacemaker-soln-models/index.html">Lab-07a Pacemaker Models </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-b-pacemaker-soln-api/index.html">Lab-07b Pacemaker API </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-c-assignmment-2-skeleton/index.html">Lab-08 Skeleton </a>
+      
+    
+  </div>
+  <div class="pusher" tabindex="-1">
+    <div class="ui basic segment">
+      <br>
+      
+        <div class="ui tab segment lab" data-tab="Lab-07a Pacemaker Models">
+          <h1>Objectives</h1>
+<p>Build a sample solution to Assignment 1, using TDD techniques, Maven &amp; Eclipse</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="01">
+          <h1>Setup: Maven</h1>
+<p>Before commencing this lab you must have Maven installed successfully. To verify this, open a command line and enter this command:</p>
+<pre><code>mvn -version</code></pre>
+<p>It should report something like this:</p>
+<pre><code>Maven home: /Users/edeleastar/dev/apache-maven-3.5.0
+Java version: 1.8.0_60, vendor: Oracle Corporation
+Java home: /Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home/jre
+Default locale: en_IE, platform encoding: UTF-8
+OS name: &quot;mac os x&quot;, version: &quot;10.12.6&quot;, arch: &quot;x86_64&quot;, family: &quot;mac&quot;</code></pre>
+<p>(The operation system may be different).</p>
+<p>Manually create a new blank folder called <em>pacemaker-console-solution</em>. </p>
+<p>Within this folder, create the following directory structure:</p>
+<pre><code>pacemaker-console-solution
+     │
+     └── src
+           │
+           ├── main
+           │     │ 
+           │     └──java
+           │
+           └── test
+                 │
+                 └──java</code></pre>
+<h2>pom.xml</h2>
+<p>Using any text editor, in the root of the folder, create the pom.xml file:</p>
+<pre><code class="lang-xml">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+  &lt;groupId&gt;pacemaker&lt;/groupId&gt;
+  &lt;artifactId&gt;pacemaker-console-solution&lt;/artifactId&gt;
+  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+  &lt;packaging&gt;jar&lt;/packaging&gt;
+
+  &lt;name&gt;pacemaker-console-solution&lt;/name&gt;
+  &lt;url&gt;https://wit-computing-msc-2017.github.io/agile&lt;/url&gt;
+
+  &lt;properties&gt;
+    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
+    &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
+  &lt;/properties&gt;
+
+  &lt;build&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+        &lt;version&gt;3.7.0&lt;/version&gt;
+        &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+        &lt;configuration&gt;
+          &lt;source&gt;1.8&lt;/source&gt;
+          &lt;target&gt;1.8&lt;/target&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+
+  &lt;dependencies&gt;
+  &lt;/dependencies&gt;
+&lt;/project&gt;</code></pre>
+<p>This is a minimal starter POM for a standard java application. To verify that we have a valid POM, run the following command from within the project folder:</p>
+<pre><code>mvn verify</code></pre>
+<p>This should report <strong>BUILD SUCCESS</strong> (note you many have warnings appearing before this output...that&#39;s ok): </p>
+<pre><code>[INFO] Scanning for projects...
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] Building pacemaker-console-solution 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 0.145 s
+[INFO] Finished at: 2017-10-19T14:40:15+01:00
+[INFO] Final Memory: 5M/123M
+[INFO] ------------------------------------------------------------------------</code></pre>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="02">
+          <h1>Setup : Eclipse</h1>
+<p>We can now import this into eclipse. Launch Eclipse and select File-&gt;Import-&gt;Maven-&gt;Existing Maven Projects</p>
+<p><img src="img/01.png" alt=""></p>
+<p>The project workspace should look like this:</p>
+<p><img src="img/02.png" alt=""></p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="03">
+          <h1>Architecture</h1>
+<p>To get an overview of the proposed solution, have a look at the below architecture diagrams (produced using Structure101 software).</p>
+<h2>Packages and their entities</h2>
+<p>The assignment solution has a number of source files and interdependencies between these files.</p>
+<p><img src="img/10.png" alt=""></p>
+<p>We use containers (packages) to manage complexity. Containment creates dependencies between containers.</p>
+<h2>Dependencies</h2>
+<p>The dependencies in our assignment solution:</p>
+<p><img src="img/11.png" alt=""></p>
+<p>When dependencies all point in the same direction (e.g. downwards), the cumulative dependency is smallest.</p>
+<p>Another view of our dependencies, with cardinalities representing the number of calls. This image should give you an appreciation of how the source files interact in our system.</p>
+<p><img src="img/12.png" alt=""></p>
+<h2>Classes/Interfaces and their responsibilities</h2>
+<h4>controllers:</h4>
+<ul>
+<li><p><strong>Main</strong>: Starts the app.  Creates a console shell attached to the PacemakerConsoleService.  Automatically saves the data created in the session upon exit.</p>
+</li>
+<li><p><strong>PacemakerConsoleService</strong>: defines the shell commands and invokes relevant Console command to render the data (coming from PacemakerAPI) on the console.</p>
+</li>
+<li><p><strong>PacemakerAPI</strong>: The pacemaker API that manages the user, activity and location data in the system (note: it is now independent of I/O approach).</p>
+</li>
+</ul>
+<h4>models:</h4>
+<ul>
+<li><p><strong>User</strong>: manages a single user and their associated activities</p>
+</li>
+<li><p><strong>Activity</strong>: manages a single activity and the routes (Location) associated with the activity.</p>
+</li>
+<li><p><strong>Location</strong>: manages a single location.</p>
+</li>
+</ul>
+<h4>utils:</h4>
+<ul>
+<li><p><strong>Console</strong>: A utility that acts as a base class for rendering users and activities onto the console.  Basic System.out.println is used in this base class.  Such as approach allows for future app evolutions to use other parsers.</p>
+</li>
+<li><p><strong>AsciiTableParser</strong>: A utility that extends the Console class and overrides the methods to render users and activities on the console using the ASCIITable utility.  Also provides an status (e.g ok, not found) when rendering data.</p>
+</li>
+<li><p><strong>TimeFormatters</strong>:  A utility that provides methods to parseDateTime and parseDuration.  These methods are used mainly in the Activity class.</p>
+</li>
+<li><p><strong>Serializer</strong>: an interface to provide a generic set of method signatures for serialization.</p>
+</li>
+<li><p><strong>JSONSerializer</strong>: manages the input and output (serialization) of JSON objects, adhering to the Serializer interface. </p>
+</li>
+<li><p><strong>XMLSerializer</strong>: manages the input and output (serialization) of overrides the objects, adhering to the Serializer interface</p>
+</li>
+</ul>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="04">
+          <h1>User Model</h1>
+<p>In <code>src/main/java</code> source folder in Eclipse, create a new package called <code>models</code>. In this package create a new class called <code>User</code>:</p>
+<h2>User</h2>
+<pre><code>package models;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import com.google.common.base.Objects;
+
+public class User implements Serializable {
+
+  public String id;
+  public String firstName;
+  public String lastName;
+  public String email;
+  public String password;
+
+  public User() {
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public String getFirstname() {
+    return firstName;
+  }
+
+  public String getLastname() {
+    return lastName;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public User(String firstName, String lastName, String email, String password) {
+    this.id = UUID.randomUUID().toString();
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.password = password;
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (obj instanceof User) {
+      final User other = (User) obj;
+      return Objects.equal(firstName, other.firstName)
+          &amp;&amp; Objects.equal(lastName, other.lastName)
+          &amp;&amp; Objects.equal(email, other.email)
+          &amp;&amp; Objects.equal(password, other.password);
+    } else {
+      return false;
+    }
+  }
+
+  @Override
+  public String toString() {
+    return toStringHelper(this).addValue(id)
+        .addValue(firstName)
+        .addValue(lastName)
+        .addValue(password)
+        .addValue(email)
+        .toString();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.id, this.lastName, this.firstName, this.email, this.password);
+  }
+}</code></pre>
+<p>This will have errors immediately - as we are relying on the <code>guava</code> library, currently not included in the dependencies. Insert the following in the the <code>&lt;dependencies&gt;</code> in the POM:</p>
+<pre><code>    &lt;dependency&gt;
+      &lt;groupId&gt;com.google.guava&lt;/groupId&gt;
+      &lt;artifactId&gt;guava&lt;/artifactId&gt;
+      &lt;version&gt;23.0&lt;/version&gt;
+    &lt;/dependency&gt;</code></pre>
+<p>Eclipse should trigger maven to download and include the library in the project, eliminating the errors. Notice that the Eclipse workspace will include a new <code>Maven Dependencies</code> entry:</p>
+<p><img src="img/03.png" alt=""></p>
+<p>The new dependencies include other libraries upstream of the guava library. These can also be seen from the Maven Central repository for guava:</p>
+<ul>
+<li><a href="https://mvnrepository.com/artifact/com.google.guava/guava/23.0">https://mvnrepository.com/artifact/com.google.guava/guava/23.0</a></li>
+</ul>
+<h2>User Unit Test</h2>
+<p>In the <code>src/test/java</code> folder, create a <code>models</code> package. Bring in these 2 classes (if prompted to add JUnit to the build path, don&#39;t...we will add it via pom.xml):</p>
+<h2>Fixtures</h2>
+<pre><code>package models;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class Fixtures {
+
+  public static List&lt;User&gt; users = new ArrayList&lt;&gt;(Arrays.asList(
+      new User(&quot;marge&quot;, &quot;simpson&quot;, &quot;marge@simpson.com&quot;, &quot;secret&quot;),
+      new User(&quot;lisa&quot;, &quot;simpson&quot;, &quot;lisa@simpson.com&quot;, &quot;secret&quot;),
+      new User(&quot;bart&quot;, &quot;simpson&quot;, &quot;bart@simpson.com&quot;, &quot;secret&quot;),
+      new User(&quot;maggie&quot;, &quot;simpson&quot;, &quot;maggie@simpson.com&quot;, &quot;secret&quot;)));
+}</code></pre>
+<h2>UserTest</h2>
+<pre><code>package models;
+
+import static org.junit.Assert.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.Test;
+
+import static models.Fixtures.users;
+
+public class UserTest {
+
+  User homer = new User(&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;, &quot;secret&quot;);
+
+  @Test
+  public void testCreate() {
+    assertEquals(&quot;homer&quot;, homer.firstName);
+    assertEquals(&quot;simpson&quot;, homer.lastName);
+    assertEquals(&quot;homer@simpson.com&quot;, homer.email);
+    assertEquals(&quot;secret&quot;, homer.password);
+  }
+
+  @Test
+  public void testIds() {
+    Set&lt;String&gt; ids = new HashSet&lt;&gt;();
+    for (User user : users) {
+      ids.add(user.id);
+    }
+    assertEquals(users.size(), ids.size());
+  }
+
+  @Test
+  public void testToString() {
+    assertEquals(&quot;User{&quot; + homer.id + &quot;, homer, simpson, secret, homer@simpson.com}&quot;,
+        homer.toString());
+  }
+}</code></pre>
+<p>The test will have syntax errors - again called by missing dependencies. Here is the JUnit library we are missing:</p>
+<pre><code>    &lt;dependency&gt;
+      &lt;groupId&gt;junit&lt;/groupId&gt;
+      &lt;artifactId&gt;junit&lt;/artifactId&gt;
+      &lt;version&gt;4.12&lt;/version&gt;
+      &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;</code></pre>
+<p>The project should have no errors now - and we should be able to run the unit test we have just introduced:</p>
+<p><img src="img/04.png" alt=""></p>
+<p>We can also run these tests independently of Eclipse on the command line:</p>
+<pre><code>$ mvn test
+
+...
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running models.UserTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.124 sec
+
+Results :
+
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2.952 s
+[INFO] Finished at: 2017-10-16T09:07:52+01:00
+[INFO] Final Memory: 15M/208M
+[INFO] ------------------------------------------------------------------------</code></pre>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="05">
+          <h1>Activity &amp; Location Models</h1>
+<p>Introduce the following models:</p>
+<h2>Activity</h2>
+<pre><code>package models;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import com.google.common.base.Objects;
+
+public class Activity implements Serializable {
+
+  public String id;
+  public String type;
+  public String location;
+  public double distance;
+  public List&lt;Location&gt; route = new ArrayList&lt;&gt;();
+
+  public Activity() {
+  }
+
+  public Activity(String type, String location, double distance, String start, String duration) {
+    this.id = UUID.randomUUID().toString();
+    this.type = type;
+    this.location = location;
+    this.distance = distance;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public String getDistance() {
+    return Double.toString(distance);
+  }
+
+  public String getRoute() {
+    return route.toString();
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (obj instanceof Activity) {
+      final Activity other = (Activity) obj;
+      return Objects.equal(type, other.type)
+          &amp;&amp; Objects.equal(location, other.location)
+          &amp;&amp; Objects.equal(distance, other.distance)
+          &amp;&amp; Objects.equal(route, other.route);
+    } else {
+      return false;
+    }
+  }
+
+  @Override
+  public String toString() {
+    return toStringHelper(this).addValue(id)
+        .addValue(type)
+        .addValue(location)
+        .addValue(distance)
+        .addValue(route)
+        .toString();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.id, this.type, this.location, this.distance);
+  }
+}</code></pre>
+<h2>Location</h2>
+<pre><code>package models;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
+
+import java.io.Serializable;
+import java.util.UUID;
+
+import com.google.common.base.Objects;
+
+public class Location implements Serializable {
+
+  public String id;
+  public double longitude;
+  public double latitude;
+
+  public Location() {
+  }
+
+  public Location(double latitude, double longitude) {
+    this.id = UUID.randomUUID().toString();
+    this.latitude = latitude;
+    this.longitude = longitude;
+  }
+
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (obj instanceof Location) {
+      final Location other = (Location) obj;
+      return Objects.equal(latitude, other.latitude)
+          &amp;&amp; Objects.equal(longitude, other.longitude);
+    } else {
+      return false;
+    }
+  }
+
+  @Override
+  public String toString() {
+    return toStringHelper(this).addValue(id)
+        .addValue(latitude)
+        .addValue(longitude)
+        .toString();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.id, this.latitude, this.longitude);
+  }
+}</code></pre>
+<h2>Tests</h2>
+<p>In <code>src/test/java</code> we can bring in our tests</p>
+<p>First the Fixtures:</p>
+<h2>Fixtures</h2>
+<pre><code>package models;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class Fixtures {
+
+  public static List&lt;User&gt; users = new ArrayList&lt;&gt;(Arrays.asList(
+      new User(&quot;marge&quot;, &quot;simpson&quot;, &quot;marge@simpson.com&quot;, &quot;secret&quot;),
+      new User(&quot;lisa&quot;, &quot;simpson&quot;, &quot;lisa@simpson.com&quot;, &quot;secret&quot;),
+      new User(&quot;bart&quot;, &quot;simpson&quot;, &quot;bart@simpson.com&quot;, &quot;secret&quot;),
+      new User(&quot;maggie&quot;, &quot;simpson&quot;, &quot;maggie@simpson.com&quot;, &quot;secret&quot;)));
+
+  public static List&lt;Activity&gt; activities = new ArrayList&lt;&gt;(Arrays.asList(
+        new Activity(&quot;walk&quot;, &quot;fridge&quot;, 0.001, &quot;10:9:2017 09:00:00&quot;, &quot;00:42:20&quot;),
+        new Activity(&quot;walk&quot;, &quot;bar&quot;, 1.0, &quot;11:9:2017 10:00:00&quot;, &quot;00:39:02&quot;),
+        new Activity(&quot;run&quot;, &quot;work&quot;, 2.2, &quot;12:9:2017 08:00:00&quot;, &quot;00:54:23&quot;),
+        new Activity(&quot;walk&quot;, &quot;shop&quot;, 2.5, &quot;13:9:2017 10:00:00&quot;, &quot;00:32:03&quot;),
+        new Activity(&quot;cycle&quot;, &quot;school&quot;, 4.5, &quot;14:9:2017 11:00:00&quot;, &quot;00:47:04&quot;)));
+
+    public static List&lt;Location&gt; locations = new ArrayList&lt;&gt;(Arrays.asList(
+        new Location(23.3, 33.3),
+        new Location(34.4, 45.2),
+        new Location(25.3, 34.3),
+        new Location(44.4, 23.3)));
+}</code></pre>
+<h2>LocationTest</h2>
+<pre><code>package models;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import static models.Fixtures.locations;
+
+public class LocationTest {
+
+  @Test
+  public void testCreate() {
+    assertEquals(0.01, 23.3, locations.get(0).latitude);
+    assertEquals(0.01, 33.3, locations.get(0).longitude);
+  }
+
+  @Test
+  public void testIds() {
+    assertNotEquals(locations.get(0).id, locations.get(1).id);
+  }
+
+  @Test
+  public void testToString() {
+    assertEquals(&quot;Location{&quot; + locations.get(0).id + &quot;, 23.3, 33.3}&quot;, locations.get(0).toString());
+  }
+}</code></pre>
+<h2>ActivityTest</h2>
+<pre><code>package models;
+
+import static org.junit.Assert.*;
+import java.util.HashSet;
+import java.util.Set;
+import org.junit.Test;
+import static models.Fixtures.activities;
+
+public class ActivityTest {
+  Activity test = new Activity(&quot;walk&quot;, &quot;fridge&quot;, 0.001, &quot;11:2:2012 9:00:00&quot;, &quot;20:00:00&quot;);
+
+  @Test
+  public void testCreate() {
+    assertEquals(&quot;walk&quot;, test.type);
+    assertEquals(&quot;fridge&quot;, test.location);
+    assertEquals(0.0001, 0.001, test.distance);
+  }
+
+  @Test
+  public void testIds() {
+    Set&lt;String&gt; ids = new HashSet&lt;&gt;();
+    for (Activity activity : activities) {
+      ids.add(activity.id);
+    }
+    assertEquals(activities.size(), ids.size());
+  }
+
+  @Test
+  public void testToString() {
+    assertEquals(&quot;Activity{&quot; + test.id + &quot;, walk, fridge, 0.001, []}&quot;, test.toString());
+  }
+}</code></pre>
+<p>All tests should now pass:</p>
+<p><img src="img/05.png" alt=""></p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="06">
+          <h1>Refining the Models</h1>
+<p>Currently User and Activity are independent classes. We would like to establish a one-to-many relationship. In this revised version, we establish the relationship:</p>
+<h2>User</h2>
+<pre><code>package models;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import com.google.common.base.Objects;
+
+public class User implements Serializable {
+
+  public String id;
+  public String firstName;
+  public String lastName;
+  public String email;
+  public String password;
+
+  public Map&lt;String, Activity&gt; activities = new HashMap&lt;&gt;();
+
+  public User() {
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public String getFirstname() {
+    return firstName;
+  }
+
+  public String getLastname() {
+    return lastName;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public User(String firstName, String lastName, String email, String password) {
+    this.id = UUID.randomUUID().toString();
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.password = password;
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (obj instanceof User) {
+      final User other = (User) obj;
+      return Objects.equal(firstName, other.firstName)
+          &amp;&amp; Objects.equal(lastName, other.lastName)
+          &amp;&amp; Objects.equal(email, other.email)
+          &amp;&amp; Objects.equal(password, other.password)
+          &amp;&amp; Objects.equal(activities, other.activities);
+    } else {
+      return false;
+    }
+  }
+
+  @Override
+  public String toString() {
+    return toStringHelper(this).addValue(id)
+        .addValue(firstName)
+        .addValue(lastName)
+        .addValue(password)
+        .addValue(email)
+        .addValue(activities)
+        .toString();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.id, this.lastName, this.firstName, this.email, this.password, this.activities);
+  }
+}</code></pre>
+<p>This version causes one of our tests to fail:</p>
+<p><img src="img/06.png" alt=""></p>
+<p>The failure is in this test here:</p>
+<pre><code>  @Test
+  public void testToString() {
+    assertEquals(&quot;User{&quot; + homer.id + &quot;, homer, simpson, secret, homer@simpson.com&quot;,
+        homer.toString());
+  }</code></pre>
+<p>which doesnt take account of the relationship to Activities. This is a small update to make the tests pass again:</p>
+<pre><code>  @Test
+  public void testToString() {
+    assertEquals(&quot;User{&quot; + homer.id + &quot;, homer, simpson, secret, homer@simpson.com, {}}&quot;,
+        homer.toString());
+  }</code></pre>
+<p>We can introduce an additional test to exercise the User-&gt;Activity relationship:</p>
+<pre><code>  @Test
+  public void tesAddActivity() {
+    Activity activity = new Activity(&quot;walk&quot;, &quot;fridge&quot;, 0.001, &quot;11:2:2012 9:00:00&quot;, &quot;20:00:00&quot;);
+    homer.activities.put(activity.id,activity);
+    System.out.println(homer);
+    assertEquals(&quot;User{&quot; + homer.id + &quot;, homer, simpson, secret, homer@simpson.com, {&quot; + activity.id + &quot;=Activity{&quot; + activity.id + &quot;, walk, fridge, 0.001, []}}}&quot;,
+        homer.toString());
+  }</code></pre>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="07">
+          <h1>Activity Time &amp; Duration Support</h1>
+<p>Parsing date, times and durations can be a challenge - with various libraries, formatters and technical approaches. The Joda time library is a well respected approach:</p>
+<ul>
+<li><a href="http://www.joda.org/joda-time/">http://www.joda.org/joda-time/</a></li>
+</ul>
+<p>Introduce this class to encapsulate the transformation of strings to/from dates/times and durations:</p>
+<h2>utils/TimeFormatters</h2>
+<pre><code>package utils;
+
+import org.joda.time.format.PeriodFormatterBuilder;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.PeriodFormatter;
+
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+
+public class TimeFormatters {
+
+  static PeriodFormatter periodFormatter = new PeriodFormatterBuilder().printZeroAlways()
+      .appendHours()
+      .appendSeparator(&quot;:&quot;)
+      .appendMinutes()
+      .appendSeparator(&quot;:&quot;)
+      .appendSeconds()
+      .toFormatter();
+
+  static DateTimeFormatter dateFormatter = DateTimeFormat.forPattern(&quot;dd:MM:yyyy HH:mm:ss&quot;);
+
+  public static DateTime parseDateTime(String dateTime) {
+    return new DateTime(dateFormatter.parseDateTime(dateTime));
+  }
+
+  public static String parseDateTime(DateTime dateTime) {
+    return dateFormatter.print(dateTime);
+  }
+
+  public static Duration parseDuration(String duration) {
+    return periodFormatter.parsePeriod(duration).toStandardDuration();
+  }
+
+  public static String parseDuration(Duration duration) {
+    return periodFormatter.print(duration.toPeriod());
+  }
+}</code></pre>
+<p>This four static methods provide the basic transformations we need.</p>
+<p>Introduce the joda-time maven dependency...locate it yourself from the maven repo:</p>
+<ul>
+<li><a href="https://mvnrepository.com/">https://mvnrepository.com/</a></li>
+</ul>
+<p>The Activity class can now be completed:</p>
+<h2>Activity.java</h2>
+<pre><code>package models;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import com.google.common.base.Objects;
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+
+import static utils.TimeFormatters.parseDateTime;
+import static utils.TimeFormatters.parseDuration;
+
+public class Activity implements Serializable {
+
+  public String id;
+  public String type;
+  public String location;
+  public double distance;
+  public DateTime starttime;
+  public Duration duration;
+  public List&lt;Location&gt; route = new ArrayList&lt;&gt;();
+
+  public Activity() {
+  }
+
+  public Activity(String type, String location, double distance, String start, String duration) {
+    this.id = UUID.randomUUID().toString();
+    this.type = type;
+    this.location = location;
+    this.distance = distance;
+    this.starttime = parseDateTime(start);
+    this.duration = parseDuration(duration);
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public String getDistance() {
+    return Double.toString(distance);
+  }
+
+  public String getRoute() {
+    return route.toString();
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (obj instanceof Activity) {
+      final Activity other = (Activity) obj;
+      return Objects.equal(type, other.type)
+          &amp;&amp; Objects.equal(location, other.location)
+          &amp;&amp; Objects.equal(distance, other.distance)
+          &amp;&amp; Objects.equal(starttime, other.starttime)
+          &amp;&amp; Objects.equal(duration, other.duration)
+          &amp;&amp; Objects.equal(route, other.route);
+    } else {
+      return false;
+    }
+  }
+
+  @Override
+  public String toString() {
+    return toStringHelper(this).addValue(id)
+        .addValue(type)
+        .addValue(location)
+        .addValue(distance)
+        .addValue(parseDateTime(starttime))
+        .addValue(parseDuration(duration))  
+        .addValue(route)
+        .toString();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.id, this.type, this.location, this.distance, this.starttime, this.duration);
+  }
+}</code></pre>
+<p>Several tests will now fail, as our toString methods are now reporting the time/duration values.</p>
+<h2>ActivityTest</h2>
+<pre><code>package models;
+
+import static org.junit.Assert.*;
+import java.util.HashSet;
+import java.util.Set;
+import org.junit.Test;
+import static models.Fixtures.activities;
+
+public class ActivityTest {
+  Activity test = new Activity(&quot;walk&quot;, &quot;fridge&quot;, 0.001, &quot;11:02:2012 9:00:00&quot;, &quot;20:0:0&quot;);
+
+  @Test
+  public void testCreate() {
+    assertEquals(&quot;walk&quot;, test.type);
+    assertEquals(&quot;fridge&quot;, test.location);
+    assertEquals(0.0001, 0.001, test.distance);
+  }
+
+  @Test
+  public void testIds() {
+    Set&lt;String&gt; ids = new HashSet&lt;&gt;();
+    for (Activity activity : activities) {
+      ids.add(activity.id);
+    }
+    assertEquals(activities.size(), ids.size());
+  }
+
+  @Test
+  public void testToString() {
+    assertEquals(&quot;Activity{&quot; + test.id + &quot;, walk, fridge, 0.001, 11:02:2012 09:00:00, 20:0:0, []}&quot;, test.toString());
+  }
+}</code></pre>
+<h2>UserTest</h2>
+<pre><code>package models;
+
+import static org.junit.Assert.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.Test;
+
+import static models.Fixtures.users;
+
+public class UserTest {
+
+  User homer = new User(&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;, &quot;secret&quot;);
+
+  @Test
+  public void testCreate() {
+    assertEquals(&quot;homer&quot;, homer.firstName);
+    assertEquals(&quot;simpson&quot;, homer.lastName);
+    assertEquals(&quot;homer@simpson.com&quot;, homer.email);
+    assertEquals(&quot;secret&quot;, homer.password);
+  }
+
+  @Test
+  public void testIds() {
+    Set&lt;String&gt; ids = new HashSet&lt;&gt;();
+    for (User user : users) {
+      ids.add(user.id);
+    }
+    assertEquals(users.size(), ids.size());
+  }
+
+  @Test
+  public void testToString() {
+    assertEquals(&quot;User{&quot; + homer.id + &quot;, homer, simpson, secret, homer@simpson.com, {}}&quot;,
+        homer.toString());
+  }
+
+
+  @Test
+  public void tesAddActivity() {
+    Activity activity = new Activity(&quot;walk&quot;, &quot;fridge&quot;, 0.001, &quot;11:2:2012 9:00:00&quot;, &quot;20:00:00&quot;);
+    homer.activities.put(activity.id,activity);
+    assertEquals(&quot;User{&quot; + homer.id + &quot;, homer, simpson, secret, homer@simpson.com, {&quot; + activity.id + &quot;=Activity{&quot; + activity.id + &quot;, walk, fridge, 0.001, 11:02:2012 09:00:00, 20:0:0, []}}}&quot;,
+        homer.toString());
+  }
+}</code></pre>
+<p>Run all tests again now.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="Exercises">
+          <h1>Exercises</h1>
+<p>Archive of the project so far can be found <a href="archives/pacemaker-console-solution-7a-pre-exercises.zip">here</a>. </p>
+<h2>Exercise 1: Maven test</h2>
+<p>Run the tests using the <code>mvn test</code> command. Verify that all tests pass, as is shown in the following output:</p>
+<pre><code>-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running models.ActivityTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.279 sec
+Running models.LocationTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 sec
+Running models.UserTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec
+
+Results :
+
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 8.360 s
+[INFO] Finished at: 2017-10-20T12:03:28+01:00
+[INFO] Final Memory: 15M/125M
+[INFO] ------------------------------------------------------------------------</code></pre>
+<h2>Exercise 2: Maven Coverage Reports</h2>
+<p>In Eclipse, select <strong>Run</strong>, followed by <strong>Coverage...</strong>.</p>
+<p>When the Coverage Configurations window appears, click on the <strong>Coverage</strong> tab and confine the analysis to the <strong>src/main/java</strong> folder, as is shown below:</p>
+<p><img src="img/07.png" alt=""></p>
+<p>When you click the <strong>Coverage</strong> button, the JUnit tests should run and a coverage analysis presented to you:</p>
+<p><img src="img/08.png" alt=""></p>
+<p>This report clearly shows that our models need to have more JUnit tests written to bring up the percentage from the low 30&#39;s to a recommended coverage of 80%. </p>
+<p>Try adding in more tests and watch the % rise.</p>
+<p>Note that running analysis on the coverage % does not generate any coverage reports to the <em>target</em> directory:</p>
+<p><img src="img/09.png" alt=""></p>
+<p>A good video on Eclipse Oxygen and Code Coverage in Practice (plus the history of code coverage):</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=p_mVa9iNmzk">https://www.youtube.com/watch?v=p_mVa9iNmzk</a></li>
+</ul>
+<p>You can export the coverage analyis:</p>
+<ul>
+<li>manually: <strong>File</strong>, <strong>Export...</strong>, <strong>Run/Debug</strong>, <strong>Coverage Session</strong>.</li>
+<li>via maven to the target directory: using the plugin below and running the <strong>mvn jacoco:report</strong> command.</li>
+</ul>
+<pre><code class="lang-xml">                &lt;plugin&gt;
+                    &lt;groupId&gt;org.jacoco&lt;/groupId&gt;
+                    &lt;artifactId&gt;jacoco-maven-plugin&lt;/artifactId&gt;
+                    &lt;version&gt;0.7.9&lt;/version&gt;                      
+                    &lt;executions&gt;
+                        &lt;execution&gt;
+                            &lt;id&gt;default-prepare-agent&lt;/id&gt;
+                            &lt;goals&gt;&lt;goal&gt;prepare-agent&lt;/goal&gt;&lt;/goals&gt;
+                        &lt;/execution&gt;
+                        &lt;execution&gt;
+                            &lt;id&gt;default-report&lt;/id&gt;
+                            &lt;phase&gt;prepare-package&lt;/phase&gt;
+                            &lt;goals&gt;&lt;goal&gt;report&lt;/goal&gt;&lt;/goals&gt;
+                        &lt;/execution&gt;
+                    &lt;/executions&gt;
+                &lt;/plugin&gt;</code></pre>
+<h2>The next lab...</h2>
+<p>With a set of models + unit tests + initial fixtures in place, we have a solid foundation for proceeding to implement the core API + console user interface (next lab).</p>
+
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).on('keydown', function(e) {
+  e = e || window.event;
+  var nextTab;
+  switch (e.which || e.keyCode) {
+    case 37: // left
+      nextTab = $('.tab-menu a[data-tab].active').prev('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').last();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+
+    case 39: // right
+      nextTab = $('.tab-menu a[data-tab].active').next('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').first();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+  }
+});
+
+  $(document).ready(function() {
+  $('img').addClass('ui image');
+
+  $('.ui.embed').embed();
+
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass(
+        'ui basic segment',
+      );
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass(
+        'ui blue ribbon label',
+      );
+      divLabel.append($images[i].alt);
+      $(divLabel).insertBefore($images[i]);
+    }
+  });
+
+  $('.ui.menu .item').tab({
+    history: true,
+    historyType: 'hash',
+  });
+
+  $('.popup').popup();
+
+  $('.ui.sidebar')
+    .sidebar({ context: $('.pushable') })
+    .sidebar('setting', 'transition', 'slide out')
+    .sidebar('attach events', '#toc');
+});
+
+</script>
+</body>
+</html>

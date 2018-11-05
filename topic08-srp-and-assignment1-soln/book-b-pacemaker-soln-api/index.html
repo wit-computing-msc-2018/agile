@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css"
+        type="text/css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css"
+        rel="stylesheet"/>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <style>
+    
+
+body {
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+  font-size:90%;
+  color: black;
+}
+
+p {
+  margin: 0.5em;
+}
+
+pre code {
+  font-family: "Monaco";
+  font-size: 100%;
+}
+
+img {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin:10px;
+}
+
+h1, h2, h3 {
+  border-bottom:thin solid black;
+  margin-bottom: 0.5em;
+  margin-top: 1em;
+}
+
+h1 {
+  font-style:italic;
+  font-size:130%;
+}
+
+h2 {
+  font-size:110%;
+}
+
+h3 {
+  font-size:100%;
+}
+
+
+
+  </style>
+</head>
+
+<body>
+
+
+
+<div class="ui fixed top pointing inverted stackable menu labmenu">
+  <header class="header item">
+    <i id="toc" class="sitemap icon"></i>
+    
+      <a href="../index.html"> 8: SRP and Assignment 1 Solution  </a>
+    
+  </header>
+  <div class="right tab-menu menu">
+    
+      <a class="item" data-tab="Lab-07b Pacemaker API">
+        Lab-07b Pacemaker API
+      </a>
+    
+      <a class="item" data-tab="01">
+        01
+      </a>
+    
+      <a class="item" data-tab="02">
+        02
+      </a>
+    
+      <a class="item" data-tab="03">
+        03
+      </a>
+    
+      <a class="item" data-tab="04">
+        04
+      </a>
+    
+      <a class="item" data-tab="05">
+        05
+      </a>
+    
+      <a class="item" data-tab="06">
+        06
+      </a>
+    
+      <a class="item" data-tab="07">
+        07
+      </a>
+    
+      <a class="item" data-tab="Solution">
+        Solution
+      </a>
+    
+  </div>
+</div>
+
+<div class="ui pushable">
+  <div class="ui inverted labeled icon left inline vertical sidebar menu">
+    <br><br>
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic01-paradigms-and-languages/book-eclipse-and-java/index.html">Lab-01 Eclipse & Java </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic02-java-language/book-cli-and-classes/index.html">Lab-02 CLI & Classes </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic03-inheritance-and-collections/book-objects-and-serialization/index.html">Lab-03 Objects & Serialization </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic04-serialisation-and-tdd-1/book-testing/index.html">Lab-04 Testing </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic05-tdd-2/book-refactoring/index.html">Lab-05 Refactoring </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic06-exceptions-and-maven/book-maven/index.html">Lab-06 Maven </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic07-tdd-3-and-java-versions/book-java-versions/index.html">Lab-07 Java Versions </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-a-pacemaker-soln-models/index.html">Lab-07a Pacemaker Models </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-b-pacemaker-soln-api/index.html">Lab-07b Pacemaker API </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-c-assignmment-2-skeleton/index.html">Lab-08 Skeleton </a>
+      
+    
+  </div>
+  <div class="pusher" tabindex="-1">
+    <div class="ui basic segment">
+      <br>
+      
+        <div class="ui tab segment lab" data-tab="Lab-07b Pacemaker API">
+          <h1>Objectives</h1>
+<p>Complete the pacemaker assignment solution.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="01">
+          <h1>PacemakerAPI</h1>
+<p>Create a new package called <code>controllers</code>, and introduce this first version if the API:</p>
+<h2>PacemakerAPI</h2>
+<pre><code>import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import com.google.common.base.Optional;
+import models.Activity;
+import models.Location;
+import models.User;
+import org.joda.time.DateTimeComparator;
+
+public class PacemakerAPI {
+
+  private Map&lt;String, User&gt; emailIndex = new HashMap&lt;&gt;();
+  private Map&lt;String, User&gt; userIndex = new HashMap&lt;&gt;();
+  private Map&lt;String, Activity&gt; activitiesIndex = new HashMap&lt;&gt;();
+
+  public PacemakerAPI() {}
+
+  public Collection&lt;User&gt; getUsers() {
+    return userIndex.values();
+  }
+
+  public void deleteUsers() {
+    userIndex.clear();
+    emailIndex.clear();
+  }
+
+  public User createUser(String firstName, String lastName, String email, String password) {
+    User user = new User(firstName, lastName, email, password);
+    emailIndex.put(email, user);
+    userIndex.put(user.id, user);
+    return user;
+  }
+
+  public Activity createActivity(String id, String type, String location, double distance,
+      String starttime, String duration) {
+    Activity activity = null;
+    Optional&lt;User&gt; user = Optional.fromNullable(userIndex.get(id));
+    if (user.isPresent()) {
+      activity = new Activity(type, location, distance, starttime, duration);
+      user.get().activities.put(activity.id, activity);
+      activitiesIndex.put(activity.id, activity);
+    }
+    return activity;
+  }
+
+  public Activity getActivity(String id) {
+    return activitiesIndex.get(id);
+  }
+
+  public Collection&lt;Activity&gt; getActivities(String id) {
+    Collection&lt;Activity&gt; activities = null;
+    Optional&lt;User&gt; user = Optional.fromNullable(userIndex.get(id));
+    if (user.isPresent()) {
+      activities = user.get().activities.values();
+    }
+    return activities;
+  }
+
+  public List&lt;Activity&gt; listActivities(String userId, String sortBy) {
+    return null;
+  }
+
+  public void addLocation(String id, double latitude, double longitude) {
+    Optional&lt;Activity&gt; activity = Optional.fromNullable(activitiesIndex.get(id));
+    if (activity.isPresent()) {
+      activity.get().route.add(new Location(latitude, longitude));
+    }
+  }
+
+  public User getUserByEmail(String email) {
+    return emailIndex.get(email);
+  }
+
+  public User getUser(String id) {
+    return userIndex.get(id);
+  }
+
+  public User deleteUser(String id) {
+    User user = userIndex.remove(id);
+    return emailIndex.remove(user.email);
+  }
+}</code></pre>
+<p>This does not include the serialization support, or the more advanced activity reports.</p>
+<p>This the corresponding test - which should be created in the <code>src/test/controllers</code> package:</p>
+<h2>PacemakerAPITest</h2>
+<pre><code>package controllers;
+
+import static org.junit.Assert.*;
+
+import java.util.List;
+import org.joda.time.DateTimeComparator;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import models.Activity;
+import models.Location;
+import models.User;
+
+import static utils.TimeFormatters.parseDateTime;
+import static utils.TimeFormatters.parseDuration;
+
+import static models.Fixtures.users;
+import static models.Fixtures.activities;
+import static models.Fixtures.locations;
+import static models.Fixtures.margeActivities;
+
+public class PacemakerAPITest {
+
+  private PacemakerAPI pacemaker;
+
+  void assertEquivalent(List&lt;Activity&gt; list1, List&lt;Activity&gt; list2) {
+    assertEquals(list1.size(), list1.size());
+    int index = 0;
+    for (Activity activity : list1) {
+      assertEquals(activity.location, list2.get(index).location);
+      index++;
+    }
+  }
+
+  @Before
+  public void setup() {
+    pacemaker = new PacemakerAPI();
+    users.forEach(
+        user -&gt; pacemaker.createUser(user.firstName, user.lastName, user.email, user.password));
+  }
+
+  @After
+  public void tearDown() {
+    pacemaker = null;
+  }
+
+  @Test
+  public void testUser() {
+    assertEquals(users.size(), pacemaker.getUsers().size());
+    pacemaker.createUser(&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;, &quot;secret&quot;);
+    assertEquals(users.size() + 1, pacemaker.getUsers().size());
+    assertEquals(users.get(0), pacemaker.getUserByEmail(users.get(0).email));
+  }
+
+  @Test
+  public void testEquals() {
+    User homer = new User(&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;, &quot;secret&quot;);
+    User homer2 = new User(&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;, &quot;secret&quot;);
+    User bart = new User(&quot;bart&quot;, &quot;simpson&quot;, &quot;bartr@simpson.com&quot;, &quot;secret&quot;);
+
+    assertEquals(homer, homer);
+    assertEquals(homer, homer2);
+    assertNotEquals(homer, bart);
+
+    assertSame(homer, homer);
+    assertNotSame(homer, homer2);
+  }
+
+  @Test
+  public void testUsers() {
+    assertEquals(users.size(), pacemaker.getUsers().size());
+    users.forEach(user -&gt; {
+      User eachUser = pacemaker.getUserByEmail(user.email);
+      assertEquals(user, eachUser);
+      assertNotSame(user, eachUser);
+    });
+  }
+
+  @Test
+  public void testDeleteUsers() {
+    assertEquals(users.size(), pacemaker.getUsers().size());
+    User marge = pacemaker.getUserByEmail(&quot;marge@simpson.com&quot;);
+    pacemaker.deleteUser(marge.id);
+    assertEquals(users.size() - 1, pacemaker.getUsers().size());
+  }
+
+  @Test
+  public void testAddActivity() {
+    User marge = pacemaker.getUserByEmail(&quot;marge@simpson.com&quot;);
+    Activity testActivity = margeActivities.get(0);
+    Activity activity = pacemaker
+        .createActivity(marge.id, testActivity.type, testActivity.location, testActivity.distance,
+            parseDateTime(testActivity.starttime), parseDuration(testActivity.duration));
+    Activity returnedActivity = pacemaker.getActivity(activity.id);
+    assertEquals(activities.get(0), returnedActivity);
+    assertNotSame(activities.get(0), returnedActivity);
+  }
+
+  @Test
+  public void testAddActivityWithSingleLocation() {
+    User marge = pacemaker.getUserByEmail(&quot;marge@simpson.com&quot;);
+    Activity testActivity = margeActivities.get(0);
+    String activityId = pacemaker
+        .createActivity(marge.id, testActivity.type, testActivity.location, testActivity.distance,
+            parseDateTime(testActivity.starttime), parseDuration(testActivity.duration)).id;
+
+    pacemaker.addLocation(activityId, locations.get(0).latitude, locations.get(0).longitude);
+
+    Activity activity = pacemaker.getActivity(activityId);
+    assertEquals(1, activity.route.size());
+    assertEquals(0.0001, locations.get(0).latitude, activity.route.get(0).latitude);
+    assertEquals(0.0001, locations.get(0).longitude, activity.route.get(0).longitude);
+  }
+
+  @Test
+  public void testAddActivityWithMultipleLocation() {
+    User marge = pacemaker.getUserByEmail(&quot;marge@simpson.com&quot;);
+    Activity testActivity = margeActivities.get(0);
+    String activityId = pacemaker
+        .createActivity(marge.id, testActivity.type, testActivity.location, testActivity.distance,
+            parseDateTime(testActivity.starttime), parseDuration(testActivity.duration)).id;
+
+    locations.forEach(
+        location -&gt; pacemaker.addLocation(activityId, location.latitude, location.longitude));
+
+    Activity activity = pacemaker.getActivity(activityId);
+    assertEquals(locations.size(), activity.route.size());
+
+    int i = 0;
+    for (Location location : activity.route) {
+      assertEquals(location, locations.get(i));
+      i++;
+    }
+  }
+
+  @Test
+  public void testSortedReports() {
+  }
+}</code></pre>
+<h2>Fixtures</h2>
+<p>Add the following fixtures to the &#39;models/Fixtures&#39; class:</p>
+<pre><code class="lang-java">  public static List&lt;Activity&gt; margeActivities =
+      new ArrayList&lt;&gt;(Arrays.asList(activities.get(0), activities.get(1)));
+
+  public static List&lt;Activity&gt; lisasActivities =
+      new ArrayList&lt;&gt;(Arrays.asList(activities.get(2), activities.get(3)));
+
+  public static List&lt;Location&gt; route1 =
+      new ArrayList&lt;&gt;(Arrays.asList(locations.get(0), locations.get(1)));
+
+  public static List&lt;Location&gt; route2 =
+      new ArrayList&lt;&gt;(Arrays.asList(locations.get(2), locations.get(3)));
+
+  public static List&lt;Activity&gt; activitiesSortedByType =
+      new ArrayList&lt;&gt;(Arrays.asList(activities.get(4), activities.get(2), activities.get(1),
+          activities.get(0), activities.get(3)));</code></pre>
+<h2>Testing</h2>
+<p>The new tests should pass - along with all of the others:</p>
+<p><img src="img/01.png" alt=""></p>
+<p>We now have a substantial body of test, which can give us the confidence (and a safety net) as we proceed to implement the remaining features.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="02">
+          <h1>Serializer Utility class</h1>
+<p>This is the Serializer interface we have to model the persistence mechanism:</p>
+<h2>Serializer</h2>
+<pre><code>package utils;
+
+public interface Serializer {
+
+  void push(Object o);
+
+  Object pop();
+
+  void write() throws Exception;
+
+  void read() throws Exception;
+}</code></pre>
+<p>Place this interface in the <code>utils</code> package. We can implement this class to support XML Serialization:</p>
+<h2>XMLSerializer</h2>
+<pre><code>package utils;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Stack;
+
+public class XMLSerializer implements Serializer {
+
+  private Stack stack = new Stack();
+  private File file;
+
+  public XMLSerializer(File file) {
+    this.file = file;
+  }
+
+  public void push(Object o) {
+    stack.push(o);
+  }
+
+  public Object pop() {
+    return stack.pop();
+  }
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  public void read() throws Exception {
+    ObjectInputStream is = null;
+
+    try {
+      XStream xstream = new XStream(new DomDriver());
+      is = xstream.createObjectInputStream(new FileReader(file));
+      stack = (Stack) is.readObject();
+    } finally {
+      if (is != null) {
+        is.close();
+      }
+    }
+  }
+
+  public void write() throws Exception {
+    ObjectOutputStream os = null;
+
+    try {
+      XStream xstream = new XStream(new DomDriver());
+      os = xstream.createObjectOutputStream(new FileWriter(file));
+      os.writeObject(stack);
+    } finally {
+      if (os != null) {
+        os.close();
+      }
+    }
+  }
+}</code></pre>
+<p>This will not compile, as we have not included our xml serialization component. Bring this into maven now:</p>
+<pre><code>    &lt;dependency&gt;
+      &lt;groupId&gt;com.thoughtworks.xstream&lt;/groupId&gt;
+      &lt;artifactId&gt;xstream&lt;/artifactId&gt;
+      &lt;version&gt;1.4.10&lt;/version&gt;
+    &lt;/dependency&gt;</code></pre>
+<p>This should compile successfully now.</p>
+<p>Now introduce a serializer into our PacemakerAPI class:</p>
+<pre><code>  public Serializer serializer;
+
+  public PacemakerAPI(Serializer serializer) {
+    this.serializer = serializer;
+  }</code></pre>
+<p>(This will require an import - use Eclipse autocorrect to fix this).</p>
+<p>This will have broken our unit tests - which we should fix before proceeding :</p>
+<h2>PacemakerAPITest</h2>
+<pre><code>  @Before
+  public void setup() {
+    pacemaker = new PacemakerAPI(null);
+    users.forEach(
+        user -&gt; pacemaker.createUser(user.firstName, user.lastName, user.email, user.password));
+  }</code></pre>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="03">
+          <h1>PacemakerAPI XML Serialization</h1>
+<p>We can now implement our load/store methods in PacemakerAPI</p>
+<h2>PacemakerAPI</h2>
+<pre><code>  @SuppressWarnings(&quot;unchecked&quot;)
+  public void load() throws Exception {
+    serializer.read();
+    activitiesIndex = (Map&lt;String, Activity&gt;) serializer.pop();
+    emailIndex = (Map&lt;String, User&gt;) serializer.pop();
+    userIndex = (Map&lt;String, User&gt;) serializer.pop();
+  }
+
+  public void store() throws Exception {
+    serializer.push(userIndex);
+    serializer.push(emailIndex);
+    serializer.push(activitiesIndex);
+    serializer.write();
+  }</code></pre>
+<p>This is test to exercise the persistence feature, which we can place in <code>src/test/java</code>:</p>
+<h2>PersistenceTest</h2>
+<pre><code>package controllers;
+
+import static org.junit.Assert.*;
+import java.io.File;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import models.Activity;
+import models.User;
+import static utils.TimeFormatters.parseDateTime;
+import static utils.TimeFormatters.parseDuration;
+import utils.Serializer;
+import utils.XMLSerializer;
+import static models.Fixtures.*;
+
+public class PersistenceTest {
+
+  PacemakerAPI pacemaker;
+  Serializer xmlSerializer;
+
+  void deleteFile(String fileName) {
+    File datastore = new File(fileName);
+    if (datastore.exists()) {
+      datastore.delete();
+    }
+  }
+
+  void populate(PacemakerAPI pacemaker) {
+    users.forEach(
+        user -&gt; pacemaker.createUser(user.firstName, user.lastName, user.email, user.password));
+
+    User marge = pacemaker.getUserByEmail(&quot;marge@simpson.com&quot;);
+    margeActivities.forEach(activity -&gt; {
+      Activity newActivity = pacemaker.createActivity(marge.id, activity.type, activity.location,
+          activity.distance, parseDateTime(activity.starttime), parseDuration(activity.duration));
+      route1.forEach(
+          location -&gt; pacemaker.addLocation(newActivity.id, location.latitude, location.longitude));
+    });
+
+    User lisa = pacemaker.getUserByEmail(&quot;lisa@simpson.com&quot;);
+    lisasActivities.forEach(activity -&gt; {
+      Activity newActivity = pacemaker.createActivity(lisa.id, activity.type, activity.location,
+          activity.distance, parseDateTime(activity.starttime), parseDuration(activity.duration));
+      route2.forEach(
+          location -&gt; pacemaker.addLocation(newActivity.id, location.latitude, location.longitude));
+    });
+  }
+
+  @Before
+  public void setup() {
+    deleteFile(&quot;datastore.xml&quot;);
+    xmlSerializer = new XMLSerializer(new File(&quot;datastore.xml&quot;));
+    deleteFile(&quot;datastore.json&quot;);
+    pacemaker = new PacemakerAPI(null);
+    populate(pacemaker);
+  }
+
+  @After
+  public void tearDown() {
+    pacemaker = null;
+    xmlSerializer = null;
+  }
+
+  @Test
+  public void testXMLSerializer() throws Exception {
+    pacemaker.serializer = xmlSerializer;
+    pacemaker.store();
+    PacemakerAPI pacemaker2 = new PacemakerAPI(null);
+    pacemaker2.serializer = xmlSerializer;
+    pacemaker2.load();
+    pacemaker.getUsers().forEach(user -&gt; assertTrue(pacemaker2.getUsers().contains(user)));
+  }
+}</code></pre>
+<p>Although the tests are concise, we are populating the model with a range or users, activities and models in the <code>populate</code> method. </p>
+<p>In our main test we are saving this model, reloading it into a different pacemaker instance and checking for equivalence. Look carefully at the <code>testXMLSerializer</code> method, which implements this test.</p>
+<p>Also, after each test run we can visually inspect <code>datastore.xml</code> to see this test model in action.</p>
+<p>Make sure this test runs, both in Eclipse and in the maven console.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="04">
+          <h1>PacemakerAPI JSON Serialization</h1>
+<p>Introduce an alternative version of the Serializer into the <code>utils</code> package, this time to use s JSON driver:</p>
+<h2>JSONSerializer</h2>
+<pre><code>package utils;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Stack;
+
+public class JSONSerializer implements Serializer {
+
+  private Stack stack = new Stack();
+  private File file;
+
+  public JSONSerializer(File file) {
+    this.file = file;
+  }
+
+  public void push(Object o) {
+    stack.push(o);
+  }
+
+  public Object pop() {
+    return stack.pop();
+  }
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  public void read() throws Exception {
+    ObjectInputStream is = null;
+
+    try {
+      XStream xstream = new XStream(new JettisonMappedXmlDriver());
+      is = xstream.createObjectInputStream(new FileReader(file));
+      stack = (Stack) is.readObject();
+    } finally {
+      if (is != null) {
+        is.close();
+      }
+    }
+  }
+
+  public void write() throws Exception {
+    ObjectOutputStream os = null;
+
+    try {
+      XStream xstream = new XStream(new JettisonMappedXmlDriver());
+      os = xstream.createObjectOutputStream(new FileWriter(file));
+      os.writeObject(stack);
+    } finally {
+      if (os != null) {
+        os.close();
+      }
+    }
+  }
+}</code></pre>
+<p>We can try the following new test in PersistenceTest:</p>
+<h2>PersistenceTest</h2>
+<pre><code>  @Test
+  public void testJSONSerializer() throws Exception {
+    Serializer jsonSerializer = new JSONSerializer(new File(&quot;datastore.json&quot;));
+    pacemaker.serializer = jsonSerializer;
+    pacemaker.store();
+    PacemakerAPI pacemaker2 = new PacemakerAPI(null);
+    pacemaker2.serializer = jsonSerializer;
+    pacemaker2.load();
+    pacemaker.getUsers().forEach(user -&gt; assertTrue(pacemaker2.getUsers().contains(user)));
+  }</code></pre>
+<p>Run the test now. It should fail:</p>
+<p><img src="img/02.png" alt=""></p>
+<p>This failure is caused by an exception in the xtsream library - not an assertion failure in our tests. The exception is because one of the upstream dependencies of xstream is not explicitly included into our POM.</p>
+<p>Introducing this additional dependency should correct the problem:</p>
+<pre><code>    &lt;dependency&gt;
+      &lt;groupId&gt;org.codehaus.jettison&lt;/groupId&gt;
+      &lt;artifactId&gt;jettison&lt;/artifactId&gt;
+      &lt;version&gt;1.3.8&lt;/version&gt;
+    &lt;/dependency&gt;</code></pre>
+<p>The tests should now pass.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="05">
+          <h1>listActivities</h1>
+<p>One of the features we have yet consider is the listActivities command:</p>
+<pre><code>la      list-activities    (userid, sortBy: type, location, distance, date, duration)</code></pre>
+<p>This requires activities to be listed sorted by different attributes.</p>
+<h2>PacemakerAPI</h2>
+<p>We already have this placeholder method in PacemakerAPI:</p>
+<pre><code>  public List&lt;Activity&gt; listActivities(String userId, String sortBy) {
+    return null;
+  }</code></pre>
+<h2>PacemakerAPITest</h2>
+<p>... and we have a placeholder for a test of this feature:</p>
+<pre><code>  @Test
+  public void testSortedReports() {}</code></pre>
+<p>Devising a test for this is a little more challenging. We already have some activity fixtures we can experiment on:</p>
+<h2>Fixtures</h2>
+<p>This fixture is currently in <strong>models/Fixtures.java</strong>:</p>
+<pre><code>  public static List&lt;Activity&gt; activities = new ArrayList&lt;&gt;(
+      Arrays.asList(new Activity(&quot;walk&quot;, &quot;fridge&quot;, 0.001, &quot;10:9:2017 09:00:00&quot;, &quot;00:42:20&quot;),
+          new Activity(&quot;walk&quot;, &quot;bar&quot;, 1.0, &quot;11:9:2017 10:00:00&quot;, &quot;00:39:02&quot;),
+          new Activity(&quot;run&quot;, &quot;work&quot;, 2.2, &quot;12:9:2017 08:00:00&quot;, &quot;00:54:23&quot;),
+          new Activity(&quot;walk&quot;, &quot;shop&quot;, 2.5, &quot;13:9:2017 10:00:00&quot;, &quot;00:32:03&quot;),
+          new Activity(&quot;cycle&quot;, &quot;school&quot;, 4.5, &quot;14:9:2017 11:00:00&quot;, &quot;00:47:04&quot;)));</code></pre>
+<p>In our test stub, we can make a start by adding all of these activities to a new user, and requesting the activity list sorted by &#39;type&#39;</p>
+<h2>PacemakerAPITest</h2>
+<pre><code class="lang-java">  @Test
+  public void testSortedReports() {
+    User homer = pacemaker.createUser(&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;, &quot;secret&quot;);
+    activities.forEach(
+        activity -&gt; pacemaker
+            .createActivity(homer.id, activity.type, activity.location, activity.distance,
+                parseDateTime(activity.starttime), parseDuration(activity.duration))
+    );
+    List&lt;Activity&gt; activities = pacemaker.listActivities(homer.id, &quot;type&quot;);</code></pre>
+<p>There is no test here yet - we are just retrieving the list. Here is a first attempt at a test:</p>
+<pre><code class="lang-java">  @Test
+  public void testSortedReports() {
+    User homer = pacemaker.createUser(&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;, &quot;secret&quot;);
+    activities.forEach(
+        activity -&gt; pacemaker
+            .createActivity(homer.id, activity.type, activity.location, activity.distance,
+                parseDateTime(activity.starttime), parseDuration(activity.duration))
+    );
+    List&lt;Activity&gt; activities = pacemaker.listActivities(homer.id, &quot;type&quot;);
+
+    for (int i = 0; i &lt; activities.size() - 1; i++) {
+      assertTrue(activities.get(i).type.compareTo(activities.get(i + 1).type) &lt;= 0);
+    }
+  }</code></pre>
+<p>Running this test will fail - as we have yet to implement the feature in PacemakerAPI. </p>
+<h2>PacemakerAPI</h2>
+<p>Here is a first attempt of the actual code:</p>
+<pre><code class="lang-java">  public List&lt;Activity&gt; listActivities(String userId, String sortBy) {
+    List&lt;Activity&gt; activities = new ArrayList&lt;&gt;();
+    activities.addAll(userIndex.get(userId).activities.values());
+    switch (sortBy) {
+      case &quot;type&quot;:
+        activities.sort((a1, a2) -&gt; a1.type.compareTo(a2.type));
+        break;
+    }
+    return activities;
+  }</code></pre>
+<p>This test should now pass. If we wanted to test location - we could augment the test as follows:</p>
+<h2>PacemakerAPITest</h2>
+<pre><code>...
+    activities = pacemaker.listActivities(homer.id, &quot;location&quot;);
+    for (int i = 0; i &lt; activities.size() - 1; i++) {
+      assertTrue(activities.get(i).location.compareTo(activities.get(i + 1).location) &lt;= 0);
+    }
+...</code></pre>
+<p>and the associated implementation of the feature:</p>
+<h2>PacemakerAPI:</h2>
+<pre><code>      case &quot;location&quot;:
+        activities.sort((a1, a2) -&gt; a1.location.compareTo(a2.location));
+        break;</code></pre>
+<p>Here is the final version of the listActivity command + its test:</p>
+<h2>PacemakerAPI:</h2>
+<pre><code>  public List&lt;Activity&gt; listActivities(String userId, String sortBy) {
+    List&lt;Activity&gt; activities = new ArrayList&lt;&gt;();
+    activities.addAll(userIndex.get(userId).activities.values());
+    switch (sortBy) {
+      case &quot;type&quot;:
+        activities.sort((a1, a2) -&gt; a1.type.compareTo(a2.type));
+        break;
+      case &quot;location&quot;:
+        activities.sort((a1, a2) -&gt; a1.location.compareTo(a2.location));
+        break;
+      case &quot;distance&quot;:
+        activities.sort((a1, a2) -&gt; Double.compare(a1.distance, a2.distance));
+        break;
+      case &quot;date&quot;:
+        activities
+            .sort((a1, a2) -&gt; DateTimeComparator.getInstance().compare(a1.starttime, a2.starttime));
+        break;
+      case &quot;duration&quot;:
+        activities
+            .sort((a1, a2) -&gt; {
+              if (a1.duration.getStandardSeconds() &gt; a2.duration.getStandardSeconds()) {
+                return 1;
+              } else {
+                return -1;
+              }
+            });
+        break;
+    }
+    return activities;
+  }</code></pre>
+<h2>PacemakerAPITest</h2>
+<pre><code>  @Test
+  public void testSortedReports() {
+    User homer = pacemaker.createUser(&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;, &quot;secret&quot;);
+    activities.forEach(
+        activity -&gt; pacemaker
+            .createActivity(homer.id, activity.type, activity.location, activity.distance,
+                parseDateTime(activity.starttime), parseDuration(activity.duration))
+    );
+    List&lt;Activity&gt; activities = pacemaker.listActivities(homer.id, &quot;type&quot;);
+
+    for (int i = 0; i &lt; activities.size() - 1; i++) {
+      assertTrue(activities.get(i).type.compareTo(activities.get(i + 1).type) &lt;= 0);
+    }
+    activities = pacemaker.listActivities(homer.id, &quot;location&quot;);
+    for (int i = 0; i &lt; activities.size() - 1; i++) {
+      assertTrue(activities.get(i).location.compareTo(activities.get(i + 1).location) &lt;= 0);
+    }
+    activities = pacemaker.listActivities(homer.id, &quot;distance&quot;);
+    for (int i = 0; i &lt; activities.size() - 1; i++) {
+      assertTrue(activities.get(i).distance &lt;= activities.get(i + 1).distance);
+    }
+    activities = pacemaker.listActivities(homer.id, &quot;date&quot;);
+    for (int i = 0; i &lt; activities.size() - 1; i++) {
+      assertTrue( DateTimeComparator.getInstance().compare(activities.get(i).starttime, activities.get(i+1).starttime) &lt;= 0);
+    }
+    activities = pacemaker.listActivities(homer.id, &quot;duration&quot;);
+    for (int i = 0; i &lt; activities.size() - 1; i++) {
+      assertTrue( activities.get(i).duration.getStandardSeconds() &lt;  activities.get(i+1).duration.getStandardSeconds());
+    }
+  }</code></pre>
+<p>Both the feature + the test are a little verbose. It is unlikely we would be able to significantly shorten the feature implementation. However, there may be scope for more creative approaches to simplifying the test, perhaps by using additional pre-sorted fixtures.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="06">
+          <h1>UX</h1>
+<p>Our final step is to include the command line implementation. </p>
+<p>First a new utility class to encapsulate our output to the command line:</p>
+<h2>Console</h2>
+<pre><code>package utils;
+
+import java.util.Collection;
+import models.Activity;
+import models.User;
+
+public class Console {
+
+  public void println(String s) {
+    System.out.println(s);
+  }
+  public void renderUser(User user) {
+    System.out.println(user.toString());
+  }
+
+  public void renderUsers(Collection&lt;User&gt; users) {
+    System.out.println(users.toString());
+  }
+
+  public void renderActivity(Activity activities) {
+    System.out.println(activities.toString());
+  }
+
+  public void renderActivities(Collection&lt;Activity&gt; activities) {
+    System.out.println(activities.toString());
+  }
+}</code></pre>
+<p>This is a special purpose console for our app - which we will customise shortly.</p>
+<p>Before we do so, we need to include 2 new maven dependencies:</p>
+<h2>pom.xml</h2>
+<pre><code>    &lt;dependency&gt;
+      &lt;groupId&gt;com.googlecode.clichemaven&lt;/groupId&gt;
+      &lt;artifactId&gt;cliche&lt;/artifactId&gt;
+      &lt;version&gt;110413&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;java-ascii-table&lt;/groupId&gt;
+      &lt;artifactId&gt;java-ascii-table&lt;/artifactId&gt;
+      &lt;version&gt;1.0&lt;/version&gt;
+    &lt;/dependency&gt;</code></pre>
+<p>Note that if java-ascii-table is not in the maven repo - we need to have installed them locally in your own maven repository image. This is the jar files here if you do not already have it</p>
+<ul>
+<li><a href="archives/java-ascii-table-1.0.jar">java-ascii-table-1.0.jar</a></li>
+</ul>
+<p>If you have this jar files in the current folder, then this maven commands will deposit them in your repository:</p>
+<pre><code>mvn install:install-file -Dfile=java-ascii-table-1.0.jar -DgroupId=java-ascii-table -DartifactId=java-ascii-table -Dversion=1.0 -Dpackaging=jar</code></pre>
+<p>With these installed, we can bring in another new utility class into the <code>utils</code> package:</p>
+<pre><code>package utils;
+
+import com.bethecoder.ascii_table.ASCIITable;
+import com.bethecoder.ascii_table.impl.CollectionASCIITableAware;
+import com.bethecoder.ascii_table.spec.IASCIITableAware;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import models.Activity;
+import models.User;
+
+public class AsciiTableParser extends Console {
+
+  public void renderUser(User user) {
+    if (user != null) {
+      renderUsers(Arrays.asList(user));
+      System.out.println(&quot;ok&quot;);
+    } else {
+      System.out.println(&quot;not found&quot;);
+    }
+  }
+
+  public void renderUsers(Collection&lt;User&gt; users) {
+    if (users != null) {
+      if (!users.isEmpty()) {
+        List&lt;User&gt; userList = new ArrayList&lt;User&gt;(users);
+        IASCIITableAware asciiTableAware = new CollectionASCIITableAware&lt;User&gt;(userList, &quot;id&quot;,
+            &quot;firstname&quot;,
+            &quot;lastname&quot;, &quot;email&quot;);
+        System.out.println(ASCIITable.getInstance().getTable(asciiTableAware));
+      }
+      System.out.println(&quot;ok&quot;);
+    } else {
+      System.out.println(&quot;not found&quot;);
+    }
+  }
+
+  public void renderActivity(Activity activity) {
+    if (activity != null) {
+      renderActivities(Arrays.asList(activity));
+      System.out.println(&quot;ok&quot;);
+    } else {
+      System.out.println(&quot;not found&quot;);
+    }
+  }
+
+  public void renderActivities(Collection&lt;Activity&gt; activities) {
+    if (activities != null) {
+      if (!activities.isEmpty()) {
+        List&lt;Activity&gt; activityList = new ArrayList(activities);
+        IASCIITableAware asciiTableAware = new CollectionASCIITableAware&lt;Activity&gt;(activityList,
+            &quot;id&quot;,
+            &quot;type&quot;, &quot;location&quot;, &quot;distance&quot;, &quot;starttime&quot;, &quot;duration&quot;, &quot;route&quot;);
+        System.out.println(ASCIITable.getInstance().getTable(asciiTableAware));
+      }
+      System.out.println(&quot;ok&quot;);
+    } else {
+      System.out.println(&quot;not found&quot;);
+    }
+  }
+}</code></pre>
+<p>If the maven step above had worked - this should compile successfully.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="07">
+          <h2>PacemakerConsoleService</h2>
+<p>The final piece of the puzzel is our completed UI:</p>
+<pre><code>package controllers;
+
+import com.google.common.base.Optional;
+
+import java.io.File;
+
+import asg.cliche.Command;
+import asg.cliche.Param;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import models.Activity;
+import models.User;
+import utils.AsciiTableParser;
+import utils.Console;
+import utils.JSONSerializer;
+
+import utils.Serializer;
+import utils.XMLSerializer;
+
+public class PacemakerConsoleService {
+
+  PacemakerAPI paceApi;
+  File datastore = new File(&quot;datastore&quot;);
+  Serializer xmlSerializer = new XMLSerializer(datastore);
+  Serializer jsonSerializer = new JSONSerializer(datastore);
+  Console console = new AsciiTableParser();
+
+  public PacemakerConsoleService() throws Exception {
+    paceApi = new PacemakerAPI(xmlSerializer);
+    if (datastore.isFile()) {
+      paceApi.load();
+    }
+  }
+
+  @Command(description = &quot;Create a new User&quot;)
+  public void createUser(@Param(name = &quot;first name&quot;) String firstName,
+      @Param(name = &quot;last name&quot;) String lastName,
+      @Param(name = &quot;email&quot;) String email, @Param(name = &quot;password&quot;) String password) {
+    console.renderUser(paceApi.createUser(firstName, lastName, email, password));
+  }
+
+  @Command(description = &quot;Get a Users details&quot;)
+  public void getUser(@Param(name = &quot;email&quot;) String email) {
+    console.renderUser(paceApi.getUserByEmail(email));
+  }
+
+  @Command(description = &quot;Get all users details&quot;)
+  public void getUsers() {
+    console.renderUsers(paceApi.getUsers());
+  }
+
+  @Command(description = &quot;Delete a User&quot;)
+  public void deleteUser(@Param(name = &quot;email&quot;) String email) {
+    console.renderUser(paceApi.getUserByEmail(email));
+  }
+
+  @Command(description = &quot;Add an activity&quot;)
+  public void addActivity(@Param(name = &quot;user-id&quot;) String id,
+      @Param(name = &quot;type&quot;) String type,
+      @Param(name = &quot;location&quot;) String location,
+      @Param(name = &quot;distance&quot;) double distance,
+      @Param(name = &quot;starttime&quot;) String starttime,
+      @Param(name = &quot;duration&quot;) String duration) {
+    console
+        .renderActivity(paceApi.createActivity(id, type, location, distance, starttime, duration));
+  }
+
+  @Command(description = &quot;Add a location to an activity&quot;)
+  public void addLocation(@Param(name = &quot;activity-id&quot;) String id,
+      @Param(name = &quot;longitude&quot;) double longitude,
+      @Param(name = &quot;latitude&quot;) double latitude) {
+    Optional&lt;Activity&gt; activity = Optional.fromNullable(paceApi.getActivity(id));
+    if (activity.isPresent()) {
+      paceApi.addLocation(activity.get().id, latitude, longitude);
+      console.println(&quot;ok&quot;);
+    } else {
+      console.println(&quot;not found&quot;);
+    }
+  }
+
+  @Command(description = &quot;List a users activities&quot;)
+  public void listActivities(@Param(name = &quot;user id&quot;) String id) {
+    Optional&lt;User&gt; user = Optional.fromNullable(paceApi.getUser(id));
+    if (user.isPresent()) {
+      console.renderActivities(paceApi.getActivities(user.get().id));
+    }
+  }
+
+  @Command(description = &quot;List all Activities&quot;)
+  public void lisAllActivities(@Param(name = &quot;userid&quot;) Long id,
+      @Param(name = &quot;sortBy: type, location, distance, date, duration&quot;) String sortBy) {
+  }
+
+  @Command(description=&quot;List Activities&quot;)
+  public void listActivities (@Param(name=&quot;userid&quot;) String id, @Param(name=&quot;sortBy: type, location, distance, date, duration&quot;) String sortBy)
+  {
+    Set&lt;String&gt; options = new HashSet&lt;&gt;(Arrays.asList(&quot;type&quot;, &quot;location&quot;, &quot;distance&quot;, &quot;date&quot;, &quot;duration&quot;));
+    if (options.contains(sortBy))  {
+      console.renderActivities(paceApi.listActivities(id, sortBy));
+    }
+    else
+      console.println (&quot;usage : la &quot; + options.toString());
+  }
+
+  @Command(description = &quot;Set file format&quot;)
+  public void changeFileFormat(@Param(name = &quot;file format: xml, json&quot;) String fileFormat) {
+    switch (fileFormat) {
+      case &quot;xml&quot;:
+        paceApi.serializer = xmlSerializer;
+        break;
+      case &quot;json&quot;:
+        paceApi.serializer = jsonSerializer;
+        break;
+    }
+  }
+
+  @Command(description = &quot;Load activities persistent store&quot;)
+  public void load() throws Exception {
+    paceApi.load();
+  }
+
+  @Command(description = &quot;Store activities persistent store&quot;)
+  public void store() throws Exception {
+    paceApi.store();
+  }
+}</code></pre>
+<p>And then a main program to give it a spin:</p>
+<pre><code>package controllers;
+
+import asg.cliche.Shell;
+import asg.cliche.ShellFactory;
+
+public class Main {
+  public static void main(String[] args) throws Exception {
+    PacemakerConsoleService main = new PacemakerConsoleService();
+
+    Shell shell = ShellFactory.createConsoleShell(&quot;pm&quot;,
+        &quot;Welcome to pacemaker-console - ?help for instructions&quot;, main);
+    shell.commandLoop();
+    main.paceApi.store();
+  }
+}</code></pre>
+<p>This should run now - give it a go.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="Solution">
+          <h1>Solution</h1>
+<ul>
+<li><a href="archives/pacemaker-console-solution.zip">pacemaker-console-solution</a></li>
+</ul>
+
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).on('keydown', function(e) {
+  e = e || window.event;
+  var nextTab;
+  switch (e.which || e.keyCode) {
+    case 37: // left
+      nextTab = $('.tab-menu a[data-tab].active').prev('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').last();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+
+    case 39: // right
+      nextTab = $('.tab-menu a[data-tab].active').next('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').first();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+  }
+});
+
+  $(document).ready(function() {
+  $('img').addClass('ui image');
+
+  $('.ui.embed').embed();
+
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass(
+        'ui basic segment',
+      );
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass(
+        'ui blue ribbon label',
+      );
+      divLabel.append($images[i].alt);
+      $(divLabel).insertBefore($images[i]);
+    }
+  });
+
+  $('.ui.menu .item').tab({
+    history: true,
+    historyType: 'hash',
+  });
+
+  $('.popup').popup();
+
+  $('.ui.sidebar')
+    .sidebar({ context: $('.pushable') })
+    .sidebar('setting', 'transition', 'slide out')
+    .sidebar('attach events', '#toc');
+});
+
+</script>
+</body>
+</html>
