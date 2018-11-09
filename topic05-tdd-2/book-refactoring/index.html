@@ -1,29 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css"
-        type="text/css">
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css"
-        rel="stylesheet"/>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script type="text/javascript"
-          src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
-  <script type="text/javascript"
-          src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
-  <script type="text/javascript"
-          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script type="text/javascript"
-          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
-  <script type="text/javascript"
-          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
-  <style>
-    
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <style>
+      
 
 body {
   font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
@@ -66,54 +57,13 @@ h3 {
 
 
 
-  </style>
-</head>
+    </style>
+  </head>
 
-<body>
+  <body>
+    
+    
 
-
-
-<div class="ui fixed top pointing inverted stackable menu labmenu">
-  <header class="header item">
-    <i id="toc" class="sitemap icon"></i>
-    
-      <a href="../index.html">  5: Test Driven Development II  </a>
-    
-  </header>
-  <div class="right tab-menu menu">
-    
-      <a class="item" data-tab="Lab-05 Refactoring">
-        Lab-05 Refactoring
-      </a>
-    
-      <a class="item" data-tab="01">
-        01
-      </a>
-    
-      <a class="item" data-tab="02">
-        02
-      </a>
-    
-      <a class="item" data-tab="03">
-        03
-      </a>
-    
-      <a class="item" data-tab="04">
-        04
-      </a>
-    
-      <a class="item" data-tab="05">
-        05
-      </a>
-    
-      <a class="item" data-tab="Exercises">
-        Exercises
-      </a>
-    
-  </div>
-</div>
-
-<<<<<<< HEAD
     <div class="ui fixed top pointing inverted stackable menu labmenu">
       <header class="header item">
         <i id="toc" class="sitemap icon"></i>
@@ -225,75 +175,12 @@ h3 {
           
             <div  class="ui tab segment lab" data-tab="Lab-05 Refactoring">
               <h1>Objectives</h1>
-=======
-<div class="ui pushable">
-  <div class="ui inverted labeled icon left inline vertical sidebar menu">
-    <br><br>
-    
-      
-        <a class="item"
-           href="https://wit-computing-msc-2018.github.io/agile//topic01-paradigms-and-languages/book-eclipse-and-java/index.html">Lab-01 Eclipse & Java </a>
-      
-    
-      
-        <a class="item"
-           href="https://wit-computing-msc-2018.github.io/agile//topic02-java-language/book-cli-and-classes/index.html">Lab-02 CLI & Classes </a>
-      
-    
-      
-        <a class="item"
-           href="https://wit-computing-msc-2018.github.io/agile//topic03-inheritance-and-collections/book-objects-and-serialization/index.html">Lab-03 Objects & Serialization </a>
-      
-    
-      
-        <a class="item"
-           href="https://wit-computing-msc-2018.github.io/agile//topic04-serialisation-and-tdd-1/book-testing/index.html">Lab-04 Testing </a>
-      
-    
-      
-        <a class="item"
-           href="https://wit-computing-msc-2018.github.io/agile//topic05-tdd-2/book-refactoring/index.html">Lab-05 Refactoring </a>
-      
-    
-      
-        <a class="item"
-           href="https://wit-computing-msc-2018.github.io/agile//topic06-exceptions-and-maven/book-maven/index.html">Lab-06 Maven </a>
-      
-    
-      
-        <a class="item"
-           href="https://wit-computing-msc-2018.github.io/agile//topic07-tdd-3-and-java-versions/book-java-versions/index.html">Lab-07 Java Versions </a>
-      
-    
-      
-        <a class="item"
-           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-a-pacemaker-soln-models/index.html">Lab-07a Pacemaker Models </a>
-      
-    
-      
-        <a class="item"
-           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-b-pacemaker-soln-api/index.html">Lab-07b Pacemaker API </a>
-      
-    
-      
-        <a class="item"
-           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-c-assignmment-2-skeleton/index.html">Lab-08 Skeleton </a>
-      
-    
-  </div>
-  <div class="pusher" tabindex="-1">
-    <div class="ui basic segment">
-      <br>
-      
-        <div class="ui tab segment lab" data-tab="Lab-05 Refactoring">
-          <h1>Objectives</h1>
->>>>>>> f1b6e64eccdc6e47c51efae39032b83e0e62a420
 <p>Refactor pacemaker to employ uuid instead of long ids. Unsure the tests as still passing as we make this transition. Make a start command line formatting features.</p>
 
-        </div>
-      
-        <div class="ui tab segment lab" data-tab="01">
-          <h1>ID Management</h1>
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="01">
+              <h1>ID Management</h1>
 <p>Currently we are using Long id for our users and activitiy objects:</p>
 <pre><code>public class Activity implements Serializable
 { 
@@ -321,10 +208,10 @@ h3 {
 <p>Specifically, if you restart the app, and load a previously saved model - what will be the value of these counters? What happens when you insert a new User for instance?</p>
 <p>See if you can perform an experiment to exercise the above scenario.</p>
 
-        </div>
-      
-        <div class="ui tab segment lab" data-tab="02">
-          <h1>Refactor User ID</h1>
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="02">
+              <h1>Refactor User ID</h1>
 <p>You may have seen that the problem with the last step was the ids were reset to 0 when the app was launched. Thus, any new users or activities would overwrite already created users/activities - corrupting the data structure.</p>
 <p>This is clearly a serious bug - one not picked up by our unit tests. In fact it is a difficult bug to pick up in the test infrastructure and you may only be able to reproduce using the command line.</p>
 <p>Out solution will be to abandon this approach completely - and adopt a different strategy for managing ids. We can switch to using Immutable Universally unique Identifiers</p>
@@ -371,10 +258,10 @@ public class User implements Serializable
 ...</code></pre>
 <p>The above version should now compile successfully. We should also be able to run just this test (even though there are errors elsewhere). It should pass.</p>
 
-        </div>
-      
-        <div class="ui tab segment lab" data-tab="03">
-          <h1>Refactor PacemakerAPI</h1>
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="03">
+              <h1>Refactor PacemakerAPI</h1>
 <p>The data structure can now altered to reflect the String id:</p>
 <pre><code>public class PacemakerAPI
 {
@@ -442,10 +329,10 @@ public class User implements Serializable
 <p>The id parameter above has been changed from Long to String.</p>
 <p>You should be able to run the app successfully now.</p>
 
-        </div>
-      
-        <div class="ui tab segment lab" data-tab="04">
-          <h1>Git &amp; Maven</h1>
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="04">
+              <h1>Git &amp; Maven</h1>
 <p>In last weeks lab we referred to some useful utilities libraries for rendering tabular data:</p>
 <ul>
 <li><a href="https://github.com/robinhowlett/java-ascii-table">https://github.com/robinhowlett/java-ascii-table</a></li>
@@ -517,10 +404,10 @@ OS name: &quot;windows 10&quot;, version: &quot;10.0&quot;, arch: &quot;amd64&qu
 <li><a href="archives/java-ascii-table-1.0.jar">java-ascii-table-1.0.jar</a></li>
 </ul>
 
-        </div>
-      
-        <div class="ui tab segment lab" data-tab="05">
-          <h1>ascii-table</h1>
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="05">
+              <h1>ascii-table</h1>
 <p>The readme for the library:</p>
 <ul>
 <li><a href="https://github.com/robinhowlett/java-ascii-table">https://github.com/robinhowlett/java-ascii-table</a></li>
@@ -591,10 +478,10 @@ pm&gt;</code></pre>
 </ul>
 <p>NB: Where we are using camel-case attributes names (e.g <code>lastName</code>), it is very important to use convert to lower case the second capital letter (the <code>N</code> in <code>lastName</code>) when composing the accessors. This is due to a bug in the library.</p>
 
-        </div>
-      
-        <div class="ui tab segment lab" data-tab="Exercises">
-          <h1>Exercises</h1>
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="Exercises">
+              <h1>Exercises</h1>
 <p>Archive of the lab so far:</p>
 <ul>
 <li><a href="https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V5.0">https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V5.0</a></li>
@@ -619,34 +506,28 @@ pm&gt;</code></pre>
 </ul>
 <p>Feel free to use either in your assignment.</p>
 
+            </div>
+          
         </div>
-      
+      </div>
     </div>
-  </div>
-</div>
 
-<script>
-  $(document).on('keydown', function(e) {
-  e = e || window.event;
-  var nextTab;
-  switch (e.which || e.keyCode) {
-    case 37: // left
-      nextTab = $('.tab-menu a[data-tab].active').prev('a[data-tab]');
-      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').last();
-      nextTab.click();
-      $('.pusher').focus();
-      break;
-
-    case 39: // right
-      nextTab = $('.tab-menu a[data-tab].active').next('a[data-tab]');
-      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').first();
-      nextTab.click();
-      $('.pusher').focus();
-      break;
-  }
+    <script>
+      $(document).ready(function() {
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass('');
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass('uk-label uk-text-lowercase');
+      divLabel.append($images[i].alt);
+      $(divLabel).insertAfter($images[i]);
+      $('<br>').insertAfter($images[i]);
+    }
+  });
 });
 
-  $(document).ready(function() {
+      $(document).ready(function() {
   $('img').addClass('ui image');
 
   $('.ui.embed').embed();
@@ -679,6 +560,6 @@ pm&gt;</code></pre>
     .sidebar('attach events', '#toc');
 });
 
-</script>
-</body>
+    </script>
+  </body>
 </html>
