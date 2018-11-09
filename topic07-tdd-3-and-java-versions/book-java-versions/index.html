@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css" rel="stylesheet" />
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-    <style>
-      
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css"
+        type="text/css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css"
+        rel="stylesheet"/>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <style>
+    
 
 body {
   font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
@@ -57,13 +66,62 @@ h3 {
 
 
 
-    </style>
-  </head>
+  </style>
+</head>
 
-  <body>
-    
-    
+<body>
 
+
+
+<div class="ui fixed top pointing inverted stackable menu labmenu">
+  <header class="header item">
+    <i id="toc" class="sitemap icon"></i>
+    
+      <a href="../index.html"> 7. TDDIII and Java Evolution  </a>
+    
+  </header>
+  <div class="right tab-menu menu">
+    
+      <a class="item" data-tab="Lab-07 Java Versions">
+        Lab-07 Java Versions
+      </a>
+    
+      <a class="item" data-tab="01">
+        01
+      </a>
+    
+      <a class="item" data-tab="02">
+        02
+      </a>
+    
+      <a class="item" data-tab="03">
+        03
+      </a>
+    
+      <a class="item" data-tab="04">
+        04
+      </a>
+    
+      <a class="item" data-tab="05">
+        05
+      </a>
+    
+      <a class="item" data-tab="06">
+        06
+      </a>
+    
+      <a class="item" data-tab="07">
+        07
+      </a>
+    
+      <a class="item" data-tab="Exercises">
+        Exercises
+      </a>
+    
+  </div>
+</div>
+
+<<<<<<< HEAD
     <div class="ui fixed top pointing inverted stackable menu labmenu">
       <header class="header item">
         <i id="toc" class="sitemap icon"></i>
@@ -183,12 +241,75 @@ h3 {
           
             <div  class="ui tab segment lab" data-tab="Lab-07 Java Versions">
               <h2>Objectives</h2>
+=======
+<div class="ui pushable">
+  <div class="ui inverted labeled icon left inline vertical sidebar menu">
+    <br><br>
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic01-paradigms-and-languages/book-eclipse-and-java/index.html">Lab-01 Eclipse & Java </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic02-java-language/book-cli-and-classes/index.html">Lab-02 CLI & Classes </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic03-inheritance-and-collections/book-objects-and-serialization/index.html">Lab-03 Objects & Serialization </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic04-serialisation-and-tdd-1/book-testing/index.html">Lab-04 Testing </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic05-tdd-2/book-refactoring/index.html">Lab-05 Refactoring </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic06-exceptions-and-maven/book-maven/index.html">Lab-06 Maven </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic07-tdd-3-and-java-versions/book-java-versions/index.html">Lab-07 Java Versions </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-a-pacemaker-soln-models/index.html">Lab-07a Pacemaker Models </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-b-pacemaker-soln-api/index.html">Lab-07b Pacemaker API </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-c-assignmment-2-skeleton/index.html">Lab-08 Skeleton </a>
+      
+    
+  </div>
+  <div class="pusher" tabindex="-1">
+    <div class="ui basic segment">
+      <br>
+      
+        <div class="ui tab segment lab" data-tab="Lab-07 Java Versions">
+          <h2>Objectives</h2>
+>>>>>>> f1b6e64eccdc6e47c51efae39032b83e0e62a420
 <p>In the previous lab, you incorporated Maven into your pacemaker-console app.  In this lab, we will bring in some of the new features from Java 7 onwards.</p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="01">
-              <h1>Eclipse - checking settings</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="01">
+          <h1>Eclipse - checking settings</h1>
 <p>In this step, we will verify that our Eclipse settings for our latest version of pacemaker-console-maven are ok.</p>
 <h2>JRE10</h2>
 <p>First make sure that your Eclipse project has Java10 on its build path.  You can check it by selecting the following from the tool bar:</p>
@@ -212,10 +333,10 @@ h3 {
 [INFO] Finished at: 2018-10-09T12:15:00+01:00
 [INFO] ------------------------------------------------------------------------</code></pre>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="02">
-              <h1>Java 7</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="02">
+          <h1>Java 7</h1>
 <p>We are going to implement try-with-resources and also multiple exceptions handling in this step.</p>
 <h2>try-with-resources</h2>
 <p>In <em>BinarySerializer.java</em>, you will notice that we are using a try-catch block in both the <em>read</em> and <em>write</em> methods:</p>
@@ -331,10 +452,10 @@ h3 {
   }</code></pre>
 <p>Already, you can see that the verbosity of your code is starting to reduce. </p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="03">
-              <h1>Java 8 - Interfaces</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="03">
+          <h1>Java 8 - Interfaces</h1>
 <p>In this step, we will add a default method to our Serializer inferface and override it in our applicable serializer concrete classes.</p>
 <h2>Default methods</h2>
 <p>Add the following default method to your Serializer interface:</p>
@@ -365,10 +486,10 @@ pm&gt; csf
 Serializer Format is...Binary
 pm&gt;</code></pre>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="04">
-              <h1>Java 8 - Lambdas and Streams</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="04">
+          <h1>Java 8 - Lambdas and Streams</h1>
 <p>Before we start working on Java 8 Lambdas and Streams, we are first going to generate some test data in the console.</p>
 <h2>Setting up test data scripts</h2>
 <p>Create three new .script files in your route directory called:</p>
@@ -633,10 +754,10 @@ al 3 43.3 44.4</code></pre>
   &lt;/java.util.Stack&gt;
 &lt;/object-stream&gt;</code></pre>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="05">
-              <h1>Java 8 - Lambdas &amp; Streams</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="05">
+          <h1>Java 8 - Lambdas &amp; Streams</h1>
 <p>We will now add a new feature that will utilise both Lambdas and Streams to perform processing on the User collection.</p>
 <h2>New Report</h2>
 <p>We are going to write a report that will print out the &quot;active&quot; users to the console.  Our code will assume that an active user is one that has activities added.</p>
@@ -752,10 +873,10 @@ al 3 43.3 44.4</code></pre>
 +------------+----------+-------------------+----------------------+</code></pre>
 <p>You have now used Lambdas and Streams in this new command.</p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="06">
-              <h2>Java 9 updates</h2>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="06">
+          <h2>Java 9 updates</h2>
 <p>We will use the new collection factory methods in our new command, Report Active Users.  </p>
 <h2>New Collection Factory Methods</h2>
 <p>Currently the report active users method looks like this:</p>
@@ -809,10 +930,10 @@ al 3 43.3 44.4</code></pre>
 <pre><code class="lang-java">.filter(p -&gt; !p.getActivities().isEmpty())</code></pre>
 <p>It makes it slightly more readable!</p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="07">
-              <h1>Java 10 updates</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="07">
+          <h1>Java 10 updates</h1>
 <p>This is the last change that we will make.  We will use the new identifier <em>var</em>.</p>
 <h2>Local variable type inference</h2>
 <p>A new identifier named <em>var</em> is now available for local variables with non-null initializers. Using this identifier, the type of the variable is inferred from the context.</p>
@@ -971,10 +1092,10 @@ public class Main {
 </li>
 </ul>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="Exercises">
-              <h1>Exercises</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="Exercises">
+          <h1>Exercises</h1>
 <p>The complete maven project so far:</p>
 <ul>
 <li><a href="https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V7.0">https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V7.0</a></li>
@@ -985,28 +1106,34 @@ public class Main {
 <h2>Exercise 2</h2>
 <p>Consider updating your assignment work completed to-date with Java 7-10 capabilities, in particular for the sorting.  Use of Streams and Lambdas in particular would be a nice addition to your assignment. </p>
 
-            </div>
-          
         </div>
-      </div>
+      
     </div>
+  </div>
+</div>
 
-    <script>
-      $(document).ready(function() {
-  const $images = $('.lab img');
-  jQuery.each($images, function(i) {
-    if ($images[i].alt.length > 0) {
-      const divImg = $(document.createElement('div')).addClass('');
-      $($images[i]).wrap(divImg);
-      const divLabel = $(document.createElement('div')).addClass('uk-label uk-text-lowercase');
-      divLabel.append($images[i].alt);
-      $(divLabel).insertAfter($images[i]);
-      $('<br>').insertAfter($images[i]);
-    }
-  });
+<script>
+  $(document).on('keydown', function(e) {
+  e = e || window.event;
+  var nextTab;
+  switch (e.which || e.keyCode) {
+    case 37: // left
+      nextTab = $('.tab-menu a[data-tab].active').prev('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').last();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+
+    case 39: // right
+      nextTab = $('.tab-menu a[data-tab].active').next('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').first();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+  }
 });
 
-      $(document).ready(function() {
+  $(document).ready(function() {
   $('img').addClass('ui image');
 
   $('.ui.embed').embed();
@@ -1039,6 +1166,6 @@ public class Main {
     .sidebar('attach events', '#toc');
 });
 
-    </script>
-  </body>
+</script>
+</body>
 </html>
