@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css" rel="stylesheet" />
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-    <style>
-      
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css"
+        type="text/css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css"
+        rel="stylesheet"/>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <style>
+    
 
 body {
   font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
@@ -57,138 +66,133 @@ h3 {
 
 
 
-    </style>
-  </head>
+  </style>
+</head>
 
-  <body>
+<body>
+
+
+
+<div class="ui fixed top pointing inverted stackable menu labmenu">
+  <header class="header item">
+    <i id="toc" class="sitemap icon"></i>
     
+      <a href="../index.html"> 6: Exceptions & Maven  </a>
     
+  </header>
+  <div class="right tab-menu menu">
+    
+      <a class="item" data-tab="Lab-06 Maven">
+        Lab-06 Maven
+      </a>
+    
+      <a class="item" data-tab="01">
+        01
+      </a>
+    
+      <a class="item" data-tab="02">
+        02
+      </a>
+    
+      <a class="item" data-tab="03">
+        03
+      </a>
+    
+      <a class="item" data-tab="04">
+        04
+      </a>
+    
+      <a class="item" data-tab="05">
+        05
+      </a>
+    
+      <a class="item" data-tab="06">
+        06
+      </a>
+    
+      <a class="item" data-tab="07">
+        07
+      </a>
+    
+      <a class="item" data-tab="Exercises">
+        Exercises
+      </a>
+    
+  </div>
+</div>
 
-    <div class="ui fixed top pointing inverted stackable menu labmenu">
-      <header class="header item">
-        <i id="toc" class="sitemap icon"></i>
-        
-          <a href="../index.html"> 6: Exceptions & Maven  </a>
-        
-      </header>
-      <div class="right tab-menu menu">
-        
-          <a class="item" data-tab="Lab-06 Maven">
-            Lab-06 Maven
-          </a>
-        
-          <a class="item" data-tab="01">
-            01
-          </a>
-        
-          <a class="item" data-tab="02">
-            02
-          </a>
-        
-          <a class="item" data-tab="03">
-            03
-          </a>
-        
-          <a class="item" data-tab="04">
-            04
-          </a>
-        
-          <a class="item" data-tab="05">
-            05
-          </a>
-        
-          <a class="item" data-tab="06">
-            06
-          </a>
-        
-          <a class="item" data-tab="07">
-            07
-          </a>
-        
-          <a class="item" data-tab="Exercises">
-            Exercises
-          </a>
-        
-      </div>
-    </div>
-
-    <div class="ui segment pushable">
-      <div class="ui inverted labeled icon left inline vertical sidebar menu">
-        <br><br>
-        
-          
-            <a class="item" href="../../topic01-paradigms-and-languages/book-eclipse-and-java/index.html">
-              Lab-01 Eclipse & Java
-            </a>
-          
-        
-          
-            <a class="item" href="../../topic02-java-language/book-cli-and-classes/index.html">
-              Lab-02 CLI & Classes
-            </a>
-          
-        
-          
-            <a class="item" href="../../topic03-inheritance-and-collections/book-objects-and-serialization/index.html">
-              Lab-03 Objects & Serialization
-            </a>
-          
-        
-          
-            <a class="item" href="../../topic04-serialisation-and-tdd-1/book-testing/index.html">
-              Lab-04 Testing
-            </a>
-          
-        
-          
-            <a class="item" href="../../topic05-tdd-2/book-refactoring/index.html">
-              Lab-05 Refactoring
-            </a>
-          
-        
-          
-            <a class="active item" href="../../topic06-exceptions-and-maven/book-maven/index.html">
-              Lab-06 Maven
-            </a>
-          
-        
-          
-            <a class="item" href="../../topic07-tdd-3-and-java-versions/book-java-versions/index.html">
-              Lab-07 Java Versions
-            </a>
-          
-        
-          
-            <a class="item" href="../../topic08-srp-and-assignment1-soln/book-a-pacemaker-soln-models/index.html">
-              Lab-07a Pacemaker Models
-            </a>
-          
-        
-          
-            <a class="item" href="../../topic08-srp-and-assignment1-soln/book-b-pacemaker-soln-api/index.html">
-              Lab-07b Pacemaker API
-            </a>
-          
-        
-          
-            <a class="item" href="../../topic08-srp-and-assignment1-soln/book-c-assignmment-2-skeleton/index.html">
-              Lab-08 Skeleton
-            </a>
-          
-        
-      </div>
-      <div class="pusher" tabindex="-1">
-        <div class="ui basic segment" id="labchat">
-          <br>
-          
-            <div  class="ui tab segment lab" data-tab="Lab-06 Maven">
-              <h2>Objectives</h2>
+<div class="ui pushable">
+  <div class="ui inverted labeled icon left inline vertical sidebar menu">
+    <br><br>
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic01-paradigms-and-languages/book-eclipse-and-java/index.html">Lab-01 Eclipse & Java </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic02-java-language/book-cli-and-classes/index.html">Lab-02 CLI & Classes </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic03-inheritance-and-collections/book-objects-and-serialization/index.html">Lab-03 Objects & Serialization </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic04-serialisation-and-tdd-1/book-testing/index.html">Lab-04 Testing </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic05-tdd-2/book-refactoring/index.html">Lab-05 Refactoring </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic06-exceptions-and-maven/book-maven/index.html">Lab-06 Maven </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic07-tdd-3-and-java-versions/book-java-versions/index.html">Lab-07 Java Versions </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-a-pacemaker-soln-models/index.html">Lab-07a Pacemaker Models </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-b-pacemaker-soln-api/index.html">Lab-07b Pacemaker API </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-c-assignmment-2-skeleton/index.html">Lab-08 Skeleton </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic09-ocp-and-rest/book-simple-rest-api/index.html">Lab-09 Rest API </a>
+      
+    
+  </div>
+  <div class="pusher" tabindex="-1">
+    <div class="ui basic segment">
+      <br>
+      
+        <div class="ui tab segment lab" data-tab="Lab-06 Maven">
+          <h2>Objectives</h2>
 <p>In the previous lab, you installed Maven.  In this lab, we will incorporate Maven into  our pacemaker-console-lab05 solution.  We will also look at using both JUnit4 and JUnit5 in our pacemaker app.</p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="01">
-              <h1>Verify your Maven Installation</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="01">
+          <h1>Verify your Maven Installation</h1>
 <p>Visit the main Maven site:</p>
 <ul>
 <li><a href="http://maven.apache.org/">http://maven.apache.org/</a></li>
@@ -216,10 +220,10 @@ C:\Users\Siobhan&gt;</code></pre>
 <li><a href="http://maven.apache.org/install.html">http://maven.apache.org/install.html</a></li>
 </ul>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="02">
-              <h1>5-minute Maven Guide</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="02">
+          <h1>5-minute Maven Guide</h1>
 <p><em>In this step, you will work through the Maven example we covered in lectures.</em></p>
 <p>Navigate to this 5 minute guide:</p>
 <ul>
@@ -272,10 +276,10 @@ C:\Users\Siobhan&gt;</code></pre>
 <li><a href="https://maven.apache.org/pom.html">https://maven.apache.org/pom.html</a></li>
 </ul>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="03">
-              <h1>Pacemaker with Maven Project</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="03">
+          <h1>Pacemaker with Maven Project</h1>
 <h2>Review pacemaker project</h2>
 <p>You should have the pacemaker project from lab05 in your workspace.  If you don&#39;t have a lab05 pacemaker project, you can download it from here:  </p>
 <ul>
@@ -376,10 +380,10 @@ C:\Users\Siobhan&gt;</code></pre>
 <p><img src="img/004.png" alt=""></p>
 <p>There are a significant number of errors however, which we will fix in the next step.  These errors have arisen because we haven&#39;t yet included our components (e.g. XStream, Cliche, etc) in the project. We are going to get Maven to manage this for us!</p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="04">
-              <h2>Incorporate Correct Library References</h2>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="04">
+          <h2>Incorporate Correct Library References</h2>
 <p>Inspect the pacemaker-console-maven folder, open and review the &quot;pom.xml&quot; file.</p>
 <pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 
@@ -657,10 +661,10 @@ C:\Users\Siobhan&gt;</code></pre>
 
 C:\Users\Siobhan\eclipse-workspace\pacemaker-console-maven&gt;</code></pre>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="05">
-              <h1>Build</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="05">
+          <h1>Build</h1>
 <h2>Attempting to compile and test</h2>
 <p>In your command prompt/shell, type in <strong>mvn test</strong>.  It will fail because maven cannot resolve the ASCII Table dependency:</p>
 <pre><code>[INFO] ------------------------------------------------------------------------
@@ -755,10 +759,10 @@ C:\Users\Siobhan\eclipse-workspace\pacemaker-console-maven\src\main\resources&gt
 <p>To execute the application within your command prompt/shell, enter:</p>
 <pre><code>mvn exec:java -Dexec.mainClass=&quot;controllers.Main&quot;</code></pre>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="06">
-              <h1>Explore the local repo and use launch scripts</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="06">
+          <h1>Explore the local repo and use launch scripts</h1>
 <h2>Local Repository</h2>
 <p>Locate the local maven repository - it should be in your <strong>home folder/.m2/repository</strong>. It contains not just dependencies explicitly downloaded as part of the project you have just constructed, but also components downloaded by maven as part of the goals you have invoked. This may include components used by maven itself.</p>
 <p>If you examine the repository, and recall the naming system we adopted for the Ascii Table component, then you can locate the generated jar file.</p>
@@ -837,10 +841,10 @@ Welcome to pacemaker-console - ?help for instructions
 pm&gt;</code></pre>
 <p>See above...you should expect to be presented with the pacemaker console user interface.  </p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="07">
-              <h1>Maven and Different Versions of JUnit</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="07">
+          <h1>Maven and Different Versions of JUnit</h1>
 <p>As an additional Maven exercise, we will use both JUnit4 and JUnit5 tests in our <em>pacemaker-console-maven</em> app.  We will, just for demonstration purposes, make a copy of the LocationTest and change the copy to JUnit4.</p>
 <h2>JUnit5</h2>
 <p>This is the current JUnit5 LocationTest class:</p>
@@ -946,10 +950,10 @@ public class LocationJUnit4Test {
 [INFO] ------------------------------------------------------------------------</code></pre>
 <p>Your JUnit4 test has now been executed using a JUnit5 dependency.</p>
 
-            </div>
-          
-            <div  class="ui tab segment lab" data-tab="Exercises">
-              <h1>Exercises</h1>
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="Exercises">
+          <h1>Exercises</h1>
 <p>The complete maven project so far:</p>
 <ul>
 <li><a href="https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V6.0">https://github.com/wit-computing-msc-2018/pacemaker-console/releases/tag/V6.0</a></li>
@@ -996,28 +1000,34 @@ public class LocationJUnit4Test {
 <li>refresh the project in eclipse</li>
 </ul>
 
-            </div>
-          
         </div>
-      </div>
+      
     </div>
+  </div>
+</div>
 
-    <script>
-      $(document).ready(function() {
-  const $images = $('.lab img');
-  jQuery.each($images, function(i) {
-    if ($images[i].alt.length > 0) {
-      const divImg = $(document.createElement('div')).addClass('');
-      $($images[i]).wrap(divImg);
-      const divLabel = $(document.createElement('div')).addClass('uk-label uk-text-lowercase');
-      divLabel.append($images[i].alt);
-      $(divLabel).insertAfter($images[i]);
-      $('<br>').insertAfter($images[i]);
-    }
-  });
+<script>
+  $(document).on('keydown', function(e) {
+  e = e || window.event;
+  var nextTab;
+  switch (e.which || e.keyCode) {
+    case 37: // left
+      nextTab = $('.tab-menu a[data-tab].active').prev('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').last();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+
+    case 39: // right
+      nextTab = $('.tab-menu a[data-tab].active').next('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').first();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+  }
 });
 
-      $(document).ready(function() {
+  $(document).ready(function() {
   $('img').addClass('ui image');
 
   $('.ui.embed').embed();
@@ -1050,6 +1060,6 @@ public class LocationJUnit4Test {
     .sidebar('attach events', '#toc');
 });
 
-    </script>
-  </body>
+</script>
+</body>
 </html>

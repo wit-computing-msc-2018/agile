@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css"
+        type="text/css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css"
+        rel="stylesheet"/>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <style>
+    
+
+body {
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+  font-size:90%;
+  color: black;
+}
+
+p {
+  margin: 0.5em;
+}
+
+pre code {
+  font-family: "Monaco";
+  font-size: 100%;
+}
+
+img {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin:10px;
+}
+
+h1, h2, h3 {
+  border-bottom:thin solid black;
+  margin-bottom: 0.5em;
+  margin-top: 1em;
+}
+
+h1 {
+  font-style:italic;
+  font-size:130%;
+}
+
+h2 {
+  font-size:110%;
+}
+
+h3 {
+  font-size:100%;
+}
+
+
+
+  </style>
+</head>
+
+<body>
+
+
+
+<div class="ui fixed top pointing inverted stackable menu labmenu">
+  <header class="header item">
+    <i id="toc" class="sitemap icon"></i>
+    
+      <a href="../index.html"> 09. OCP and REST  </a>
+    
+  </header>
+  <div class="right tab-menu menu">
+    
+      <a class="item" data-tab="Lab-09 Rest API">
+        Lab-09 Rest API
+      </a>
+    
+      <a class="item" data-tab="01">
+        01
+      </a>
+    
+      <a class="item" data-tab="02">
+        02
+      </a>
+    
+      <a class="item" data-tab="03">
+        03
+      </a>
+    
+      <a class="item" data-tab="04">
+        04
+      </a>
+    
+      <a class="item" data-tab="05">
+        05
+      </a>
+    
+      <a class="item" data-tab="06">
+        06
+      </a>
+    
+      <a class="item" data-tab="07">
+        07
+      </a>
+    
+      <a class="item" data-tab="Exercises">
+        Exercises
+      </a>
+    
+  </div>
+</div>
+
+<div class="ui pushable">
+  <div class="ui inverted labeled icon left inline vertical sidebar menu">
+    <br><br>
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic01-paradigms-and-languages/book-eclipse-and-java/index.html">Lab-01 Eclipse & Java </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic02-java-language/book-cli-and-classes/index.html">Lab-02 CLI & Classes </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic03-inheritance-and-collections/book-objects-and-serialization/index.html">Lab-03 Objects & Serialization </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic04-serialisation-and-tdd-1/book-testing/index.html">Lab-04 Testing </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic05-tdd-2/book-refactoring/index.html">Lab-05 Refactoring </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic06-exceptions-and-maven/book-maven/index.html">Lab-06 Maven </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic07-tdd-3-and-java-versions/book-java-versions/index.html">Lab-07 Java Versions </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-a-pacemaker-soln-models/index.html">Lab-07a Pacemaker Models </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-b-pacemaker-soln-api/index.html">Lab-07b Pacemaker API </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic08-srp-and-assignment1-soln/book-c-assignmment-2-skeleton/index.html">Lab-08 Skeleton </a>
+      
+    
+      
+        <a class="item"
+           href="https://wit-computing-msc-2018.github.io/agile//topic09-ocp-and-rest/book-simple-rest-api/index.html">Lab-09 Rest API </a>
+      
+    
+  </div>
+  <div class="pusher" tabindex="-1">
+    <div class="ui basic segment">
+      <br>
+      
+        <div class="ui tab segment lab" data-tab="Lab-09 Rest API">
+          <h1>Objectives</h1>
+<p>Evolve a simple Rest service from the existing pacemaker-skeleton app using the Javalin microframework.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="01">
+          <h1>Solutions to Lab-08 Exercises</h1>
+<p>The solutions are available in this version:</p>
+<ul>
+<li><a href="https://github.com/wit-computing-msc-2017/pacemaker-skeleton/releases/tag/lab08.exercises">https://github.com/wit-computing-msc-2017/pacemaker-skeleton/releases/tag/lab08.exercises</a></li>
+</ul>
+<p>These are the details:</p>
+<h2>Exercise 1:</h2>
+<p>Implement the Add Location Command</p>
+<h3>Solution</h3>
+<pre><code class="lang-java">  @Command(description = &quot;Add location: Append location to an activity&quot;)
+  public void addLocation(@Param(name = &quot;activity-id&quot;) String id,
+      @Param(name = &quot;longitude&quot;) double longitude,
+      @Param(name = &quot;latitude&quot;) double latitude) {
+    Optional&lt;Activity&gt; activity = Optional.fromNullable(paceApi.getActivity(id));
+    if (activity.isPresent()) {
+      paceApi.addLocation(activity.get().id, latitude, longitude);
+      console.println(&quot;ok&quot;);
+    } else {
+      console.println(&quot;not found&quot;);
+    }
+  }</code></pre>
+<h1>Exercise 2:</h1>
+<p>Implement the List Location Command</p>
+<h3>Solution</h3>
+<pre><code class="lang-java">  @Command(description = &quot;List all locations for a specific activity&quot;)
+  public void listActivityLocations(@Param(name = &quot;activity-id&quot;) String id) {
+    Optional&lt;Activity&gt; activity = Optional.fromNullable(paceApi.getActivity(id));
+    if (activity.isPresent()) {
+      console.renderLocations(activity.get().route);
+    }
+  }</code></pre>
+<h1>Exercise 3:</h1>
+<p>Implement the Activity Report Commands</p>
+<ul>
+<li>(a) taking no parameters - which sorts the activities by type</li>
+</ul>
+<p>We already have an API method to deliver a sorted list of activities, so we just call it:</p>
+<pre><code class="lang-java">  @Command(description = &quot;ActivityReport: List all activities for logged in user, sorted alphabetically by type&quot;)
+  public void activityReport() {
+    Optional&lt;User&gt; user = Optional.fromNullable(loggedInUser);
+    if (user.isPresent()) {
+      console.renderActivities(paceApi.listActivities(user.get().id, &quot;type&quot;));
+    }
+  }</code></pre>
+<ul>
+<li>(b) talking a single parameter - the activity type. This command only lists activities of the specified type. However, they are to be sorted by distance, longest to shortest.</li>
+</ul>
+<pre><code class="lang-java">  @Command(
+      description = &quot;Activity Report: List all activities for logged in user by type. Sorted longest to shortest distance&quot;)
+  public void activityReport(@Param(name = &quot;byType: type&quot;) String type) {
+    Optional&lt;User&gt; user = Optional.fromNullable(loggedInUser);
+    if (user.isPresent()) {
+      List&lt;Activity&gt; reportActivities = new ArrayList&lt;&gt;();
+      Collection&lt;Activity&gt; usersActivities = paceApi.getActivities(user.get().id);
+      usersActivities.forEach(a -&gt; {
+        if (a.type.equals(type))
+          reportActivities.add(a);
+      });
+      reportActivities.sort((a1, a2) -&gt; {
+        if (a1.distance &gt;= a2.distance)
+          return -1;
+        else
+          return 1;
+      });
+      console.renderActivities(reportActivities);
+    }
+  }</code></pre>
+<p>Bellow is a script that demonstrate some simple interaction to test out these commands. In the script we keep the user and activity details to just single letters for brevity. </p>
+<ul>
+<li>A user with details &#39;a a a a&#39; is created and logged in.</li>
+<li>Then a series of activities of types &#39;t&#39;, are created of various distances.</li>
+<li>ar (without parameters) - list all activities sorted by type</li>
+<li>at t - this list only activities of type c, sorted by distance, longest to shortest</li>
+</ul>
+<pre><code>Welcome to pacemaker-console - ?help for instructions
+pm&gt; r a a a a
++--------------------------------------+-----------+----------+-------+
+|                  ID                  | FIRSTNAME | LASTNAME | EMAIL |
++--------------------------------------+-----------+----------+-------+
+| 002c7e21-cf50-44ca-a39b-c9680182cc84 |         a |        a |     a |
++--------------------------------------+-----------+----------+-------+
+ok
+ok
+pm&gt; l a a
+Logged in a
+ok
+pm&gt; aa t t 5
++--------------------------------------+------+----------+----------+-----------+----------+
+|                  ID                  | TYPE | LOCATION | DISTANCE | STARTTIME | DURATION |
++--------------------------------------+------+----------+----------+-----------+----------+
+| 08520461-a88d-4918-80a5-728acf6b1ac7 |    t |        t |        5 |      null |     null |
++--------------------------------------+------+----------+----------+-----------+----------+
+ok
+pm&gt; aa t t 7
++--------------------------------------+------+----------+----------+-----------+----------+
+|                  ID                  | TYPE | LOCATION | DISTANCE | STARTTIME | DURATION |
++--------------------------------------+------+----------+----------+-----------+----------+
+| 9aa2328a-adc5-4121-b71a-8ee7fa16d5b7 |    t |        t |        7 |      null |     null |
++--------------------------------------+------+----------+----------+-----------+----------+
+ok
+pm&gt; aa t t 1
++--------------------------------------+------+----------+----------+-----------+----------+
+|                  ID                  | TYPE | LOCATION | DISTANCE | STARTTIME | DURATION |
++--------------------------------------+------+----------+----------+-----------+----------+
+| efa5beeb-9d16-4f34-a5c5-4e5ade656472 |    t |        t |        1 |      null |     null |
++--------------------------------------+------+----------+----------+-----------+----------+
+ok
+pm&gt; ar 
++--------------------------------------+------+----------+----------+-----------+----------+
+|                  ID                  | TYPE | LOCATION | DISTANCE | STARTTIME | DURATION |
++--------------------------------------+------+----------+----------+-----------+----------+
+| 9aa2328a-adc5-4121-b71a-8ee7fa16d5b7 |    t |        t |        7 |      null |     null |
+| efa5beeb-9d16-4f34-a5c5-4e5ade656472 |    t |        t |        1 |      null |     null |
+| 08520461-a88d-4918-80a5-728acf6b1ac7 |    t |        t |        5 |      null |     null |
++--------------------------------------+------+----------+----------+-----------+----------+
+ok
+pm&gt; ar t
++--------------------------------------+------+----------+----------+-----------+----------+
+|                  ID                  | TYPE | LOCATION | DISTANCE | STARTTIME | DURATION |
++--------------------------------------+------+----------+----------+-----------+----------+
+| 9aa2328a-adc5-4121-b71a-8ee7fa16d5b7 |    t |        t |        7 |      null |     null |
+| 08520461-a88d-4918-80a5-728acf6b1ac7 |    t |        t |        5 |      null |     null |
+| efa5beeb-9d16-4f34-a5c5-4e5ade656472 |    t |        t |        1 |      null |     null |
++--------------------------------------+------+----------+----------+-----------+----------+
+ok
+pm&gt;</code></pre>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="02">
+          <h1>Javalin Depencencies</h1>
+<p>Javalin is a minial Java library for developing Java Web Services and applications:</p>
+<ul>
+<li><a href="https://javalin.io">https://javalin.io</a></li>
+</ul>
+<p>We are going to bootstrap a simple REST service from our existing API, and implement a number of initial endpoints.</p>
+<h2>Dependencies</h2>
+<p>These are the initial dependencies to enable out skeleton app to support an rest service:</p>
+<pre><code>    &lt;dependency&gt;
+      &lt;groupId&gt;io.javalin&lt;/groupId&gt;
+      &lt;artifactId&gt;javalin&lt;/artifactId&gt;
+       &lt;version&gt;2.4.0&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+      &lt;artifactId&gt;slf4j-simple&lt;/artifactId&gt;
+      &lt;version&gt;1.7.25&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+      &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+      &lt;version&gt;2.9.5&lt;/version&gt;
+    &lt;/dependency&gt;</code></pre>
+<p>Place these in your POM alongside the other dependencies. You may need to run the following command in a shell inside your project:</p>
+<pre><code>mvn package</code></pre>
+<p>This will download the dependencies to your local maven repo. If you refresh eclipse, you should see a range of new dependencies:</p>
+<p><img src="img/01.png" alt=""></p>
+<p>Although we only included 3 entries - note that a range of upstream modules were also incorporated into our build path.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="03">
+          <h1>Start Rest Service</h1>
+<p>The existing main launches a simple console application.</p>
+<p>Keeping this main as is, we can augment this with another main, this time it will start a web server :</p>
+<h2>RestMain</h2>
+<pre><code>package controllers;
+
+import io.javalin.Javalin;
+
+public class RestMain {
+
+  public static void main(String[] args) throws Exception {
+    Javalin app = Javalin.create().start(7000);
+  }
+}</code></pre>
+<p>You should be able to launch this by right-clicking RestMain and selecting &#39;Run as-&gt;Java Application&#39;</p>
+<p><img src="img/02.png" alt=""></p>
+<p>The console should look like this:</p>
+<pre><code>[main] INFO org.eclipse.jetty.util.log - Logging initialized @247ms to org.eclipse.jetty.util.log.Slf4jLog
+[main] INFO io.javalin.Javalin - 
+ _________________________________________
+|        _                  _ _           |
+|       | | __ ___   ____ _| (_)_ __      |
+|    _  | |/ _` \ \ / / _` | | | &#39;_ \     |
+|   | |_| | (_| |\ V / (_| | | | | | |    |
+|    \___/ \__,_| \_/ \__,_|_|_|_| |_|    |
+|_________________________________________|
+|                                         |
+|    https://javalin.io/documentation     |
+|_________________________________________|
+[main] INFO io.javalin.Javalin - Starting Javalin ...
+[main] INFO org.eclipse.jetty.server.Server - jetty-9.4.12.v20180830; built: 2018-08-30T13:59:14.071Z; git: 27208684755d94a92186989f695db2d7b21ebc51; jvm 1.8.0_162-b12
+[main] INFO org.eclipse.jetty.server.session - DefaultSessionIdManager workerName=node0
+[main] INFO org.eclipse.jetty.server.session - No SessionScavenger set, using defaults
+[main] INFO org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+[main] INFO org.eclipse.jetty.server.handler.ContextHandler - Started i.j.c.u.initialize$httpHandler$1@ff5b51f{/,null,AVAILABLE}
+[main] INFO org.eclipse.jetty.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@71bbf57e{/,null,AVAILABLE}
+[main] INFO org.eclipse.jetty.server.AbstractConnector - Started ServerConnector@59e5ddf{HTTP/1.1,[http/1.1]}{0.0.0.0:7000}
+[main] INFO org.eclipse.jetty.server.Server - Started @697ms
+[main] INFO io.javalin.Javalin - Jetty is listening on: [http://localhost:7000/]
+[main] INFO io.javalin.Javalin - Javalin has started \o/</code></pre>
+<p>If you now browse to:</p>
+<ul>
+<li><a href="http://localhost:7000/">http://localhost:7000/</a></li>
+</ul>
+<p>Your browser should display:</p>
+<pre><code>Not found</code></pre>
+<p>You now have a web service running on localhost - it doesnt expose any endpoints yet, so accessing it delivers a &#39;not found&#39; response.</p>
+<p>If you open Chrome developer tools - you might be able to see a little more detail:</p>
+<p><img src="img/03.png" alt=""></p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="04">
+          <h1>First End Point</h1>
+<p>Introduce the folowing class into the controllers package:</p>
+<h2>PacemakerRestService</h2>
+<pre><code>package controllers;
+
+import io.javalin.Context;
+
+public class PacemakerRestService {
+
+  PacemakerAPI pacemaker = new PacemakerAPI();
+
+  public void listUsers(Context ctx) {
+  }
+}</code></pre>
+<p>We are implementing a single endpoint to retrieve a list of users.</p>
+<p>Attaching the end point to the server, we need to refactor RestMain as follows:</p>
+<pre><code>package controllers;
+
+import io.javalin.Javalin;
+
+public class RestMain {
+
+  public static void main(String[] args) throws Exception {
+    Javalin app = Javalin.create().start(7000);
+    PacemakerRestService service = new PacemakerRestService();
+    configRoutes(app, service);
+  }
+
+  static void configRoutes(Javalin app, PacemakerRestService service) {
+
+    app.get(&quot;/users&quot;, ctx -&gt; {
+      service.listUsers(ctx);
+    });
+  }
+}</code></pre>
+<p>Examine the above carefully. </p>
+<p>Via the <strong>Console</strong> window, <strong>Terminate</strong> the previous run of your app. </p>
+<p>Then <strong>Restart</strong> the app and open a browser on this url:</p>
+<ul>
+<li><a href="http://localhost:7000/users">http://localhost:7000/users</a></li>
+</ul>
+<p>This time the response will be blank - but if you can locate the Chrome developer console it might look like this:</p>
+<p><img src="img/04.png" alt=""></p>
+<p>This indicates the endpoint was found this time (status 200), but no value was returned.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="05">
+          <h1>Sample Data</h1>
+<p>We can carry over some fixtures from our previous solution:</p>
+<h2>fixtures</h2>
+<pre><code>package models;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class Fixtures {
+
+  public static List&lt;User&gt; users =
+      new ArrayList&lt;&gt;(Arrays.asList(new User(&quot;marge&quot;, &quot;simpson&quot;, &quot;marge@simpson.com&quot;, &quot;secret&quot;),
+          new User(&quot;lisa&quot;, &quot;simpson&quot;, &quot;lisa@simpson.com&quot;, &quot;secret&quot;),
+          new User(&quot;bart&quot;, &quot;simpson&quot;, &quot;bart@simpson.com&quot;, &quot;secret&quot;),
+          new User(&quot;maggie&quot;, &quot;simpson&quot;, &quot;maggie@simpson.com&quot;, &quot;secret&quot;)));
+}</code></pre>
+<p>This creates a list of test users.</p>
+<p>We can now rework our PacemakerRestService to return this list:</p>
+<pre><code>package controllers;
+
+import io.javalin.Context;
+import static models.Fixtures.users;
+
+public class PacemakerRestService {
+
+  PacemakerAPI pacemaker = new PacemakerAPI();
+
+  PacemakerRestService() {
+    users.forEach(
+        user -&gt; pacemaker.createUser(user.firstName, user.lastName, user.email, user.password));
+  }
+
+  public void listUsers(Context ctx) {
+    ctx.json(pacemaker.getUsers());
+  }
+}</code></pre>
+<p>Terminate the existing app, restart it and browse to the same endpoint:</p>
+<ul>
+<li><a href="http://localhost:7000/users">http://localhost:7000/users</a></li>
+</ul>
+<p>The following list should be returned:</p>
+<p><img src="img/05.png" alt=""></p>
+<p>Looking carefully as the result, we see a slight anomaly in each user returned:</p>
+<pre><code>{
+  &quot;id&quot;:&quot;8179fe9a-3dfa-4a9c-8835-4c044d35471d&quot;,
+  &quot;firstName&quot;:&quot;marge&quot;,
+  &quot;lastName&quot;:&quot;simpson&quot;,
+  &quot;email&quot;:&quot;marge@simpson.com&quot;,
+  &quot;password&quot;:&quot;secret&quot;,
+  &quot;activities&quot;:{},
+  &quot;firstname&quot;:&quot;marge&quot;,
+  &quot;lastname&quot;:&quot;simpson&quot;
+}</code></pre>
+<p>.. we seem to be repeating the firstname/lastname pair. Our Json parsers cannot cope very well with camel-case attribute. We can fix this now using the Refactor-&gt;rename facility in Eclipse:</p>
+<p><img src="img/06.png" alt=""></p>
+<p>This will change the fields names, and all uses thereof in the application:</p>
+<pre><code>public class User implements Serializable {
+
+  public String id;
+  public String firstname;
+  public String lastname;
+  public String email;
+  public String password</code></pre>
+<p>Restart, and verify that Users are returned as expected:</p>
+<pre><code>{
+  &quot;id&quot;:&quot;8179fe9a-3dfa-4a9c-8835-4c044d35471d&quot;,
+  &quot;firstName&quot;:&quot;marge&quot;,
+  &quot;lastName&quot;:&quot;simpson&quot;,
+  &quot;email&quot;:&quot;marge@simpson.com&quot;,
+  &quot;password&quot;:&quot;secret&quot;,
+  &quot;activities&quot;:{}
+}</code></pre>
+<p>We can also test this endpoint using specialized REST tools. Locate the <code>Restlet Client</code> Chrome extension:</p>
+<p><img src="img/07.png" alt=""></p>
+<p>and install it.</p>
+<p>Launch the extension, and create a &#39;GET&#39; request to our endpoint. Note the request is in the top of the page and the results are below the green bar.  Also note that you must have your REST server running to execute these endpoints.</p>
+<p><img src="img/08.png" alt=""></p>
+<p>Explore this tool for a few minutes - including the <code>history</code> and <code>repository</code> sections.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="06">
+          <h1>Creating a User</h1>
+<p>To support the <strong>create user</strong> endpoint, we need a new method in our Service class:</p>
+<h2>PacemakerRestService</h2>
+<pre><code>...
+  public void createUser(Context ctx) {
+    User user = ctx.bodyAsClass(User.class);
+    User newUser = pacemaker
+        .createUser(user.firstname, user.lastname, user.email, user.password);
+    ctx.json(newUser);
+  }
+...</code></pre>
+<p>... and a new Route:</p>
+<h2>RestMain</h2>
+<pre><code>...
+    app.post(&quot;/users&quot;, ctx -&gt; {
+      service.createUser(ctx);
+    });
+...</code></pre>
+<p>We can configure Restlet (our chrome extension) to send a <strong><em>POST</em></strong> request instead of <strong><em>GET</em></strong></p>
+<p><img src="img/09.png" alt=""></p>
+<p>You will need to manually enter the user json. Copy/paste from here:</p>
+<pre><code>{
+  &quot;firstname&quot; : &quot;homer&quot;,
+  &quot;lastname&quot;:&quot;Simpson&quot;,
+  &quot;email&quot;:&quot;homer@simpson.com&quot;,
+  &quot;password&quot;:&quot;secret&quot;
+}</code></pre>
+<p>If the request succeeds, then you should see this result:</p>
+<p><img src="img/10.png" alt=""></p>
+<h2>Retrieving a single user</h2>
+<p>We would also like to return an individual user, not the complete list of users. To do this we would formulate a url containing the id of the user e.g.:</p>
+<ul>
+<li><a href="http://localhost:7000/users/4de9f79b-a600-4a39-a0f2-231386cd70ab">http://localhost:7000/users/4de9f79b-a600-4a39-a0f2-231386cd70ab</a></li>
+</ul>
+<p>Here is a new route - added below the other routes in the <code>configRoutes</code> method:</p>
+<pre><code>    app.get(&quot;/users/:id&quot;, ctx -&gt; {
+      service.listUser(ctx);
+    });</code></pre>
+<p>Then add a new method in the <code>PacemakerRestService</code> to support the route:</p>
+<pre><code>  public void listUser(Context ctx) {
+    String id = ctx.pathParam(&quot;id&quot;);
+    ctx.json(pacemaker.getUser(id));
+  }</code></pre>
+<p>Restart the app now and test out this route. You will need to first retrieve all users (to get the IDs), and then you can request a specific user, using one of the user IDs just retrieved.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="07">
+          <h1>Activities</h1>
+<p>Now that users are supported - we can implement initial activity support.</p>
+<p>First 2 new routes:</p>
+<pre><code>    app.get(&quot;/users/:id/activities&quot;, ctx -&gt; {
+      service.getActivities(ctx);
+    });
+
+    app.post(&quot;/users/:id/activities&quot;, ctx -&gt; {
+      service.createActivity(ctx);
+    });</code></pre>
+<p>This will get all activities for a given user, and also create single activity for a user. This is the implementation of these routes:</p>
+<pre><code>  public void getActivities(Context ctx) {
+    String id = ctx.pathParam(&quot;id&quot;);
+    User user = pacemaker.getUser(id);
+    if (user != null) {
+      ctx.json(user.activities.values());
+    } else {
+      ctx.status(404);
+    }
+  }
+
+  public void createActivity(Context ctx) {
+    String id = ctx.pathParam(&quot;id&quot;);
+    User user = pacemaker.getUser(id);
+    if (user != null) {
+      Activity activity = ctx.bodyAsClass(Activity.class);
+      Activity newActivity = pacemaker
+          .createActivity(id, activity.type, activity.location, activity.distance);
+      ctx.json(newActivity);
+    } else {
+      ctx.status(404);
+    }
+  }</code></pre>
+<p>In each case, we interrogate the context for the user id - and we use this id to discover which user the activities are associated with. Our API is then accessed - and we return the list of all activities, or the individual activity just created.</p>
+<p>Testing these routes requires REST tools - we have already installed Restlet in Chrome.</p>
+<p>First, retrieve all users:</p>
+<p><img src="img/11.png" alt=""></p>
+<p>Using the first id - formulate a <code>POST</code> request. Copy the json object for the new activity:</p>
+<pre><code>{
+  &quot;type&quot;: &quot;walk&quot;,
+  &quot;location&quot; : &quot;fridge&quot;,
+  &quot;distance&quot; : 2
+}</code></pre>
+<p><img src="img/12.png" alt=""></p>
+<p>Press send - and we should expect a successful response (you may have to scroll down to see the response):</p>
+<p><img src="img/13.png" alt=""></p>
+<p>Finally, test the get all activities route:</p>
+<p><img src="img/14.png" alt=""></p>
+<p>Which returns the activity just created - in a list.</p>
+
+        </div>
+      
+        <div class="ui tab segment lab" data-tab="Exercises">
+          <h1>Exercises</h1>
+<h1>Solution</h1>
+<p>The project so far:</p>
+<ul>
+<li><a href="https://github.com/wit-computing-msc-2018/pacemaker-skeleton/releases/tag/lab.09.end.2018">https://github.com/wit-computing-msc-2018/pacemaker-skeleton/releases/tag/lab.09.end.2018</a></li>
+</ul>
+<h2>Exercises 1</h2>
+<p>Restlet Client has a feature whereby requests can be saved for reuse later:</p>
+<p><img src="img/15.png" alt=""></p>
+<p>Experiment with creating additional activities and listing all activities, using this feature.</p>
+<h2>Exercise 2</h2>
+<p>Examine the following route:</p>
+<pre><code>    app.get(&quot;/users/:id/activities/:activityid&quot;, ctx -&gt; {
+      service.getActivity(ctx);
+    });</code></pre>
+<p>This retrieves a single activity by id. Implement the <code>getActivity()</code> method in <code>PacemkerRestService</code>. </p>
+<p>Test this route using the Restlet Client.</p>
+<h2>Exercise 3</h2>
+<p>Two final routes:</p>
+<pre><code>    app.get(&quot;/users/:id/activities/:activityid/locations&quot;, ctx -&gt; {
+      service.getActivityLocations(ctx);
+    });
+
+    app.post(&quot;/users/:id/activities/:activityid/locations&quot;, ctx -&gt; {
+      service.addLocation(ctx);
+    });</code></pre>
+<p>See if you can implement them?</p>
+
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).on('keydown', function(e) {
+  e = e || window.event;
+  var nextTab;
+  switch (e.which || e.keyCode) {
+    case 37: // left
+      nextTab = $('.tab-menu a[data-tab].active').prev('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').last();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+
+    case 39: // right
+      nextTab = $('.tab-menu a[data-tab].active').next('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').first();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+  }
+});
+
+  $(document).ready(function() {
+  $('img').addClass('ui image');
+
+  $('.ui.embed').embed();
+
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass(
+        'ui basic segment',
+      );
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass(
+        'ui blue ribbon label',
+      );
+      divLabel.append($images[i].alt);
+      $(divLabel).insertBefore($images[i]);
+    }
+  });
+
+  $('.ui.menu .item').tab({
+    history: true,
+    historyType: 'hash',
+  });
+
+  $('.popup').popup();
+
+  $('.ui.sidebar')
+    .sidebar({ context: $('.pushable') })
+    .sidebar('setting', 'transition', 'slide out')
+    .sidebar('attach events', '#toc');
+});
+
+</script>
+</body>
+</html>
