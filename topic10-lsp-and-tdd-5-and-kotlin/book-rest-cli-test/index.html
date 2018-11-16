@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <style>
+      
+
+body {
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+  font-size:90%;
+  color: black;
+}
+
+p {
+  margin: 0.5em;
+}
+
+pre code {
+  font-family: "Monaco";
+  font-size: 100%;
+}
+
+img {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin:10px;
+}
+
+h1, h2, h3 {
+  border-bottom:thin solid black;
+  margin-bottom: 0.5em;
+  margin-top: 1em;
+}
+
+h1 {
+  font-style:italic;
+  font-size:130%;
+}
+
+h2 {
+  font-size:110%;
+}
+
+h3 {
+  font-size:100%;
+}
+
+
+
+    </style>
+  </head>
+
+  <body>
+    
+    
+
+    <div class="ui fixed top pointing inverted stackable menu labmenu">
+      <header class="header item">
+        <i id="toc" class="sitemap icon"></i>
+        
+          <a href="../index.html"> 10. LSP, TDD & Rest Client  </a>
+        
+      </header>
+      <div class="right tab-menu menu">
+        
+          <a class="item" data-tab="Lab-10 Rest CLI">
+            Lab-10 Rest CLI
+          </a>
+        
+          <a class="item" data-tab="01">
+            01
+          </a>
+        
+          <a class="item" data-tab="02">
+            02
+          </a>
+        
+          <a class="item" data-tab="03">
+            03
+          </a>
+        
+          <a class="item" data-tab="04">
+            04
+          </a>
+        
+          <a class="item" data-tab="05">
+            05
+          </a>
+        
+          <a class="item" data-tab="06">
+            06
+          </a>
+        
+          <a class="item" data-tab="07">
+            07
+          </a>
+        
+          <a class="item" data-tab="Exercises">
+            Exercises
+          </a>
+        
+      </div>
+    </div>
+
+    <div class="ui segment pushable">
+      <div class="ui inverted labeled icon left inline vertical sidebar menu">
+        <br><br>
+        
+          
+            <a class="item" href="../../topic01-paradigms-and-languages/book-eclipse-and-java/index.html">
+              Lab-01 Eclipse & Java
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic02-java-language/book-cli-and-classes/index.html">
+              Lab-02 CLI & Classes
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic03-inheritance-and-collections/book-objects-and-serialization/index.html">
+              Lab-03 Objects & Serialization
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic04-serialisation-and-tdd-1/book-testing/index.html">
+              Lab-04 Testing
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic05-tdd-2/book-refactoring/index.html">
+              Lab-05 Refactoring
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic06-exceptions-and-maven/book-maven/index.html">
+              Lab-06 Maven
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic07-tdd-3-and-java-versions/book-java-versions/index.html">
+              Lab-07 Java Versions
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic08-srp-and-assignment1-soln/book-a-pacemaker-soln-models/index.html">
+              Lab-07a Pacemaker Models
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic08-srp-and-assignment1-soln/book-b-pacemaker-soln-api/index.html">
+              Lab-07b Pacemaker API
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic08-srp-and-assignment1-soln/book-c-assignmment-2-skeleton/index.html">
+              Lab-08 Skeleton
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic09-ocp-and-rest/book-simple-rest-api/index.html">
+              Lab-09 Rest API
+            </a>
+          
+        
+          
+            <a class="active item" href="../../topic10-lsp-and-tdd-5-and-kotlin/book-rest-cli-test/index.html">
+              Lab-10 Rest CLI
+            </a>
+          
+        
+      </div>
+      <div class="pusher" tabindex="-1">
+        <div class="ui basic segment" id="labchat">
+          <br>
+          
+            <div  class="ui tab segment lab" data-tab="Lab-10 Rest CLI">
+              <h1>Objectives</h1>
+<p>Implement a new project that will be a client of the pacemaker-skeleton application.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="01">
+              <h1>Exercise Solutions</h1>
+<h2>Exercise 2</h2>
+<pre><code>    app.get(&quot;/users/:id/activities/:activityid&quot;, ctx -&gt; {
+      service.getActivity(ctx);
+    });</code></pre>
+<p>This retrieves a single activity by id. Implement the <code>getActivity()</code> method in <code>PacemkerRestService</code>. </p>
+<h2>Solution</h2>
+<h3>controllers/PacemakerRestService</h3>
+<pre><code>  public void getActivity(Context ctx) {
+    String id = ctx.pathParam(&quot;activityId&quot;);
+    Activity activity = pacemaker.getActivity(id);
+    if (activity != null) {
+      ctx.json(activity);
+    } else {
+      ctx.status(404);
+    }
+  }</code></pre>
+<h2>Exercise 3</h2>
+<p>Two final routes:</p>
+<pre><code>    app.get(&quot;/users/:id/activities/:activityid/locations&quot;, ctx -&gt; {
+      service.getActivityLocations(ctx);
+    });
+
+    app.post(&quot;/users/:id/activities/:activityid/locations&quot;, ctx -&gt; {
+      service.addLocation(ctx);
+    });</code></pre>
+<h2>Solution</h2>
+<h3>controllers/PacemakerRestService</h3>
+<pre><code>  public void getActivityLocations(Context ctx) {
+    String id = ctx.pathParam(&quot;activityid&quot;);
+    Activity activity = pacemaker.getActivity(id);
+    if (activity != null) {
+      ctx.json(activity.route);
+    } else {
+      ctx.status(404);
+    }
+  }
+
+  public void addLocation(Context ctx) {
+    String id = ctx.pathParam(&quot;activityid&quot;);
+    Activity activity = pacemaker.getActivity(id);
+    if (activity != null) {
+      Location location = ctx.bodyAsClass(Location.class);
+      activity.route.add(location);
+      ctx.json(location);
+    } else {
+      ctx.status(404);
+    }
+  }</code></pre>
+<p>Note in these implementations, we are choosing to ignore the if (the user id), as the activityid is unique in our name space. We could, perhaps, have additional logic to verify that the id is correct, and that the activityId represents a valid activity for that user. If the id is incorrect, we could return a 404.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="02">
+              <h1>pacemker-skeleton-client project</h1>
+<p>With your pacemaker-skeleton project:</p>
+<ul>
+<li>Create a copy of the project, calling the new folder <code>pacemaker-skeleton-client</code></li>
+<li><p>Open the <code>pom.xml</code> file, and change the project <strong>name</strong> and <strong>artifact id</strong> to <code>pacemaker-skeleton-client</code>:</p>
+<pre><code>    &lt;name&gt;pacemaker-skeleton-client&lt;/name&gt;
+    &lt;artifactId&gt;pacemaker-skeleton-client&lt;/artifactId&gt;</code></pre>
+</li>
+<li><p>Import the <code>pacemaker-skeleton-client</code> project (as a maven project) into Eclipse.</p>
+</li>
+</ul>
+<p>Your eclipse project should look like this:</p>
+<p><img src="img/01.png" alt=""></p>
+<p>Note that you should have 2 identical projects named:</p>
+<ul>
+<li>pacemaker-skeleton   <em>(the project you built using last week&#39;s labs)</em></li>
+<li>pacemaker-skeleton-client   <em>(the project you just imported )</em></li>
+</ul>
+<p>Both implement identical features:</p>
+<ul>
+<li>a REST API for the pacemaker service (via controllers.RestMain)</li>
+<li>a command line application for the pacemaker service (via controllers.Main)</li>
+</ul>
+<p>We would like to progressively diverge these two applications such that:</p>
+<ul>
+<li><code>pacemaker-skeleton</code> -&gt; Expose REST API only, removing the CLI</li>
+<li><code>pacemaker-skeleton-client</code> -&gt; Command line application only, removing the existing pacemaker implementation</li>
+</ul>
+<p>The client application will ultimately utilize the REST API exposed by the service.</p>
+<h2>First Steps</h2>
+<p>Simplifying <code>pacemaker-skeleton</code> is relatively straightforward. Delete the following source files from the project:</p>
+<ul>
+<li>controllers.PacemakerConsoleService</li>
+<li>controllers.Main</li>
+<li>controlers.parsers.Parser</li>
+<li>controllers.parsers.AsciiTableParser</li>
+</ul>
+<p>You can also delete the, now empty, &#39;parsers&#39; package.</p>
+<p>In the <code>pacemaker-skeleton-client</code> project, remove these classes:</p>
+<ul>
+<li>controllers.PacemakerRestService</li>
+<li>controllers.RestMain</li>
+<li>models.Fixtures</li>
+</ul>
+<p>In addition, edit the <code>pacemaker-skeleton-client</code> pom file, and remove the javalin dependencies:</p>
+<pre><code>    &lt;dependency&gt;
+      &lt;groupId&gt;io.javalin&lt;/groupId&gt;
+      &lt;artifactId&gt;javalin&lt;/artifactId&gt;
+       &lt;version&gt;2.4.0&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+      &lt;artifactId&gt;slf4j-simple&lt;/artifactId&gt;
+      &lt;version&gt;1.7.25&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+      &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+      &lt;version&gt;2.9.5&lt;/version&gt;
+    &lt;/dependency&gt;</code></pre>
+<p>Both projects should look like this:</p>
+<p><img src="img/02.png" alt=""></p>
+<p>The server (<code>pacemaker-skeleton</code>) should be working fine as is - run it to make sure there are no errors:</p>
+<p><img src="img/03.png" alt=""></p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="03">
+              <h1>PacemakerAPI in pacemaker-skeleton-client</h1>
+<p>In the client project, replace the PacemakerAPI class with a stubbed out version, implementing the same signatures:</p>
+<pre><code>package controllers;
+
+import java.util.Collection;
+import java.util.List;
+import models.Activity;
+import models.Location;
+import models.User;
+
+
+public class PacemakerAPI {
+
+  public PacemakerAPI() {
+  }
+
+  public Collection&lt;User&gt; getUsers() {
+    return null;
+  }
+
+  public void deleteUsers() {
+  }
+
+  public User createUser(String firstName, String lastName, String email, String password) {
+    return null;    
+  }
+
+  public Activity createActivity(String id, String type, String location, double distance) {
+    return null;
+  }
+
+  public Activity getActivity(String id) {
+    return null;
+  }
+
+  public Collection&lt;Activity&gt; getActivities(String id) {
+    return null;
+  }
+
+  public List&lt;Activity&gt; listActivities(String userId, String sortBy) {
+    return null;
+  }
+
+  public void addLocation(String id, double latitude, double longitude) {
+  }
+
+  public User getUserByEmail(String email) {
+    return null;
+  }
+
+  public User getUser(String id) {
+    return null;
+  }
+
+  public User deleteUser(String id) {
+    return null;
+  }
+}</code></pre>
+<p>In addition to simplifying the above class, we will also simplify the models. Replace the pacemaker-skeleton-client models with the following versions:</p>
+<h2>User</h2>
+<pre><code>package models;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
+import java.io.Serializable;
+import com.google.common.base.Objects;
+
+public class User implements Serializable {
+
+  public String id;
+  public String firstname;
+  public String lastname;
+  public String email;
+  public String password;
+
+  public User() {
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public String getFirstname() {
+    return firstname;
+  }
+
+  public String getLastname() {
+    return lastname;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public User(String firstName, String lastName, String email, String password) {
+    this.firstname = firstName;
+    this.lastname = lastName;
+    this.email = email;
+    this.password = password;
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (obj instanceof User) {
+      final User other = (User) obj;
+      return Objects.equal(firstname, other.firstname)
+          &amp;&amp; Objects.equal(lastname, other.lastname)
+          &amp;&amp; Objects.equal(email, other.email)
+          &amp;&amp; Objects.equal(password, other.password);
+    } else {
+      return false;
+    }
+  }
+
+  @Override
+  public String toString() {
+    return toStringHelper(this).addValue(id)
+        .addValue(firstname)
+        .addValue(lastname)
+        .addValue(password)
+        .addValue(email)
+        .toString();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.id, this.lastname, this.firstname, this.email, this.password);
+  }
+}</code></pre>
+<h2>Activity</h2>
+<pre><code>package models;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
+import java.io.Serializable;
+import com.google.common.base.Objects;
+
+public class Activity implements Serializable {
+
+  public String id;
+  public String type;
+  public String location;
+  public double distance;
+
+  public Activity() {
+  }
+
+  public Activity(String type, String location, double distance) {
+    this.type = type;
+    this.location = location;
+    this.distance = distance;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public String getDistance() {
+    return Double.toString(distance);
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (obj instanceof Activity) {
+      final Activity other = (Activity) obj;
+      return Objects.equal(type, other.type)
+          &amp;&amp; Objects.equal(location, other.location)
+          &amp;&amp; Objects.equal(distance, other.distance);
+    } else {
+      return false;
+    }
+  }
+
+  @Override
+  public String toString() {
+    return toStringHelper(this).addValue(id)
+        .addValue(type)
+        .addValue(location)
+        .addValue(distance)
+        .toString();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.id, this.type, this.location, this.distance);
+  }
+}</code></pre>
+<h2>Location</h2>
+<pre><code>package models;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
+import java.io.Serializable;
+import com.google.common.base.Objects;
+
+public class Location implements Serializable {
+
+  public String id;
+  public double longitude;
+  public double latitude;
+
+  public Location() {
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public double getLongitude() {
+    return longitude;
+  }
+
+  public double getLatitude() {
+    return latitude;
+  }
+
+  public Location(double latitude, double longitude) {
+    this.latitude = latitude;
+    this.longitude = longitude;
+  }
+
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (obj instanceof Location) {
+      final Location other = (Location) obj;
+      return Objects.equal(latitude, other.latitude)
+          &amp;&amp; Objects.equal(longitude, other.longitude);
+    } else {
+      return false;
+    }
+  }
+
+  @Override
+  public String toString() {
+    return toStringHelper(this).addValue(id)
+        .addValue(latitude)
+        .addValue(longitude)
+        .toString();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.id, this.latitude, this.longitude);
+  }
+}</code></pre>
+<p>These versions have the following differences:</p>
+<ul>
+<li>id&#39;s no longer generated in the constructors</li>
+<li>the one-to-many relationships have been removed</li>
+</ul>
+<p>Specifically, references from Activity -&gt; Location and User -&gt; Activity have been deleted.</p>
+<p>You might notice that we have compile errors in PacemakerConsoleService now.  We have a single change to make to this class - in the implementation of the &#39;List all locations&#39; command:</p>
+<h2>PacemakerConsoleService</h2>
+<pre><code>  @Command(description = &quot;List all locations for a specific activity&quot;)
+  public void listActivityLocations(@Param(name = &quot;activity-id&quot;) String id) {
+    Optional&lt;Activity&gt; activity = Optional.fromNullable(paceApi.getActivity(id));
+    if (activity.isPresent()) {
+     // console.renderLocations(activity.get().route);
+    }
+  }</code></pre>
+<p>As the client is no longer keeping a copy of its locations - we will disable access to this field (for the moment).</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="04">
+              <h1>Retrofit</h1>
+<p>In the client (<code>pacemaker-skeleton-client</code>) introduce the following new dependencies into pom.xml:</p>
+<pre><code>  &lt;dependency&gt;
+    &lt;groupId&gt;com.squareup.retrofit2&lt;/groupId&gt;
+    &lt;artifactId&gt;retrofit&lt;/artifactId&gt;
+    &lt;version&gt;2.4.0&lt;/version&gt;
+  &lt;/dependency&gt;
+  &lt;dependency&gt;
+    &lt;groupId&gt;com.squareup.retrofit2&lt;/groupId&gt;
+    &lt;artifactId&gt;converter-gson&lt;/artifactId&gt;
+    &lt;version&gt;2.4.0&lt;/version&gt;
+  &lt;/dependency&gt;
+  &lt;dependency&gt;
+    &lt;groupId&gt;com.google.code.gson&lt;/groupId&gt;
+    &lt;artifactId&gt;gson&lt;/artifactId&gt;
+    &lt;version&gt;2.8.5&lt;/version&gt;
+  &lt;/dependency&gt;</code></pre>
+<p>When you save the pom in eclipse, you will have a range of additional libraries downloaded and referenced by the application:</p>
+<p><img src="img/10.png" alt=""></p>
+<p>We now start to work on implementing the Client API:</p>
+<p>Start by declaring this new interface inside the PacemakerAPI source file:</p>
+<pre><code>import retrofit2.Call;
+import retrofit2.http.GET;
+
+interface PacemakerInterface
+{
+  @GET(&quot;/users&quot;)
+  Call&lt;List&lt;User&gt;&gt; getUsers();
+}</code></pre>
+<p>Place this interface just before the existing PacemakerAPI class and after the existing import statements.</p>
+<p>Now make the following changes to the PacemakerAPI:</p>
+<ul>
+<li>introduce a new attribute <code>pacemakerInterface</code></li>
+<li>replace the existing empty default constructor </li>
+</ul>
+<pre><code>public class PacemakerAPI {
+
+  PacemakerInterface pacemakerInterface;
+
+  public PacemakerAPI(String url) {
+    Gson gson = new GsonBuilder().create();
+    Retrofit retrofit = new Retrofit.Builder().baseUrl(url)
+        .addConverterFactory(GsonConverterFactory.create(gson)).build();
+    pacemakerInterface = retrofit.create(PacemakerInterface.class);
+  }</code></pre>
+<p>Import the appropriate libraries as prompted by Eclipse auto-correct. If you are having difficulty with the imports, this is the complete revised class at this stage:</p>
+<pre><code>package controllers;
+
+import java.util.Collection;
+import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import models.Activity;
+import models.Location;
+import models.User;
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
+
+interface PacemakerInterface
+{
+    @GET(&quot;/users&quot;)
+    Call&lt;List&lt;User&gt;&gt; getUsers();
+}
+
+public class PacemakerAPI {
+
+    PacemakerInterface pacemakerInterface;
+
+    public PacemakerAPI(String url) {
+        Gson gson = new GsonBuilder().create();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson)).build();
+        pacemakerInterface = retrofit.create(PacemakerInterface.class);
+    }
+    public Collection&lt;User&gt; getUsers() {
+        return null;
+    }
+
+    public void deleteUsers() {
+    }
+
+    public User createUser(String firstName, String lastName, String email, String password) {
+        return null;    
+    }
+
+    public Activity createActivity(String id, String type, String location, double distance) {
+        return null;
+    }
+
+    public Activity getActivity(String id) {
+        return null;
+    }
+
+    public Collection&lt;Activity&gt; getActivities(String id) {
+        return null;
+    }
+
+    public List&lt;Activity&gt; listActivities(String userId, String sortBy) {
+        return null;
+    }
+
+    public void addLocation(String id, double latitude, double longitude) {
+    }
+
+    public User getUserByEmail(String email) {
+        return null;
+    }
+
+    public User getUser(String id) {
+        return null;
+    }
+
+    public User deleteUser(String id) {
+        return null;
+    }
+}</code></pre>
+<p>There will be an error in PacemakerConsoleService class on this line:</p>
+<pre><code>  private PacemakerAPI paceApi = new PacemakerAPI();</code></pre>
+<p>This constructor requires a parameter - which will be the url of the API. We will be running the service on our local machine, so this change will do for the moment:</p>
+<pre><code>  private PacemakerAPI paceApi = new PacemakerAPI(&quot;http://localhost:7000&quot;);</code></pre>
+<p>The project should now compile without errors.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="05">
+              <h1>PacemakerAPI</h1>
+<p>We can implement our first command now in the PacemakerAPI class in the client. Start with the the <code>getUsers</code> command;</p>
+<pre><code class="lang-java">  public Collection&lt;User&gt; getUsers() {
+    Collection&lt;User&gt; users = null;
+    try {
+      Call&lt;List&lt;User&gt;&gt; call = pacemakerInterface.getUsers();
+      Response&lt;List&lt;User&gt;&gt; response = call.execute();
+      users = response.body();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return users;
+  }</code></pre>
+<p>You will need this import statement too:</p>
+<pre><code class="lang-java">import retrofit2.Response;</code></pre>
+<p>If the server project (pacemaker-skeleton) is running, then this <code>lu</code> command should work now:</p>
+<p><img src="img/04.png" alt=""></p>
+<p>This is rendereing the test users loaded by the server application. If the server is not running, then you will get an error like this:</p>
+<p><img src="img/05.png" alt=""></p>
+<p>Running two applications in a single eclipse workspace can be a little challenging. The Console view in Eclipse has a tool bar button called <code>Display Selected Console</code> (on the extreme right of the tool bar). Selecting it will either list the available console (one per application running), or allow you to list them and select one:</p>
+<p><img src="img/06.png" alt=""></p>
+<p>In addition, using a combination of the <code>New Console View</code>, <code>Pin Console</code> and drag and drop within eclipse, it should be possible to rearrange the IDE to display the two consoles simultaneously:</p>
+<p><img src="img/07.png" alt=""></p>
+<p>It might be worth spending a little time experimenting with Eclipse until you can assemble the consoles as shown above. Experiment with the <code>Pin Console</code> button, which will prevent the console from altering to always display the most recently active console.</p>
+<p>We could include some log statements in the pacemaker-skeleton server to aid debugging:</p>
+<h2>ParemakerRestService</h2>
+<pre><code>  public void listUsers(Context ctx) {
+    ctx.json(pacemaker.getUsers());
+    System.out.println(&quot;list users requested&quot;);
+  }</code></pre>
+<p><img src="img/08.png" alt=""></p>
+<h2>Revist the two projects to take stock of the content in each</h2>
+<p>Before moving on, it might be a good idea, at this stage of the lab, to revisit the contents of both projects and broadly familiarise yourself with the workings of each.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="06">
+              <h1>Register &amp; Login Commands</h1>
+<p>We can now start to implement additional commands. Each command will typically need both an Interface and API methods.</p>
+<h2>Register User</h2>
+<p>Starting with creating a new user. Introduce new method into the PacemakerInterface :</p>
+<pre><code>  @POST(&quot;/users&quot;)
+  Call&lt;User&gt; registerUser(@Body User User);</code></pre>
+<p>(Bring in the appropriate imports)</p>
+<p>And then this is the <code>createUser()</code> API command implementation:</p>
+<pre><code>  public User createUser(String firstName, String lastName, String email, String password) {
+    User returnedUser = null;
+    try {
+      Call&lt;User&gt; call = pacemakerInterface.registerUser(new User(firstName, lastName, email, password));
+      Response&lt;User&gt; response = call.execute();
+      returnedUser = response.body();    
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return returnedUser;
+  }</code></pre>
+<p>Restart the client - and try this command:</p>
+<pre><code>pm&gt; r homer simpson homer@simpson.com secret</code></pre>
+<p>Which should respond with a new user:</p>
+<pre><code>+--------------------------------------+-----------+----------+-------------------+
+|                  ID                  | FIRSTNAME | LASTNAME |       EMAIL       |
++--------------------------------------+-----------+----------+-------------------+
+| cf67ed43-77c9-46cd-8e1a-b21930916b42 |     homer |  simpson | homer@simpson.com |
++--------------------------------------+-----------+----------+-------------------+</code></pre>
+<p>Listing all users should respond with:</p>
+<pre><code>pm&gt; lu
++--------------------------------------+-----------+----------+--------------------+
+|                  ID                  | FIRSTNAME | LASTNAME |        EMAIL       |
++--------------------------------------+-----------+----------+--------------------+
+| 31509d53-80fd-4b75-8aa1-a1c23cbd9146 |    maggie |  simpson | maggie@simpson.com |
+| eb24cf06-c94c-409c-a1b7-2fcb7f4a3356 |      bart |  simpson |   bart@simpson.com |
+| 27a8a0eb-7f96-4155-ad97-b241ce8d504e |      lisa |  simpson |   lisa@simpson.com |
+| 25f5a591-410d-4352-8b46-582b6c19785c |     marge |  simpson |  marge@simpson.com |
+| cf67ed43-77c9-46cd-8e1a-b21930916b42 |     homer |  simpson |  homer@simpson.com |
++--------------------------------------+-----------+----------+--------------------+
+
+ok
+pm&gt;</code></pre>
+<p>You can also see the <strong>homer simpson</strong> user by navigating to your local host, port 7000 via your browser.</p>
+<p><img src="img/11.png" alt=""></p>
+<h2>Login a user</h2>
+<p>This is our <code>getUserByEmail()</code> implementation:</p>
+<pre><code>  public User getUserByEmail(String email) {
+    Collection&lt;User&gt; users = getUsers();
+    User foundUser = null;
+    for (User user : users) {
+      if (user.email.equals(email)) {
+        foundUser = user;
+      }
+    }
+    return foundUser;
+  }</code></pre>
+<p>Notice that this is rather inefficient - as we request all users, and then once we have fetched them we search of the user by email. Alternative strategies would involve introducing a new api to fetch user details by email explicitly. We will stick to this implementation for the moment. </p>
+<p>With this method implemented, out CLI should allow us to log in:</p>
+<p><img src="img/09.png" alt=""></p>
+<p>We can register new users, list all users and login and logout (try all these commands). Remember, we are operating a client CLI application, using an API hosted on our local machine. </p>
+<p>If, somehow, we could move the server application to another machine (in the cloud), then it could support multiple user logins - and the planned features would start to become useful.</p>
+<p>Recall, our client application is &#39;bound&#39; to the local url on creation:</p>
+<pre><code>  private PacemakerAPI paceApi = new PacemakerAPI(&quot;http://localhost:7000&quot;);</code></pre>
+<p>We could, theoretically, bind it to a service located at any url.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="07">
+              <h2>AddActivity &amp; ListActivity Commands</h2>
+<p>Here are implementations of createActivity &amp; getActivities commands:</p>
+<pre><code>  public Activity createActivity(String id, String type, String location, double distance) {
+    Activity returnedActivity = null;
+    try {
+      Call&lt;Activity&gt; call = pacemakerInterface.addActivity(id, new Activity(type, location, distance));
+      Response&lt;Activity&gt; response = call.execute();
+      returnedActivity = response.body();    
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return returnedActivity;
+  }
+
+  //...
+
+  public Collection&lt;Activity&gt; getActivities(String id) {
+    Collection&lt;Activity&gt; activities = null;
+    try {
+      Call&lt;List&lt;Activity&gt;&gt; call = pacemakerInterface.getActivities(id);
+      Response&lt;List&lt;Activity&gt;&gt; response = call.execute();
+      activities = response.body();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return activities;
+  }</code></pre>
+<p>And the new PacemakerInterface methods (import Path from retrofit): </p>
+<pre><code>  @GET(&quot;/users/{id}/activities&quot;)
+  Call&lt;List&lt;Activity&gt;&gt; getActivities(@Path(&quot;id&quot;) String id);
+
+  @POST(&quot;/users/{id}/activities&quot;)
+  Call&lt;Activity&gt; addActivity(@Path(&quot;id&quot;) String id, @Body Activity activity);</code></pre>
+<p>Relaunch the server and client, and you should be able to proceed through the command sequence below:</p>
+<pre><code>Welcome to pacemaker-console - ?help for instructions
+pm&gt; l bart@simpson.com secret
+Logged in bart@simpson.com
+ok
+pm&gt; aa walk fridge 23
++--------------------------------------+------+----------+----------+
+|                  ID                  | TYPE | LOCATION | DISTANCE |
++--------------------------------------+------+----------+----------+
+| 1079e6b4-647d-4f22-8608-099b0046ca39 | walk |   fridge |       23 |
++--------------------------------------+------+----------+----------+
+
+ok
+ok
+pm&gt; aa run shop 234
++--------------------------------------+------+----------+----------+
+|                  ID                  | TYPE | LOCATION | DISTANCE |
++--------------------------------------+------+----------+----------+
+| a17b4a03-61b4-4b69-8fb0-374a7fac98a9 |  run |     shop |      234 |
++--------------------------------------+------+----------+----------+
+
+ok
+ok
+pm&gt; la
++--------------------------------------+------+----------+----------+
+|                  ID                  | TYPE | LOCATION | DISTANCE |
++--------------------------------------+------+----------+----------+
+| a17b4a03-61b4-4b69-8fb0-374a7fac98a9 |  run |     shop |      234 |
+| 1079e6b4-647d-4f22-8608-099b0046ca39 | walk |   fridge |       23 |
++--------------------------------------+------+----------+----------+
+
+ok
+pm&gt;</code></pre>
+<p>Remember, for the server you must terminate the application before relaunching. </p>
+<p><img src="img/12.png" alt=""></p>
+<p>Generally, the <code>Terminate</code> and <code>Remove all terminated launches</code> buttons on the console tool bar can help in keeping your console organised.</p>
+<p>(Notice in the above we also removed the duration and time fields from the table)</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="Exercises">
+              <h1>Solution</h1>
+<ul>
+<li><a href="https://github.com/wit-computing-msc-2018/pacemaker-skeleton/releases/tag/lab.10.end.2018">https://github.com/wit-computing-msc-2018/pacemaker-skeleton/releases/tag/lab.10.end.2018</a></li>
+<li><a href="https://github.com/wit-computing-msc-2018/pacemaker-client/releases/tag/lab.10.end.2018">https://github.com/wit-computing-msc-2018/pacemaker-client/releases/tag/lab.10.end.2018</a></li>
+</ul>
+<h1>Exercise 1: getActivity</h1>
+<p>If this method stub is not implemented in your <strong>pacemaker-skeleton-client PacemakerConsoleService</strong> class, implement it now:</p>
+<pre><code>  public Activity getActivity(String id) {
+    return null;
+  }</code></pre>
+<p>See if you can provide the full implementation based on the previous steps.</p>
+<p>HINT: You will need this additional method in <strong>PacemakerInterface</strong> in <strong>PacemakerConsoleService</strong>:</p>
+<pre><code>interface PacemakerInterface {
+
+  // ...
+
+  @GET(&quot;/users/{id}/activities/{activityId}&quot;)
+  Call&lt;Activity&gt; getActivity(@Path(&quot;id&quot;) String id, @Path(&quot;activityId&quot;) String activityId);
+}</code></pre>
+<h1>Exercise 2: add Location</h1>
+<p>If this method stub is not implemented in your <strong>pacemaker-skeleton-client PacemakerConsoleService</strong> class, implement it now:</p>
+<pre><code>public void addLocation(String id, double latitude, double longitude) {
+}</code></pre>
+<p>Using this new method in the client interface:</p>
+<pre><code>Interface PacemakerInterface {
+
+  // ...
+
+  @POST(&quot;/users/{id}/activities/{activityId}/locations&quot;)
+  Call&lt;Location&gt; addLocation(@Path(&quot;id&quot;) String id, @Path(&quot;activityId&quot;) String activityId, @Body Location location);
+}</code></pre>
+<p>See if you can implement it.</p>
+
+            </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function() {
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass('');
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass('uk-label uk-text-lowercase');
+      divLabel.append($images[i].alt);
+      $(divLabel).insertAfter($images[i]);
+      $('<br>').insertAfter($images[i]);
+    }
+  });
+});
+
+      $(document).ready(function() {
+  $('img').addClass('ui image');
+
+  $('.ui.embed').embed();
+
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass(
+        'ui basic segment',
+      );
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass(
+        'ui blue ribbon label',
+      );
+      divLabel.append($images[i].alt);
+      $(divLabel).insertBefore($images[i]);
+    }
+  });
+
+  $('.ui.menu .item').tab({
+    history: true,
+    historyType: 'hash',
+  });
+
+  $('.popup').popup();
+
+  $('.ui.sidebar')
+    .sidebar({ context: $('.pushable') })
+    .sidebar('setting', 'transition', 'slide out')
+    .sidebar('attach events', '#toc');
+});
+
+    </script>
+  </body>
+</html>
