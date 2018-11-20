@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <style>
+      
+
+body {
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+  font-size:90%;
+  color: black;
+}
+
+p {
+  margin: 0.5em;
+}
+
+pre code {
+  font-family: "Monaco";
+  font-size: 100%;
+}
+
+img {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin:10px;
+}
+
+h1, h2, h3 {
+  border-bottom:thin solid black;
+  margin-bottom: 0.5em;
+  margin-top: 1em;
+}
+
+h1 {
+  font-style:italic;
+  font-size:130%;
+}
+
+h2 {
+  font-size:110%;
+}
+
+h3 {
+  font-size:100%;
+}
+
+
+
+    </style>
+  </head>
+
+  <body>
+    
+    
+
+    <div class="ui fixed top pointing inverted stackable menu labmenu">
+      <header class="header item">
+        <i id="toc" class="sitemap icon"></i>
+        
+          <a href="../index.html"> 11. ISP, DSP and Kotlin  </a>
+        
+      </header>
+      <div class="right tab-menu menu">
+        
+          <a class="item" data-tab="Lab-11 Rest Test">
+            Lab-11 Rest Test
+          </a>
+        
+          <a class="item" data-tab="01">
+            01
+          </a>
+        
+          <a class="item" data-tab="02">
+            02
+          </a>
+        
+          <a class="item" data-tab="03">
+            03
+          </a>
+        
+          <a class="item" data-tab="04">
+            04
+          </a>
+        
+          <a class="item" data-tab="05">
+            05
+          </a>
+        
+          <a class="item" data-tab="06">
+            06
+          </a>
+        
+          <a class="item" data-tab="07">
+            07
+          </a>
+        
+          <a class="item" data-tab="Exercises">
+            Exercises
+          </a>
+        
+      </div>
+    </div>
+
+    <div class="ui segment pushable">
+      <div class="ui inverted labeled icon left inline vertical sidebar menu">
+        <br><br>
+        
+          
+            <a class="item" href="../../topic01-paradigms-and-languages/book-eclipse-and-java/index.html">
+              Lab-01 Eclipse & Java
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic02-java-language/book-cli-and-classes/index.html">
+              Lab-02 CLI & Classes
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic03-inheritance-and-collections/book-objects-and-serialization/index.html">
+              Lab-03 Objects & Serialization
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic04-serialisation-and-tdd-1/book-testing/index.html">
+              Lab-04 Testing
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic05-tdd-2/book-refactoring/index.html">
+              Lab-05 Refactoring
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic06-exceptions-and-maven/book-maven/index.html">
+              Lab-06 Maven
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic07-tdd-3-and-java-versions/book-java-versions/index.html">
+              Lab-07 Java Versions
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic08-srp-and-assignment1-soln/book-a-pacemaker-soln-models/index.html">
+              Lab-07a Pacemaker Models
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic08-srp-and-assignment1-soln/book-b-pacemaker-soln-api/index.html">
+              Lab-07b Pacemaker API
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic08-srp-and-assignment1-soln/book-c-assignmment-2-skeleton/index.html">
+              Lab-08 Skeleton
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic09-ocp-and-rest/book-simple-rest-api/index.html">
+              Lab-09 Rest API
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic10-lsp-and-tdd-5-and-kotlin/book-rest-cli-test/index.html">
+              Lab-10 Rest CLI
+            </a>
+          
+        
+          
+            <a class="active item" href="../../topic11-isp-dip-and-kotlin/book-pacemaker-service-test/index.html">
+              Lab-11 Rest Test
+            </a>
+          
+        
+      </div>
+      <div class="pusher" tabindex="-1">
+        <div class="ui basic segment" id="labchat">
+          <br>
+          
+            <div  class="ui tab segment lab" data-tab="Lab-11 Rest Test">
+              <h1>Objectives</h1>
+<p>Complete the API + write a range of unit tests to exercises the features. Deploy the service to the cloud.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="01">
+              <h1>Exercise Solutions</h1>
+<h1>Exercise 1: getActivity</h1>
+<pre><code>interface PacemakerInterface {
+
+  // ...
+
+  @GET(&quot;/users/{id}/activities/{activityId}&quot;)
+  Call&lt;Activity&gt; getActivity(@Path(&quot;id&quot;) String id, @Path(&quot;activityId&quot;) String activityId);  
+}</code></pre>
+<h2>PacemakerAPI (in pacemaker-skeleton-client)</h2>
+<pre><code>  public Activity getActivity(String userId, String activityId) {
+   Activity activity = null;
+    try {
+      Call&lt;Activity&gt; call = pacemakerInterface.getActivity(userId, activityId);
+      Response&lt;Activity&gt; response = call.execute();
+      activity = response.body();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return activity;
+  }</code></pre>
+<h2>PacemakerConsoleService (fix the compile error with this new implementation)</h2>
+<pre><code>  @Command(description = &quot;List all locations for a specific activity&quot;)
+  public void listActivityLocations(@Param(name = &quot;activity-id&quot;) String id) {
+
+    Optional&lt;Activity&gt; activity = Optional.fromNullable(paceApi.getActivity(loggedInUser.getId(), id));
+    if (activity.isPresent()) {
+      // console.renderLocations(activity.get().route);
+    }
+  }</code></pre>
+<h1>Exercise 2: addLocation</h1>
+<pre><code>interface PacemakerInterface {
+
+  // ...
+
+  @POST(&quot;/users/{id}/activities/{activityId}/locations&quot;)
+  Call&lt;Location&gt; addLocation(@Path(&quot;id&quot;) String id, @Path(&quot;activityId&quot;) String activityId, @Body Location location);
+
+}</code></pre>
+<h2>PacemakerAPI (in pacemaker-skeleton-client)</h2>
+<pre><code>  public void addLocation(String id, String activityId, double latitude, double longitude) {
+    try {
+      Call&lt;Location&gt; call = pacemakerInterface.addLocation(id, activityId, new Location(latitude, longitude));
+      call.execute();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }</code></pre>
+<p>Also, addLocation method on PacemakerConsoleService will need to be updateD:</p>
+<pre><code>  @Command(description = &quot;Add location: Append location to an activity&quot;)
+  public void addLocation(@Param(name = &quot;activity-id&quot;) String id,
+      @Param(name = &quot;longitude&quot;) double longitude, @Param(name = &quot;latitude&quot;) double latitude) {
+    Optional&lt;Activity&gt; activity = Optional.fromNullable(paceApi.getActivity(loggedInUser.getId(), id));
+    if (activity.isPresent()) {
+      paceApi.addLocation(loggedInUser.getId(), activity.get().id, latitude, longitude);
+      console.println(&quot;ok&quot;);
+    } else {
+      console.println(&quot;not found&quot;);
+    }
+  }</code></pre>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="02">
+              <h1>User Endpoints</h1>
+<p>In this step, we will implement the remaining user endpoints:</p>
+<pre><code>GET    /user/:id
+DELETE /users
+DELETE /users/:id</code></pre>
+<p>This will require additional work in two projects:</p>
+<ul>
+<li>pacemaker-skeleton</li>
+<li>pacemaker-skeleton-client</li>
+</ul>
+<p>The Endpoints will need to be implemented in the server, and then exposed in the client.</p>
+<h2>pacemaker-skeleton</h2>
+<p>We have new endpoint to make available:</p>
+<h3>RestMain</h3>
+<pre><code>    app.delete(&quot;/users&quot;, ctx -&gt; {
+      service.deleteUsers(ctx);
+    });
+
+    app.delete(&quot;/users/:id&quot;, ctx -&gt; {
+      service.deleteUser(ctx);
+    });</code></pre>
+<h3>PacemakerRestService</h3>
+<pre><code>  public void deleteUser(Context ctx) {
+    String id = ctx.pathParam(&quot;id&quot;);
+    ctx.json(pacemaker.deleteUser(id));
+  }
+
+  public void deleteUsers(Context ctx) {
+    pacemaker.deleteUsers();
+    ctx.json(204);
+  }</code></pre>
+<h2>pacemaker-skeleton-client</h2>
+<p>We need these methods to be implemented:</p>
+<h2>PacemakerAPI</h2>
+<p>Additional methods in PacemakerInterface</p>
+<pre><code>  @DELETE(&quot;/users&quot;)
+  Call&lt;User&gt; deleteUsers();
+
+  @DELETE(&quot;/users/{id}&quot;)
+  Call&lt;User&gt; deleteUser(@Path(&quot;id&quot;) String id);
+
+  @GET(&quot;/users/{id}&quot;)
+  Call&lt;User&gt; getUser(@Path(&quot;id&quot;) String id);</code></pre>
+<p>And these are the additional methods in PacemakerAPI</p>
+<pre><code>  public User getUser(String id) {
+    User user = null;
+    try {
+      Call&lt;User&gt; call = pacemakerInterface.getUser(id);
+      Response&lt;User&gt; response = call.execute();
+      user = response.body();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return user;
+  }
+
+  public void deleteUsers() {
+    try {
+      Call&lt;User&gt; call = pacemakerInterface.deleteUsers();
+      call.execute();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  public User deleteUser(String id) {
+    User user = null;
+    try {
+      Call&lt;User&gt; call = pacemakerInterface.deleteUser(id);
+      Response&lt;User&gt; response = call.execute();
+      user = response.body();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return user;
+  }</code></pre>
+<p>We will tests these endpoints in the following steps.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="03">
+              <h1>User Tests</h1>
+<p>In <strong>pacemaker-skeleton-client</strong>, we can now proceed to implement some initial tests.</p>
+<p>In the test folder, create two packages:  <strong>models</strong> and <strong>controllers</strong>. </p>
+<p>In the <strong>models</strong> package, we can start by bringing over some fixtures:</p>
+<pre><code>package models;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class Fixtures {
+
+  public static List&lt;User&gt; users =
+      new ArrayList&lt;&gt;(Arrays.asList(new User(&quot;marge&quot;, &quot;simpson&quot;, &quot;marge@simpson.com&quot;, &quot;secret&quot;),
+          new User(&quot;lisa&quot;, &quot;simpson&quot;, &quot;lisa@simpson.com&quot;, &quot;secret&quot;),
+          new User(&quot;bart&quot;, &quot;simpson&quot;, &quot;bart@simpson.com&quot;, &quot;secret&quot;),
+          new User(&quot;maggie&quot;, &quot;simpson&quot;, &quot;maggie@simpson.com&quot;, &quot;secret&quot;)));
+
+  public static List&lt;Activity&gt; activities = new ArrayList&lt;&gt;(
+      Arrays.asList(new Activity(&quot;walk&quot;, &quot;fridge&quot;, 0.001),
+          new Activity(&quot;walk&quot;, &quot;bar&quot;, 1.0),
+          new Activity(&quot;run&quot;, &quot;work&quot;, 2.2),
+          new Activity(&quot;walk&quot;, &quot;shop&quot;, 2.5),
+          new Activity(&quot;cycle&quot;, &quot;school&quot;, 4.5)));
+
+  public static List&lt;Location&gt; locations = new ArrayList&lt;&gt;(Arrays.asList(new Location(23.3, 33.3),
+      new Location(34.4, 45.2), new Location(25.3, 34.3), new Location(44.4, 23.3)));
+
+  public static List&lt;Activity&gt; margeActivities =
+      new ArrayList&lt;&gt;(Arrays.asList(activities.get(0), activities.get(1)));
+
+  public static List&lt;Activity&gt; lisasActivities =
+      new ArrayList&lt;&gt;(Arrays.asList(activities.get(2), activities.get(3)));
+
+  public static List&lt;Location&gt; route1 =
+      new ArrayList&lt;&gt;(Arrays.asList(locations.get(0), locations.get(1)));
+
+  public static List&lt;Location&gt; route2 =
+      new ArrayList&lt;&gt;(Arrays.asList(locations.get(2), locations.get(3)));
+
+  public static List&lt;Activity&gt; activitiesSortedByType =
+      new ArrayList&lt;&gt;(Arrays.asList(activities.get(4), activities.get(2), activities.get(1),
+          activities.get(0), activities.get(3)));
+}</code></pre>
+<p>There are more or less the same as the fixture we had in the sample solution to assignment 1.</p>
+<p>We can now try this test:</p>
+<pre><code>package controllers;
+
+import static org.junit.Assert.*;
+import java.util.Collection;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import models.User;
+import static models.Fixtures.users;
+
+public class UserTest {
+
+  PacemakerAPI pacemaker = new PacemakerAPI(&quot;http://localhost:7000&quot;);
+  User homer = new User(&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;, &quot;secret&quot;);
+
+  @Before
+  public void setup() {
+    pacemaker.deleteUsers();
+  }
+
+  @After
+  public void tearDown() {
+  }
+
+  @Test
+  public void testCreateUser() {
+    User user = pacemaker.createUser(homer.firstname, homer.lastname, homer.email, homer.password);
+    assertEquals(user, homer);
+    User user2 = pacemaker.getUserByEmail(homer.email);
+    assertEquals(user2, homer);
+  }
+
+  @Test
+  public void testCreateUsers() {
+    users.forEach(
+        user -&gt; pacemaker.createUser(user.firstname, user.lastname, user.email, user.password));
+    Collection&lt;User&gt; returnedUsers = pacemaker.getUsers();
+    assertEquals(users.size(), returnedUsers.size());
+  }
+}</code></pre>
+<p>Remember - you must first run pacemaker-skeleton before running these tests. If these tests fail, it could be because you have previously added users to your current app session via the RESTLET client.  If this is the case, terminate the pacemaker-skeleton session, restart it and try the tests again.  They should pass. </p>
+<p>Notice that <code>setup()</code> deletes all users before each test. Commenting this out will cause one of the tests to fail. Can you see why?</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="04">
+              <h1>Create Activity Test</h1>
+<p>We can now compose this new unit test to exercise the activity endpoint:</p>
+<pre><code>package controllers;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import models.Activity;
+import models.User;
+
+public class ActivityTest {
+
+  PacemakerAPI pacemaker = new PacemakerAPI(&quot;http://localhost:7000&quot;);
+  User homer = new User(&quot;homer&quot;, &quot;simpson&quot;, &quot;homer@simpson.com&quot;, &quot;secret&quot;);
+
+  @Before
+  public void setup() {
+    pacemaker.deleteUsers();
+    homer = pacemaker.createUser(homer.firstname, homer.lastname, homer.email, homer.password);
+  }
+
+  @After
+  public void tearDown() {
+  }
+
+  @Test
+  public void testCreateActivity() {
+    Activity activity = new Activity(&quot;walk&quot;, &quot;shop&quot;, 2.5);
+
+    Activity returnedActivity = pacemaker.createActivity(homer.id, activity.type, activity.location, activity.distance);
+    assertEquals(activity.type, returnedActivity.type);
+    assertEquals(activity.location, returnedActivity.location);
+    assertEquals(activity.distance, returnedActivity.distance, 0.001);
+    assertNotNull(returnedActivity.id);
+  }
+}</code></pre>
+<p>The createActivity test above is structured as follows:</p>
+<ul>
+<li>create a local activity test object</li>
+<li>invoke the api to create a remote activity</li>
+<li>compare the returned activity with the test object</li>
+<li>verify that the returned activity has an id</li>
+</ul>
+<p>Make sure the server is running - and run the test.</p>
+<!--
+
+?sdr? Siobhan's note:  The distance assignment statement is in my code from lab08, so I commented this out.
+
+
+However! - When we execute the test is fails on this line:
+
+~~~
+    assertEquals(activity.distance, returnedActivity.distance, 0.001);
+~~~
+
+(Try it). Can you decipher the reason for the failure? 
+
+The reason is a bug this test has surfaced a simple bug in our server. In pacemaker-skeleton, our Activity constructor currently looks like this:
+
+~~~
+  public Activity(String type, String location, double distance) {
+    this.id = UUID.randomUUID().toString();
+    this.type = type;
+    this.location = location;
+  }
+~~~
+
+This is clearly missing the initialisation of the distance attribute:
+
+~~~
+  public Activity(String type, String location, double distance) {
+    this.id = UUID.randomUUID().toString();
+    this.type = type;
+    this.location = location;
+    this.distance = distance;
+  }
+~~~
+
+Make this change, restart the service, and verify that the tests passes.
+-->
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="05">
+              <h1>Get and Delete Activity tests</h1>
+<p>Currently we might say that the <code>activities</code> endpoint is not quite testable yet - until we implement some way of removing activities. We will implement an API to remove all activities for a given user, and then write some tests to exercise this new feature.</p>
+<p>First - start with the server:</p>
+<h1>pacemaker-skeleton</h1>
+<p>We need to implement new api - delete all activities for a user. This requires 3 changes:</p>
+<h2>PacemakerAPI</h2>
+<p>Method to remove all activities for a given user from our model:</p>
+<pre><code>  public void deleteActivities(String id) {
+    Optional&lt;User&gt; user = Optional.fromNullable(userIndex.get(id));
+    if (user.isPresent()) {
+      user.get().activities.values().forEach(activity -&gt; activitiesIndex.remove(activity.getId()));
+      user.get().activities.clear();
+    }
+  }</code></pre>
+<h2>PacemakerRestService</h2>
+<p>Service implementation - which will be invoked by <em>Javalin</em> when this delete request is triggered:</p>
+<pre><code>  public void deleteActivities(Context ctx) {
+    String id = ctx.pathParam(&quot;id&quot;);
+    pacemaker.deleteActivities(id);
+    ctx.json(204);
+  }</code></pre>
+<h2>RestMain</h2>
+<p>The registration of the new api path with Javalin:</p>
+<pre><code>    app.delete(&quot;/users/:id/activities&quot;, ctx -&gt; {
+      service.deleteActivities(ctx);
+    });</code></pre>
+<h1>pacemaker-skeleton-client</h1>
+<h2>PacemakerAPI</h2>
+<p>Add the following route:</p>
+<pre><code>    @DELETE(&quot;/users/{id}/activities&quot;)
+    Call&lt;String&gt; deleteActivities(@Path(&quot;id&quot;) String id);</code></pre>
+<p>and the asssociated method call:</p>
+<pre><code>    public void deleteActivities(String id) {
+        try {
+          Call&lt;String&gt; call = pacemakerInterface.deleteActivities(id);
+          call.execute();
+        } catch (Exception e) {
+          System.out.println(e.getMessage());
+        }
+      }</code></pre>
+<h2>ActivityTest.java</h2>
+<p>We can now write some new tests:</p>
+<pre><code>  @Test
+  public void testGetActivity() {
+    Activity activity = new Activity(&quot;run&quot;, &quot;fridge&quot;, 0.5);
+    Activity returnedActivity1 = pacemaker.createActivity(homer.id, activity.type, activity.location, activity.distance);
+    Activity returnedActivity2 = pacemaker.getActivity(homer.id, returnedActivity1.id);
+    assertEquals(returnedActivity1, returnedActivity2);
+  }
+
+  @Test
+  public void testDeleteActivity() {
+    Activity activity = new Activity(&quot;sprint&quot;, &quot;pub&quot;, 4.5);
+    Activity returnedActivity = pacemaker.createActivity(homer.id, activity.type, activity.location, activity.distance);
+    assertNotNull (returnedActivity);
+    pacemaker.deleteActivities(homer.id);
+    returnedActivity = pacemaker.getActivity(homer.id, returnedActivity.id);
+    assertNull (returnedActivity);
+  }</code></pre>
+<p>Read these tests carefully - and verify that they all pass.</p>
+<p><img src="img/01.png" alt=""></p>
+<p>.here - two tests failed...check out why...fix below doesn&#39;t work</p>
+<p>If you find your testGetActivity fails, it could be that you have a case-issue...i.e. <em>activityid</em> in one place and <em>activityId</em> in another.  Ensure both are the same case e.g.:</p>
+<p>PacemakerRestService.java:</p>
+<pre><code class="lang-java">  public void getActivity(Context ctx) {
+        String id = ctx.pathParam(&quot;activityid&quot;);  
+    Activity activity = pacemaker.getActivity(id);
+    if (activity != null) {
+      ctx.json(activity);
+    } else {
+      ctx.status(404);
+    }
+  }</code></pre>
+<p>RestMain.java:</p>
+<pre><code class="lang-java">    app.get(&quot;/users/:id/activities/:activityid&quot;, ctx -&gt; {
+      service.getActivity(ctx);
+    });</code></pre>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="06">
+              <h1>Deployment Preparation</h1>
+<p>In order to deploy pacemaker-skeleton (i.e. the server) we need to make some small modifications to the the pacemaker-skeleton project.</p>
+<h1>RestMain</h1>
+<p>First, introduce a new method into the RestMain class:</p>
+<pre><code class="lang-java">  private static int getAssignedPort() {
+    ProcessBuilder processBuilder = new ProcessBuilder();
+    if (processBuilder.environment().get(&quot;PORT&quot;) != null) {
+      return Integer.parseInt(processBuilder.environment().get(&quot;PORT&quot;));
+    }
+    return 7000;
+  }</code></pre>
+<p>This is required as we need to detect the port the cloud provider may have assigned to our app on startup (7000 is only for local test/development).</p>
+<p>The main method in RestMain can now be changed to this:</p>
+<pre><code>  public static void main(String[] args) throws Exception {
+    Javalin app = Javalin.create();
+    app.port(getAssignedPort());
+    app.start();
+    PacemakerRestService service = new PacemakerRestService();
+    configRoutes(app, service);
+  }</code></pre>
+<h1>pom.xml</h1>
+<p>The pom for pacemaker-skeleton will need to be augmented to support deployment.</p>
+<p>First, rename the version as follows:</p>
+<pre><code>  &lt;groupId&gt;pacemaker&lt;/groupId&gt;
+  &lt;artifactId&gt;pacemaker-skeleton&lt;/artifactId&gt;
+  &lt;version&gt;1.0&lt;/version&gt;
+  &lt;packaging&gt;jar&lt;/packaging&gt;</code></pre>
+<p>We have just removed SNAPSHOT from the version information.</p>
+<p>Now introduce a new set of plugins:</p>
+<pre><code>      &lt;plugin&gt;
+        &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;
+        &lt;executions&gt;
+          &lt;execution&gt;
+            &lt;phase&gt;package&lt;/phase&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;single&lt;/goal&gt;
+            &lt;/goals&gt;
+          &lt;/execution&gt;
+        &lt;/executions&gt;
+        &lt;configuration&gt;
+          &lt;descriptorRefs&gt;
+            &lt;descriptorRef&gt;jar-with-dependencies&lt;/descriptorRef&gt;
+          &lt;/descriptorRefs&gt;
+          &lt;archive&gt;
+            &lt;manifest&gt;
+              &lt;mainClass&gt;controllers.RestMain&lt;/mainClass&gt;
+            &lt;/manifest&gt;
+          &lt;/archive&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+
+      &lt;plugin&gt;
+        &lt;groupId&gt;com.heroku.sdk&lt;/groupId&gt;
+        &lt;artifactId&gt;heroku-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;1.1.3&lt;/version&gt;
+        &lt;configuration&gt;
+          &lt;jdkVersion&gt;1.8&lt;/jdkVersion&gt;
+          &lt;appName&gt;YOUR-APP-NAME&lt;/appName&gt;
+          &lt;processTypes&gt;
+            &lt;web&gt;java -jar target/pacemaker-skeleton-1.0-jar-with-dependencies.jar&lt;/web&gt;
+          &lt;/processTypes&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;</code></pre>
+<p>This must be in the <code>&lt;plugins&gt;</code> section of the POM.</p>
+<p>Note the <code>&lt;appName&gt;YOUR-APP-NAME&lt;/appName&gt;</code> element - you will replace this with your own application name in the next step.</p>
+<p>Just to make sure that the pom file is without errors by entering the following commands:</p>
+<pre><code>mvn clean
+mvn package</code></pre>
+<p>The &#39;package&#39; command will pull down a few new dependencies from the remote repo, so make sure you are connected to the Internet. </p>
+<p>Now make sure that the <code>./target</code> folder contains this file:</p>
+<ul>
+<li>pacemaker-skeleton-1.0-jar-with-dependencies.jar</li>
+</ul>
+<p>This is a compiled version of our application, containing all dependencies. This is the artifact that will be deployed to the cloud (in the next step).</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="07">
+              <h2>Heroku</h2>
+<p>We will use the Heroku provider. Create a free account on the service now:</p>
+<ul>
+<li><a href="https://www.heroku.com/">https://www.heroku.com/</a></li>
+</ul>
+<p>You will also need to download and install the Heroku CLI:</p>
+<ul>
+<li><a href="https://devcenter.heroku.com/articles/heroku-cli">https://devcenter.heroku.com/articles/heroku-cli</a></li>
+</ul>
+<p>Once installed, open a command prompt/shell <code>inside the pacemaker-skeleton folder</code>, and log in to heroku:</p>
+<pre><code>heroku login
+Email: youremail@domain.com
+Password: **********
+Logged in as youremail@domain.com</code></pre>
+<p>Once logged in - you have a range of commands available:</p>
+<ul>
+<li><a href="https://devcenter.heroku.com/articles/heroku-cli-commands">https://devcenter.heroku.com/articles/heroku-cli-commands</a></li>
+</ul>
+<p>We will be interested in these commands:</p>
+<ul>
+<li>create</li>
+<li>apps</li>
+<li>logs</li>
+</ul>
+<p>Lets try to create an app:</p>
+<pre><code>heroku create
+Creating app... done, ⬢ fierce-brook-96934
+https://fierce-brook-96934.herokuapp.com/ | https://git.heroku.com/fierce-brook-96934.git</code></pre>
+<p>Heroku generates the url when you create the app. If you forget it, you can list all apps:</p>
+<pre><code> heroku apps</code></pre>
+<p>The apps will also be listed on the web app (if you are logged in)</p>
+<ul>
+<li><a href="https://dashboard.heroku.com/apps">https://dashboard.heroku.com/apps</a></li>
+</ul>
+<h1>Deployment</h1>
+<p>Before we deploy the app - we need to place the application name (as generated above) into our POM e.g. ours is:</p>
+<pre><code>          &lt;appName&gt;fierce-brook-96934&lt;/appName&gt;</code></pre>
+<p>(This was YOUR-APP-NAME previously).</p>
+<p>From within the application folder, enter this command to deploy:</p>
+<pre><code>mvn heroku:deploy</code></pre>
+<p>This will take a few minutes - and should conclude with something like this:</p>
+<pre><code>[INFO] -----&gt; Packaging application...
+[INFO]        - app: fierce-brook-96934
+[INFO]        - including: target/
+[INFO] -----&gt; Creating build...
+[INFO]        - file: target/heroku/slug.tgz
+[INFO]        - size: 12MB
+[INFO] -----&gt; Uploading build...
+[INFO]        - success
+[INFO] -----&gt; Deploying...
+[INFO] remote:
+[INFO] remote: -----&gt; heroku-maven-plugin app detected
+[INFO] remote: -----&gt; Installing OpenJDK 1.8... done
+[INFO] remote: -----&gt; Discovering process types
+[INFO] remote:        Procfile declares types -&gt; web
+[INFO] remote:
+[INFO] remote: -----&gt; Compressing...
+[INFO] remote:        Done: 61.1M
+[INFO] remote: -----&gt; Launching...
+[INFO] remote:        Released v7
+[INFO] remote:        https://fierce-brook-96934.herokuapp.com/ deployed to Heroku
+[INFO] remote:
+[INFO] -----&gt; Done
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 54.253 s
+[INFO] Finished at: 2017-11-23T12:28:47Z
+[INFO] Final Memory: 36M/622M
+[INFO] ------------------------------------------------------------------------</code></pre>
+<p>If all goes well, the application should be deployed on the generated url. The application does not have a UX, so you will need to test it via the api:</p>
+<p><img src="img/02.png" alt=""></p>
+<p>If you wish to see the application console - for debugging or other purposes - you can run this command :</p>
+<pre><code>heroku logs --tail</code></pre>
+<p>This will reveal the console, more or less as you would have seen it in Eclipse when running locally:</p>
+<p><img src="img/03.png" alt=""></p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="Exercises">
+              <h1>Exercises</h1>
+<p>Project Archives at this stage:</p>
+<ul>
+<li><a href="https://github.com/wit-computing-msc-2018/pacemaker-skeleton/releases/tag/lab.11.end">https://github.com/wit-computing-msc-2018/pacemaker-skeleton/releases/tag/lab.11.end</a></li>
+<li><a href="https://github.com/wit-computing-msc-2018/pacemaker-client/releases/tag/lab.11.end">https://github.com/wit-computing-msc-2018/pacemaker-client/releases/tag/lab.11.end</a></li>
+</ul>
+<h2>Exercise 1:</h2>
+<p>Test the deployed api. Currently, when the tests in pacemaker-skeleton-client launches, it is expecting the API on localhost:</p>
+<pre><code>  PacemakerAPI pacemaker = new PacemakerAPI(&quot;http://localhost:7000&quot;);</code></pre>
+<p>Change this to your deployed application url:</p>
+<pre><code>  PacemakerAPI pacemaker = new PacemakerAPI(&quot;https://fierce-brook-34.herokuapp.com/&quot;);</code></pre>
+<p>(Use your own url here)</p>
+<p>And run all tests. They should pass. Keep an eye on the logs as the test run.</p>
+<h2>Exercise 2</h2>
+<p>Try the same experiment with the pacemaker CLI. I.e. change PacemakerConsoleService</p>
+<pre><code>public class PacemakerConsoleService {
+
+  private PacemakerAPI paceApi = new PacemakerAPI(&quot;http://localhost:7000&quot;);</code></pre>
+<p>to use the deployed application:</p>
+<pre><code>public class PacemakerConsoleService {
+
+  PacemakerAPI pacemaker = new PacemakerAPI(&quot;https://fierce-brook-34.herokuapp.com/&quot;);</code></pre>
+<h2>Exercise 3:</h2>
+<p>Explore the deployed service using the Restlet Chrome plugin</p>
+<h2>Exercise 4:</h2>
+<p>Evolve a set of tests to verify that locations can be added to activities.</p>
+
+            </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function() {
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass('');
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass('uk-label uk-text-lowercase');
+      divLabel.append($images[i].alt);
+      $(divLabel).insertAfter($images[i]);
+      $('<br>').insertAfter($images[i]);
+    }
+  });
+});
+
+      $(document).ready(function() {
+  $('img').addClass('ui image');
+
+  $('.ui.embed').embed();
+
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass(
+        'ui basic segment',
+      );
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass(
+        'ui blue ribbon label',
+      );
+      divLabel.append($images[i].alt);
+      $(divLabel).insertBefore($images[i]);
+    }
+  });
+
+  $('.ui.menu .item').tab({
+    history: true,
+    historyType: 'hash',
+  });
+
+  $('.popup').popup();
+
+  $('.ui.sidebar')
+    .sidebar({ context: $('.pushable') })
+    .sidebar('setting', 'transition', 'slide out')
+    .sidebar('attach events', '#toc');
+});
+
+    </script>
+  </body>
+</html>
