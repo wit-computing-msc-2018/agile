@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <style>
+      
+
+body {
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+  font-size:90%;
+  color: black;
+}
+
+p {
+  margin: 0.5em;
+}
+
+pre code {
+  font-family: "Monaco";
+  font-size: 100%;
+}
+
+img {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin:10px;
+}
+
+h1, h2, h3 {
+  border-bottom:thin solid black;
+  margin-bottom: 0.5em;
+  margin-top: 1em;
+}
+
+h1 {
+  font-style:italic;
+  font-size:130%;
+}
+
+h2 {
+  font-size:110%;
+}
+
+h3 {
+  font-size:100%;
+}
+
+
+
+    </style>
+  </head>
+
+  <body>
+    
+    
+
+    <div class="ui fixed top pointing inverted stackable menu labmenu">
+      <header class="header item">
+        <i id="toc" class="sitemap icon"></i>
+        
+          <a href="../index.html"> 12. Test Doubles + Lab Review  </a>
+        
+      </header>
+      <div class="right tab-menu menu">
+        
+          <a class="item" data-tab="Lab-12 Kotlin">
+            Lab-12 Kotlin
+          </a>
+        
+          <a class="item" data-tab="01">
+            01
+          </a>
+        
+          <a class="item" data-tab="02">
+            02
+          </a>
+        
+          <a class="item" data-tab="03">
+            03
+          </a>
+        
+          <a class="item" data-tab="04">
+            04
+          </a>
+        
+          <a class="item" data-tab="05">
+            05
+          </a>
+        
+          <a class="item" data-tab="Exercises">
+            Exercises
+          </a>
+        
+      </div>
+    </div>
+
+    <div class="ui segment pushable">
+      <div class="ui inverted labeled icon left inline vertical sidebar menu">
+        <br><br>
+        
+          
+            <a class="item" href="../../topic01-paradigms-and-languages/book-eclipse-and-java/index.html">
+              Lab-01 Eclipse & Java
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic02-java-language/book-cli-and-classes/index.html">
+              Lab-02 CLI & Classes
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic03-inheritance-and-collections/book-objects-and-serialization/index.html">
+              Lab-03 Objects & Serialization
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic04-serialisation-and-tdd-1/book-testing/index.html">
+              Lab-04 Testing
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic05-tdd-2/book-refactoring/index.html">
+              Lab-05 Refactoring
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic06-exceptions-and-maven/book-maven/index.html">
+              Lab-06 Maven
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic07-tdd-3-and-java-versions/book-java-versions/index.html">
+              Lab-07 Java Versions
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic08-srp-and-assignment1-soln/book-a-pacemaker-soln-models/index.html">
+              Lab-07a Pacemaker Models
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic08-srp-and-assignment1-soln/book-b-pacemaker-soln-api/index.html">
+              Lab-07b Pacemaker API
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic08-srp-and-assignment1-soln/book-c-assignmment-2-skeleton/index.html">
+              Lab-08 Skeleton
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic09-ocp-and-rest/book-simple-rest-api/index.html">
+              Lab-09 Rest API
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic10-lsp-and-tdd-5-and-kotlin/book-rest-cli-test/index.html">
+              Lab-10 Rest CLI
+            </a>
+          
+        
+          
+            <a class="item" href="../../topic11-isp-dip-and-kotlin/book-pacemaker-service-test/index.html">
+              Lab-11 Rest Test
+            </a>
+          
+        
+          
+            <a class="active item" href="../../topic12-tdd-6/book-kotlin-pacemaker-client/index.html">
+              Lab-12 Kotlin
+            </a>
+          
+        
+      </div>
+      <div class="pusher" tabindex="-1">
+        <div class="ui basic segment" id="labchat">
+          <br>
+          
+            <div  class="ui tab segment lab" data-tab="Lab-12 Kotlin">
+              <h1>Objectives</h1>
+<p>Introduce a new project, an implementation of the service in Kotlin.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="01">
+              <h1>Lab 11 Exercise Solutions</h1>
+<p>Project Archives at this stage:</p>
+<ul>
+<li><a href="https://github.com/wit-computing-msc-2018/pacemaker-skeleton/releases/tag/lab.11.end">https://github.com/wit-computing-msc-2018/pacemaker-skeleton/releases/tag/lab.11.end</a></li>
+<li><a href="https://github.com/wit-computing-msc-2018/pacemaker-client/releases/tag/lab.11.end">https://github.com/wit-computing-msc-2018/pacemaker-client/releases/tag/lab.11.end</a></li>
+</ul>
+<h2>Exercise 4:</h2>
+<p>Evolve a set of tests to verify that locations can be added to activities.</p>
+<h3>Solution</h3>
+<p>In pacemaker-skeleton-client, we need an additional method in the PacemakerInterface:</p>
+<pre><code>  @GET(&quot;/users/{id}/activities/{activityId}/locations&quot;)
+  Call&lt;List&lt;Location&gt;&gt; getLocations(@Path(&quot;id&quot;) String id, @Path(&quot;activityId&quot;) String activityId);</code></pre>
+<p>... and this matching method in PacemakerAPI:</p>
+<pre><code>  public List&lt;Location&gt; getLocations(String id, String activityId) {
+    List&lt;Location&gt; locations = null;
+    try {
+      Call&lt;List&lt;Location&gt;&gt; call = pacemakerInterface.getLocations(id, activityId);
+      Response&lt;List&lt;Location&gt;&gt; response = call.execute();
+      locations = response.body();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return locations;
+  }</code></pre>
+<p>With these methods in place, this new test in ActivityTest should pass:</p>
+<pre><code>  @Test
+  public void testCreateActivityWithSingleLocation() {
+    pacemaker.deleteActivities(homer.id);
+    Activity activity = new Activity(&quot;walk&quot;, &quot;shop&quot;, 2.5);
+    Location location = new Location(12.0, 33.0);
+
+    Activity returnedActivity = pacemaker.createActivity(homer.id, activity.type, activity.location, activity.distance);
+    pacemaker.addLocation(homer.id, returnedActivity.id, location.latitude, location.longitude);
+
+    List&lt;Location&gt; locations = pacemaker.getLocations(homer.id, returnedActivity.id);
+    assertEquals (locations.size(), 1);
+    assertEquals (locations.get(0), location);
+  }</code></pre>
+<p>Verify that this test runs successfully (don&#39;t forget to start your server i.e. pacemaker-skeleton).</p>
+<p>This test should also run:</p>
+<pre><code>  @Test
+  public void testCreateActivityWithMultipleLocation() {
+    pacemaker.deleteActivities(homer.id);
+    Activity activity = new Activity(&quot;walk&quot;, &quot;shop&quot;, 2.5);
+    Activity returnedActivity = pacemaker.createActivity(homer.id, activity.type, activity.location, activity.distance);
+
+    locations.forEach (location -&gt;  pacemaker.addLocation(homer.id, returnedActivity.id, location.latitude, location.longitude));
+    List&lt;Location&gt; returnedLocations = pacemaker.getLocations(homer.id, returnedActivity.id);
+    assertEquals (locations.size(), returnedLocations.size());
+    assertEquals(locations, returnedLocations);
+  }</code></pre>
+<p>These imports are required:</p>
+<pre><code>import models.Location;
+import static models.Fixtures.locations;
+import java.util.List;</code></pre>
+<p>Notice that we are no longer using the id field in the Location class. We should remove it now as it is not neccessary in our current implementation. Be sure to remove in both client and server projects.</p>
+<p>To ensure your refactoring of the Location classes hasn&#39;t disrupted anything, rerun your tests.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="02">
+              <h1>Kotlin</h1>
+<p>In eclipse, visit the Eclipse Marketplace (Help-&gt;Eclipse Marketplace), locate and install the Kotlin plugin:</p>
+<p><img src="img/01.png" alt=""></p>
+<p>You may need to restart eclipse.</p>
+<p>Outside of Eclipse, create a new folder called <code>pacemaker-skeleton-kotlin</code>, and create this new <code>pom.xml</code> file:</p>
+<pre><code>&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+  &lt;groupId&gt;pacemaker&lt;/groupId&gt;
+  &lt;artifactId&gt;pacemaker-skeleton-kotlin&lt;/artifactId&gt;
+  &lt;version&gt;1.0&lt;/version&gt;
+  &lt;packaging&gt;jar&lt;/packaging&gt;
+
+  &lt;name&gt;pacemaker-skeleton&lt;/name&gt;
+  &lt;url&gt;http://maven.apache.org&lt;/url&gt;
+
+  &lt;properties&gt;
+    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
+    &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
+    &lt;kotlin.version&gt;1.1.60&lt;/kotlin.version&gt;
+  &lt;/properties&gt;
+
+  &lt;build&gt;
+    &lt;sourceDirectory&gt;src/main/kotlin&lt;/sourceDirectory&gt;
+    &lt;testSourceDirectory&gt;src/test/kotlin&lt;/testSourceDirectory&gt;
+
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+        &lt;version&gt;3.7.0&lt;/version&gt;
+        &lt;configuration&gt;
+          &lt;source&gt;1.8&lt;/source&gt;
+          &lt;target&gt;1.8&lt;/target&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.jetbrains.kotlin&lt;/groupId&gt;
+        &lt;artifactId&gt;kotlin-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;${kotlin.version}&lt;/version&gt;
+        &lt;executions&gt;
+          &lt;execution&gt;
+            &lt;id&gt;compile&lt;/id&gt;
+            &lt;phase&gt;compile&lt;/phase&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;compile&lt;/goal&gt;
+            &lt;/goals&gt;
+          &lt;/execution&gt;
+          &lt;execution&gt;
+            &lt;id&gt;test-compile&lt;/id&gt;
+            &lt;phase&gt;test-compile&lt;/phase&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;test-compile&lt;/goal&gt;
+            &lt;/goals&gt;
+          &lt;/execution&gt;
+        &lt;/executions&gt;
+      &lt;/plugin&gt;      
+
+      &lt;plugin&gt;
+        &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;
+        &lt;executions&gt;
+          &lt;execution&gt;
+            &lt;phase&gt;package&lt;/phase&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;single&lt;/goal&gt;
+            &lt;/goals&gt;
+          &lt;/execution&gt;
+        &lt;/executions&gt;
+        &lt;configuration&gt;
+          &lt;descriptorRefs&gt;
+            &lt;descriptorRef&gt;jar-with-dependencies&lt;/descriptorRef&gt;
+          &lt;/descriptorRefs&gt;
+          &lt;archive&gt;
+            &lt;manifest&gt;
+              &lt;mainClass&gt;controllers.RestMainKt&lt;/mainClass&gt;
+            &lt;/manifest&gt;
+          &lt;/archive&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+
+      &lt;plugin&gt;
+        &lt;groupId&gt;com.heroku.sdk&lt;/groupId&gt;
+        &lt;artifactId&gt;heroku-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;1.1.3&lt;/version&gt;
+        &lt;configuration&gt;
+          &lt;jdkVersion&gt;1.8&lt;/jdkVersion&gt;
+          &lt;appName&gt;YOUR APP NAME&lt;/appName&gt;
+          &lt;processTypes&gt;
+            &lt;web&gt;java -jar ./target/pacemaker-skeleton-kotlin-1.0-jar-with-dependencies.jar&lt;/web&gt;
+          &lt;/processTypes&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;      
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;junit&lt;/groupId&gt;
+      &lt;artifactId&gt;junit&lt;/artifactId&gt;
+      &lt;version&gt;4.12&lt;/version&gt;
+      &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.google.guava&lt;/groupId&gt;
+      &lt;artifactId&gt;guava&lt;/artifactId&gt;
+      &lt;version&gt;23.0&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.googlecode.clichemaven&lt;/groupId&gt;
+      &lt;artifactId&gt;cliche&lt;/artifactId&gt;
+      &lt;version&gt;110413&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;java-ascii-table&lt;/groupId&gt;
+      &lt;artifactId&gt;java-ascii-table&lt;/artifactId&gt;
+      &lt;version&gt;1.0&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;io.javalin&lt;/groupId&gt;
+      &lt;artifactId&gt;javalin&lt;/artifactId&gt;
+      &lt;version&gt;0.5.1&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+      &lt;artifactId&gt;slf4j-simple&lt;/artifactId&gt;
+      &lt;version&gt;1.7.21&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+      &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+      &lt;version&gt;2.9.1&lt;/version&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+&lt;/project&gt;</code></pre>
+<p>In Eclipse, import the folder as a Maven project.</p>
+<p><img src="img/02.png" alt=""></p>
+<p>Notice the project does not have a source folder yet. Create this folder structure now (on the command line or using Explorer/Finder)</p>
+<pre><code>└── src
+     ├── main
+           └──kotlin</code></pre>
+<p>Back in Eclipse, refresh the project - and the (empty) source folder should appear:</p>
+<p><img src="img/03.png" alt=""></p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="03">
+              <h1>Models</h1>
+<p>Note: when coding in Kotlin, you might find it easier to switch to the <strong>Kotlin</strong> perspective in Eclipse (see the buttons on the top right hand corner of Eclipse). </p>
+<p>Create a new package in the src/main/kotlin folder called <code>models</code>, and create three new Kotlin classes:</p>
+<p><img src="img/04.png" alt=""></p>
+<ul>
+<li>Location</li>
+<li>Activity</li>
+<li>User</li>
+</ul>
+<p><img src="img/05.png" alt=""></p>
+<p>These are the sources for these classes:</p>
+<h2>Location</h2>
+<pre><code>package models
+
+data class Location(
+    val latitude: Double,
+    val longitude: Double)</code></pre>
+<h2>Activity</h2>
+<pre><code>package models
+
+import java.util.UUID
+
+data class Activity(
+    var type: String = &quot;&quot;,
+    var location: String = &quot;&quot;,
+    var distance: Float = 0.0f,
+    var id: String = UUID.randomUUID().toString(),
+    val route: MutableList&lt;Location&gt; = ArrayList())</code></pre>
+<h2>User</h2>
+<pre><code>package models
+
+import java.util.UUID
+
+data class User(
+    val firstname: String = &quot;&quot;,
+    val lastname: String = &quot;&quot;,
+    val email: String = &quot;&quot;,
+    val password: String = &quot;&quot;,
+    var id: String = UUID.randomUUID().toString(),
+    val activities: MutableMap&lt;String, Activity&gt; = hashMapOf&lt;String, Activity&gt;())</code></pre>
+<p>These are <a href="https://kotlinlang.org/docs/reference/data-classes.html">Kotlin Data Classes</a> - they are functionally equivalent to the Java equivalents from pacemaker-skeleton, with much of the extra methods auto-generated. </p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="04">
+              <h1>Controllers User Endpoints</h1>
+<p>Create three Kotlin classes in a new controllers package:</p>
+<p><img src="img/06.png" alt=""></p>
+<ul>
+<li>PacemakerAPI</li>
+<li>PacemakerRestService</li>
+<li>RestMain</li>
+</ul>
+<p>These are the sources:</p>
+<h2>PacemakerAPI</h2>
+<pre><code>package controllers
+
+import java.util.UUID;
+import models.Activity
+import models.Location
+import models.User
+
+class PacemakerAPI {
+
+  var userIndex = hashMapOf&lt;String, User&gt;()
+  var emailIndex = hashMapOf&lt;String, User&gt;()
+  var activitiesIndex = hashMapOf&lt;String, Activity&gt;()
+  var users = userIndex.values
+
+  fun createUser(firstName: String, lastName: String, email: String, password: String): User {
+    var user = User(firstName, lastName, email, password)
+    userIndex[user.id] = user
+    emailIndex[user.email] = user
+    return user
+  }
+
+  fun deleteUsers() {
+    userIndex.clear();
+    emailIndex.clear()
+  }
+
+  fun getUser(id: String) = userIndex[id]
+  fun getUserByEmail(email: String) = emailIndex[email]
+}</code></pre>
+<h2>PacemakerRestService</h2>
+<pre><code>package controllers
+
+import io.javalin.Context
+import models.Activity
+import models.Location
+import models.User
+
+class PacemakerRestService  {
+  val pacemaker = PacemakerAPI()
+
+  fun listUsers(ctx: Context) {
+    ctx.json(pacemaker.users)
+  }
+
+  fun createUser(ctx: Context) {
+    val user = ctx.bodyAsClass(User::class.java)
+    val newUser = pacemaker.createUser(user.firstname, user.lastname, user.email, user.password)
+    ctx.json(newUser)
+  }
+
+  fun deleteUsers(ctx: Context) {
+    pacemaker.deleteUsers()
+    ctx.status(200)
+  }
+}</code></pre>
+<h2>RestMain</h2>
+<pre><code>package controllers
+
+import io.javalin.Javalin
+
+fun main(args: Array&lt;String&gt;) {
+  val app = Javalin.create().port(getHerokuAssignedPort()).start()
+  val service = PacemakerRestService()
+  configRoutes(app, service)
+}
+
+private fun getHerokuAssignedPort(): Int {
+  val processBuilder = ProcessBuilder()
+  return if (processBuilder.environment()[&quot;PORT&quot;] != null) {
+    Integer.parseInt(processBuilder.environment()[&quot;PORT&quot;])
+  } else 7000
+}
+
+fun configRoutes(app: Javalin, service: PacemakerRestService) {
+  app.get(&quot;/users&quot;) { ctx -&gt; service.listUsers(ctx) }
+  app.post(&quot;/users&quot;) { ctx -&gt; service.createUser(ctx) }
+  app.delete(&quot;/users&quot;) { ctx -&gt; service.deleteUsers(ctx) }
+}</code></pre>
+<p>You should be able to run the application now:</p>
+<p><img src="img/07.png" alt=""></p>
+<p><img src="img/08.png" alt=""></p>
+<p>This is supporting the users endpoint - making the service available on <a href="http://localhost:7000">http://localhost:7000</a></p>
+<p>We already have a set of tests built to exercises these routes - in <code>UsersTest</code> in pacemaker-skeleton-client.</p>
+<p><img src="img/09.png" alt=""></p>
+<p>Have a look at the code in this test and make sure the tests are being exercised over your local host service and not your Heroku implementation i.e.:</p>
+<pre><code class="lang-java">//PacemakerAPI pacemaker = new PacemakerAPI(&quot;https://evening-tor-94050.herokuapp.com/&quot;);
+PacemakerAPI pacemaker = new PacemakerAPI(&quot;http://localhost:7000&quot;);</code></pre>
+<p>Run these test now - they should pass:</p>
+<p><img src="img/10.png" alt=""></p>
+<p>The service is implemented in Kotlin - the tests are in Java.</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="05">
+              <h1>controllers Activity Endpoints</h1>
+<p>Initial activity endpoints can now be implemented:</p>
+<h2>PacemakerAPI</h2>
+<pre><code>  fun createActivity(id: String, type: String, location: String, distance: Float): Activity? {
+    var activity:Activity? = null
+    var user = userIndex.get(id)
+    if (user != null) {
+      activity = Activity(type, location, distance)
+      user.activities[activity.id] = activity
+      activitiesIndex[activity.id] = activity;
+    }
+    return activity;
+  }
+
+  fun getActivity(id: String): Activity? {
+    return activitiesIndex[id]
+  }
+
+  fun deleteActivities(id: String) {
+    require(userIndex[id] != null)
+    var user = userIndex.get(id)
+    if (user != null) {
+      for ((u, activity) in user.activities) {
+        activitiesIndex.remove(activity.id)
+      }
+      user.activities.clear();
+    }
+  }</code></pre>
+<h2>PacemakerRestService</h2>
+<pre><code>  fun getActivity(ctx: Context) {
+    // val userId: String? = ctx.param(&quot;id&quot;)
+    val activityId: String? = ctx.param(&quot;activityId&quot;) 
+    val activity = pacemaker.getActivity(activityId!!)
+    if (activity != null) {
+      ctx.json(activity)
+    } else {
+      ctx.status(404)
+    }
+  }
+
+  fun getActivities(ctx: Context) {
+    val id: String? =  ctx.param(&quot;id&quot;)
+    val user = pacemaker.getUser(id!!)
+    if (user != null) {
+      ctx.json(user.activities)
+    } else {
+      ctx.status(404)
+    }
+  }
+
+   fun createActivity(ctx: Context) {
+    val id: String? =  ctx.param(&quot;id&quot;)
+    val user = pacemaker.getUser(id!!)
+    if (user != null) {
+      val activity = ctx.bodyAsClass(Activity::class.java)
+      val newActivity = pacemaker.createActivity(user.id, activity.type, activity.location, activity.distance)
+      ctx.json(newActivity!!)
+    } else {
+      ctx.status(404)
+    }
+  }
+
+  fun deleteActivites(ctx: Context) {
+    val id: String? =  ctx.param(&quot;id&quot;)
+    pacemaker.deleteActivities(id!!);
+    ctx.status(204)
+  }</code></pre>
+<h2>RestMain</h2>
+<pre><code>  app.get(&quot;/users/:id/activities&quot;) { ctx -&gt; service.getActivities(ctx) }
+  app.get(&quot;/users/:id/activities/:activityId&quot;) { ctx -&gt; service.getActivity(ctx) }
+  app.post(&quot;/users/:id/activities&quot;) { ctx -&gt; service.createActivity(ctx) }
+  app.delete(&quot;/users/:id/activities&quot;) { ctx -&gt; service.deleteActivites(ctx) }</code></pre>
+<p>We can now try the ActivityTest from pacemaker-skeleton-client (once again, make sure the tests are being exercised over your local host service and not your Heroku implementation):</p>
+<p><img src="img/11.png" alt=""></p>
+<p>Notice that the location endpoints are failing - as we have not yet implemented them.</p>
+<p>Note: if more of your tests have errors in them when compared with the above graphic, you might need to stop the Kotlin Rest service and restart it (to pick up the above changes).</p>
+
+            </div>
+          
+            <div  class="ui tab segment lab" data-tab="Exercises">
+              <h1>Exercises</h1>
+<h2>Lab 12 Archive:</h2>
+<p>Archive of this lab so far:</p>
+<ul>
+<li><a href="https://github.com/wit-computing-msc-2018/pacemaker-skeleton-kotlin/releases/tag/lab12">https://github.com/wit-computing-msc-2018/pacemaker-skeleton-kotlin/releases/tag/lab12</a></li>
+</ul>
+<h2>Archive of collected labs to date:</h2>
+<p>Archive of ALL labs (from lab 08 to lab 12) :</p>
+<ul>
+<li><a href="./archives/lab-review.zip">lab-review</a></li>
+</ul>
+<p>See accompanying video tour of the labs in this week&#39;s release.</p>
+<h2>Project Submission Form (ppt file)</h2>
+<ul>
+<li><a href="./archives/submission-tempate.pptx">submission-template.pptx</a></li>
+</ul>
+<p>When submitting your final project, please download and complete the above pptx form outlining your approach and achievements in the project.</p>
+<h2>Exercise 1:</h2>
+<p>Implement the location endpoints so that the ActivityTest all pass</p>
+<h2>Exercise</h2>
+<p>Deploy the application to Heroku. The same steps we have already carried out (in lab 11) can also be applied here.</p>
+
+            </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function() {
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass('');
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass('uk-label uk-text-lowercase');
+      divLabel.append($images[i].alt);
+      $(divLabel).insertAfter($images[i]);
+      $('<br>').insertAfter($images[i]);
+    }
+  });
+});
+
+      $(document).ready(function() {
+  $('img').addClass('ui image');
+
+  $('.ui.embed').embed();
+
+  const $images = $('.lab img');
+  jQuery.each($images, function(i) {
+    if ($images[i].alt.length > 0) {
+      const divImg = $(document.createElement('div')).addClass(
+        'ui basic segment',
+      );
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass(
+        'ui blue ribbon label',
+      );
+      divLabel.append($images[i].alt);
+      $(divLabel).insertBefore($images[i]);
+    }
+  });
+
+  $('.ui.menu .item').tab({
+    history: true,
+    historyType: 'hash',
+  });
+
+  $('.popup').popup();
+
+  $('.ui.sidebar')
+    .sidebar({ context: $('.pushable') })
+    .sidebar('setting', 'transition', 'slide out')
+    .sidebar('attach events', '#toc');
+});
+
+    </script>
+  </body>
+</html>
